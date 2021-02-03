@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tryout;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -15,13 +16,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $users = User::count();
-
-        $widget = [
-            'users' => $users,
-            //...
-        ];
-
-        return view('home', compact('widget'));
+        $tryout = Tryout::all();
+        return view('home', compact('tryout'));
     }
 }
