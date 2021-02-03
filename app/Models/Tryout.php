@@ -9,6 +9,7 @@ use Carbon\Carbon;
 class Tryout extends Model
 {
     use HasFactory;
+    protected $table = 'tryout';
 
     protected $fillable = [
         'name', 'time_start', 'time_end'

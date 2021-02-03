@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Student;
+use App\Models\Tryout;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -14,6 +15,7 @@ class StudentSeeder extends Seeder{
      * @return void
      */
     public function run(){
-		User::factory(10)->create();
+        User::factory(10)->create();
+        Tryout::factory(10)->create();
     }
 }
