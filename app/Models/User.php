@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -37,6 +38,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function user_answer(){
+        return $this->hasMany(UserAnswer::class);
+    }
+
+    public function user_tryout(){
+        return $this->hasMany(UserTryout::class);
+    }
+
     public function getFullNameAttribute()
     {
         if (is_null($this->last_name)) {
@@ -45,4 +54,5 @@ class User extends Authenticatable
 
         return "{$this->name} {$this->last_name}";
     }
+
 }
