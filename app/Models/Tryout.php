@@ -26,11 +26,11 @@ class Tryout extends Model
         return $this->hasMany(UserTryout::class);
     }
 
-    public function tryout_status(){
+    public function tryout_status($id){
         $time_now = now();
-        $user_check = Tryout::find(1)->user_tryout()
-                                     ->where('user_id', Auth::user()->id)
-                                     ->first();
+        $user_check = Tryout::find($id)->user_tryout()
+                                    ->where('user_id', Auth::user()->id)
+                                    ->first();
         if($this->time_start > $time_now){
             return 'Dijadwalkan';
         } else if($this->time_end < $time_now){

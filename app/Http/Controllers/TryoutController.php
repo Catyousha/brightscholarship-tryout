@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tryout;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class TryoutController extends Controller
 {
@@ -13,7 +15,7 @@ class TryoutController extends Controller
      */
     public function index()
     {
-        return view('tryout.soal');
+
     }
 
     /**
@@ -43,9 +45,13 @@ class TryoutController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id_tryout, $no_soal)
     {
-        //
+        $tryout         = Tryout::findOrFail($id_tryout);
+        $soal           = $tryout->question()->where('question_num', $no_soal)->firstOrFail();
+        $soal->terakhir = ($tryout->question()->where('question_num', $no_soal+1)->first() == null);
+        
+        return view('tryout.soal', compact('tryout', 'soal'));
     }
 
     /**

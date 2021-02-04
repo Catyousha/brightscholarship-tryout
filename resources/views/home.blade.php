@@ -23,7 +23,7 @@
     <div class="row">
         @foreach ($tryout as $t)
         @php
-        $stat = $t->tryout_css( $t->tryout_status() )
+        $stat = $t->tryout_css( $t->tryout_status($t->id) )
         @endphp
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card {{$stat->border_pinggir}} shadow h-100 py-2">
@@ -32,9 +32,12 @@
                         <div class="col mr-2">
                             <div class="h5 mb-1 font-weight-bold text-gray-800 mb-3">{{$t->name}}</div>
                             <div class="text-xs font-weight-bold {{$stat->teks}} text-uppercase mb-1">{{$t->time_start->translatedFormat('d M Y')}}<br>{{$t->time_start->translatedFormat('H:i')}} - {{$t->time_end->translatedFormat('H:i')}}</div>
-                            <span class="badge badge-pill {{$stat->badge}} mb-2">Status: {{$t->tryout_status()}}</span>
-                            @if($t->tryout_status() == "Sedang Berlangsung")
-                            <a class="btn btn-sm {{$stat->btn}} btn-block" href="{{route('tryout.index')}}">Kerjakan</a>
+                            <span class="badge badge-pill {{$stat->badge}} mb-2">Status: {{$t->tryout_status($t->id)}}</span>
+                            @if($t->tryout_status($t->id) == "Telah Diselesaikan")
+                            <span class="badge badge-pill {{$stat->badge}} mb-2">Skor: {{$t->user_tryout->where('user_id', Auth::id())->first()->score?? 0}}/100</span>
+                            @endif
+                            @if($t->tryout_status($t->id) == "Sedang Berlangsung")
+                            <a class="btn btn-sm {{$stat->btn}} btn-block" href="{{route('tryout.soal', ['id_tryout' => $t->id, 'no_soal' => 1])}}">Kerjakan</a>
                             @endif
                         </div>
                         <div class="col-auto">
@@ -45,58 +48,5 @@
             </div>
         </div>
         @endforeach
-
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="h5 mb-1 font-weight-bold text-gray-800 mb-3">Try Out 1</div>
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">27 Februari 2021<br>08:00 - 09:00</div>
-                            <span class="badge badge-pill badge-primary mb-2">Status: Sedang Berlangsung</span>
-                            <a class="btn btn-sm btn-primary btn-block" href="{{route('tryout.index')}}">Kerjakan</a>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-secondary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="h5 mb-1 font-weight-bold text-gray-800 mb-3">Try Out 2</div>
-                            <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">28 Februari 2021<br>08:00 - 09:00</div>
-                            <span class="badge badge-pill badge-secondary mb-2">Status: Dijadwalkan</span>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="h5 mb-1 font-weight-bold text-gray-800 mb-3">Try Out 3</div>
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">02 Februari 2021<br>08:00 - 09:00</div>
-                            <span class="badge badge-pill badge-success mb-2">Status: Telah Selesai</span>
-                            <span class="badge badge-info mb-2">Skor: 90/100</span>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 @endsection

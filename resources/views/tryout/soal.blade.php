@@ -31,50 +31,34 @@
 
 @section('main-content')
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">{{ __('Page Soal') }}</h1>
+    <h1 class="h3 mb-4 text-gray-800">{{ __('Selamat Mengerjakan!') }}</h1>
 
     <!-- Main Content goes here -->
     <div class="row">
         <div class="col-lg-8 mb-4">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Tryout 1: Soal No. 1</h6>
-                    <h6 class="m-0 font-weight-bold">Sisa Waktu: 00:30:00</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{{$tryout->name}}: Soal No. {{$soal->question_num}}</h6>
+                    <!--<h6 class="m-0 font-weight-bold">Sisa Waktu: 00:30:00</h6>-->
                 </div>
                 <div class="card-body">
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.
-                        Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.
-                        A small river named Duden flows by their place and supplies it with the necessary regelialia.
-                        It is a paradisematic country, in which roasted parts of sentences fly into your mouth.
-                        Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life.
-                    </p>
-
+                    <p>{{$soal->question_text}}</p>
                     <div class="mt-4 d-flex flex-column">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input mr-3" type="radio" name="answer" id="inlineRadio1" value="option1">
-                            <label class="form-check-label" for="inlineRadio1">A. Lorem ipsum dolor sit amet</label>
+                        @foreach ($soal->choice as $c)
+                        <div class="form-check mb-2">
+                            <input class="form-check-input mr-3" type="radio" name="ans_{{$soal->question_num}}" id="{{$c->id}}" value="{{$c->id}}" @if(Session::get("$tryout->id.$soal->id") == $c->id) checked @endif>
+                            <label class="form-check-label" for="{{$c->id}}">{{$c->choice_symbol}}. {{$c->choice_text}}</label>
                         </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input mr-3" type="radio" name="answer" id="inlineRadio2" value="option1">
-                            <label class="form-check-label" for="inlineRadio2">B. Lorem ipsum dolor sit amet</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input mr-3" type="radio" name="answer" id="inlineRadio3" value="option1">
-                            <label class="form-check-label" for="inlineRadio3">C. Lorem ipsum dolor sit amet</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input mr-3" type="radio" name="answer" id="inlineRadio4" value="option1">
-                            <label class="form-check-label" for="inlineRadio4">D. Lorem ipsum dolor sit amet</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input mr-3" type="radio" name="answer" id="inlineRadio5" value="option1">
-                            <label class="form-check-label" for="inlineRadio5">E. Lorem ipsum dolor sit amet</label>
-                        </div>
+                        @endforeach
                     </div>
 
-                    <div class="mt-4 d-flex justify-content-between">
-                        <a class="btn btn-primary">Sebelumnya</a>
-                        <a class="btn btn-primary">Selanjutnya</a>
+                    <div class="mt-4 d-flex @if($soal->question_num == 1)justify-content-end @else justify-content-between @endif">
+                        @if($soal->question_num != 1)
+                        <a href="{{route('tryout.soal', ['id_tryout' => $tryout->id, 'no_soal' => $soal->question_num-1])}}" class="btn btn-primary">Sebelumnya</a>
+                        @endif
+                        @if(!$soal->terakhir)
+                        <a href="{{route('tryout.soal', ['id_tryout' => $tryout->id, 'no_soal' => $soal->question_num+1])}}" class="btn btn-primary">Selanjutnya</a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -88,20 +72,19 @@
                 </div>
                 <div class="card-body">
                     <ul class="nav-soal">
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">6</a></li>
-                        <li><a href="#">7</a></li>
-                        <li><a href="#">8</a></li>
-                        <li><a href="#">9</a></li>
-                        <li><a href="#">10</a></li>
+                        @foreach ($tryout->question as $q)
+                           <li class="@if($q->question_num == $soal->question_num) active @endif"><a href="{{route('tryout.soal', ['id_tryout' => $tryout->id, 'no_soal' =>$q->question_num])}}">{{$q->question_num}}</a></li>
+                        @endforeach
                     </ul>
                     <div class="text-center mt-3">
+
+                        <p id="test">@php /*var_dump(Session::get("$tryout->id"))*/@endphp</p>
+                        <form action="{{route('answer.submit')}}" method="POST">
+                        @csrf
+                        <input type="hidden" name="t_id" value="{{$tryout->id}}"/>
                         <small class="text-danger">Pastikan semua soal sudah dijawab!</small>
-                        <a class="btn btn-success">Submit Pengerjaan</a>
+                        <input type="submit" class="btn btn-success" value="Submit Pengerjaan">
+                        </form>
                     </div>
                 </div>
             </div>
@@ -126,4 +109,36 @@
         {{ session('status') }}
     </div>
 @endif
+@endpush
+
+@push('js')
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"
+integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+crossorigin="anonymous">
+</script>
+<script>
+    const answ = document.getElementsByName('{{"ans_$soal->question_num"}}');
+
+    function s_ans(event){
+        console.log(event.target.value)
+        $.ajax({
+            type:'POST',
+            url:'/answer',
+            data:{_token: "{{ csrf_token() }}",
+                    t_id: {{$tryout->id}},
+                    q_id: {{$soal->id}},
+                    c_id: event.target.value
+                },
+            success:function(data) {
+                console.log("200")
+            },
+            error: function(err){
+                console.log(err)
+            }
+        });
+    }
+    Array.prototype.forEach.call(answ, function(radio) {
+        radio.addEventListener('change', s_ans);
+    });
+</script>
 @endpush

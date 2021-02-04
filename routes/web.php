@@ -1,5 +1,6 @@
 <?php
-
+use App\Http\Controllers\TryoutController;
+use App\Http\Controllers\AnswerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,7 +21,12 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function(){
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/profile', 'ProfileController@index')->name('profile');
-    Route::resource('/tryout', 'TryoutController');
+    Route::get('/tryout/{id_tryout}/{no_soal}', [TryoutController::class, 'show'])->name('tryout.soal');
+    Route::post('/answer/submit', [AnswerController::class, 'submit_answer'])->name('answer.submit');
+
+    //AJAX
+    Route::post('/answer', [AnswerController::class, 'save_answer'])->name('answer.save');
+
 });
 
 Route::get('/blank', function () {
