@@ -26,9 +26,13 @@ class Tryout extends Model
         return $this->hasMany(UserTryout::class);
     }
 
-    public function tryout_status($id){
+    public function user_score(){
+        return $this->user_tryout->where('user_id', Auth::id())->first()->score;
+    }
+
+    public function tryout_status(){
         $time_now = now();
-        $user_check = Tryout::find($id)->user_tryout()
+        $user_check = $this->user_tryout()
                                     ->where('user_id', Auth::user()->id)
                                     ->first();
         if($this->time_start > $time_now){

@@ -23,7 +23,7 @@
     <div class="row">
         @foreach ($tryout as $t)
         @php
-        $stat = $t->tryout_css( $t->tryout_status($t->id) )
+        $stat = $t->tryout_css( $t->tryout_status() )
         @endphp
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card {{$stat->border_pinggir}} shadow h-100 py-2">
@@ -32,11 +32,11 @@
                         <div class="col mr-2">
                             <div class="h5 mb-1 font-weight-bold text-gray-800 mb-3">{{$t->name}}</div>
                             <div class="text-xs font-weight-bold {{$stat->teks}} text-uppercase mb-1">{{$t->time_start->translatedFormat('d M Y')}}<br>{{$t->time_start->translatedFormat('H:i')}} - {{$t->time_end->translatedFormat('H:i')}}</div>
-                            <span class="badge badge-pill {{$stat->badge}} mb-2">Status: {{$t->tryout_status($t->id)}}</span>
-                            @if($t->tryout_status($t->id) == "Telah Diselesaikan")
-                            <span class="badge badge-pill {{$stat->badge}} mb-2">Skor: {{$t->user_tryout->where('user_id', Auth::id())->first()->score?? 0}}/100</span>
+                            <span class="badge badge-pill {{$stat->badge}} mb-2">Status: {{$t->tryout_status()}}</span>
+                            @if($t->tryout_status() == "Telah Diselesaikan")
+                            <span class="badge badge-pill {{$stat->badge}} mb-2">Skor: {{$t->user_score() ?? 0}}/100</span>
                             @endif
-                            @if($t->tryout_status($t->id) == "Sedang Berlangsung")
+                            @if($t->tryout_status() == "Sedang Berlangsung")
                             <a class="btn btn-sm {{$stat->btn}} btn-block" href="{{route('tryout.soal', ['id_tryout' => $t->id, 'no_soal' => 1])}}">Kerjakan</a>
                             @endif
                         </div>

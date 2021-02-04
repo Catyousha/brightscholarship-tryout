@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Tryout;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class TryoutController extends Controller
 {
@@ -48,9 +50,12 @@ class TryoutController extends Controller
     public function show($id_tryout, $no_soal)
     {
         $tryout         = Tryout::findOrFail($id_tryout);
+        //selain sedang berlangsung, tolak.
+        Gate::authorize('view', $tryout);
+
         $soal           = $tryout->question()->where('question_num', $no_soal)->firstOrFail();
         $soal->terakhir = ($tryout->question()->where('question_num', $no_soal+1)->first() == null);
-        
+
         return view('tryout.soal', compact('tryout', 'soal'));
     }
 
