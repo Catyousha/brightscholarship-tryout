@@ -16,7 +16,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $tryout = Tryout::all();
+        $tryout = Tryout::latest()->get();
         return view('home', compact('tryout'));
     }
 }

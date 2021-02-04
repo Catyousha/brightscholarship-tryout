@@ -24,7 +24,7 @@ class TryoutFactory extends Factory
         return [
             'name' => "Tryout Test",
             'time_start' => $this->faker->dateTimeBetween('-1 days'),
-            'time_end' => $this->faker->dateTimeBetween('now')
+            'time_end' => $this->faker->dateTimeBetween('-1 days', '1 days')
         ];
     }
 }
