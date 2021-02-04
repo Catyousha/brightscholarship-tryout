@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tryout;
+use App\Models\Choice;
+use App\Models\Question;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 
-class TryoutController extends Controller
+class QuestionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,21 +15,7 @@ class TryoutController extends Controller
      */
     public function index()
     {
-        $tryout = Tryout::latest()->paginate(5);
-        return view('tryout.list', compact('tryout'));
-    }
-
-
-    public function solve($id_tryout, $no_soal)
-    {
-        $tryout         = Tryout::findOrFail($id_tryout);
-        //selain sedang berlangsung, tolak.
-        Gate::authorize('view', $tryout);
-
-        $soal           = $tryout->question()->where('question_num', $no_soal)->firstOrFail();
-        $soal->terakhir = ($tryout->question()->where('question_num', $no_soal+1)->first() == null);
-
-        return view('tryout.soal', compact('tryout', 'soal'));
+        //
     }
 
     /**
@@ -41,7 +25,7 @@ class TryoutController extends Controller
      */
     public function create()
     {
-
+        //
     }
 
     /**
@@ -52,7 +36,7 @@ class TryoutController extends Controller
      */
     public function store(Request $request)
     {
-
+        //
     }
 
     /**
@@ -74,8 +58,8 @@ class TryoutController extends Controller
      */
     public function edit($id)
     {
-        $tryout = Tryout::findOrFail($id);
-        return view('tryout.edit_tryout', compact('tryout'));
+        $soal = Question::findOrFail($id);
+        return view('question.edit', compact('soal'));
     }
 
     /**
@@ -87,18 +71,30 @@ class TryoutController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $tryout = Tryout::findOrFail($id);
-        $update_tryout = $tryout->update([
-            'name' => $request->f_name,
-            'time_start' => $request->f_time_start,
-            'time_end' => $request->f_time_end
+        $soal = Question::findOrFail($id);
+        $update_soal = $soal->update([
+            'question_text' => $request->f_question_text
         ]);
 
-        if($update_tryout){
-            return redirect()->route('tryout.edit', $id)->with(['success' => 'Tryout Berhasil Diedit!']);
-        } else{
-            return redirect()->route('tryout.edit', $id)->with(['error' => 'Terjadi kesalahan, coba beberapa saat lagi...']);
+        if(!$update_soal){
+            return redirect()->route('soal.edit', $id)->with(['error' => 'Terjadi kesalahan, coba beberapa saat lagi...']);
         }
+
+        $i = 0;
+        foreach ($request->f_choice_id as $cid) {
+            $choice = Choice::find($cid);
+            $upd_choice = $choice->update([
+                'choice_text' => $request->f_choice_text[$i],
+                'correct' => ($request->f_correct == $choice->choice_symbol) ? 1 : 0
+            ]);
+            $i++;
+            if(!$upd_choice){
+                return redirect()->route('soal.edit', $id)->with(['error' => 'Terjadi kesalahan, coba beberapa saat lagi...']);
+            }
+        }
+
+        return redirect()->route('soal.edit', $id)->with(['success' => 'Soal berhasil diubah!']);
+
     }
 
     /**

@@ -43,6 +43,39 @@
             </div>
         </div>
 
+        <div class="col-lg-12 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Daftar Soal</h6>
+                    <!--<h6 class="m-0 font-weight-bold">Sisa Waktu: 00:30:00</h6>-->
+                </div>
+                <div class="card-body table-responsive ">
+                    <table class="table">
+                            <tr>
+                                <th class="align-middle">No Soal</th>
+                                <th class="align-middle">Teks Soal</th>
+                                <th class="align-middle">Opsi</th>
+
+                            </tr>
+                            @forelse ($tryout->question as $q)
+                                <tr>
+                                    <td class="align-middle">{{$q->question_num}}</td>
+                                    <td class="align-middle">{{\Illuminate\Support\Str::limit($q->question_text, 50, $end='...')}}</td>
+                                    <td class="align-middle">
+                                        <a href="{{route('soal.edit', $q->id)}}" class="btn btn-primary btn-sm">Edit</a>
+                                        <a href="{{route('soal.destroy', $q->id)}}" class="btn btn-danger btn-sm">Hapus</a>
+                                    </td>
+                                </tr>
+                            @empty
+                            <tr>
+                                <td colspan="3" align="center"><span class="text-muted">Data tidak ditemukan</span></td>
+                            </tr>
+                            @endforelse
+
+                    </table>
+                </div>
+            </div>
+        </div>
     <!-- End of Main Content -->
 @endsection
 

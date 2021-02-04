@@ -22,6 +22,9 @@ Route::middleware('auth')->group(function(){
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/profile', 'ProfileController@index')->name('profile');
     Route::resource('/tryout', 'TryoutController');
+    Route::resource('/soal', 'QuestionController');
+
+
     Route::get('/tryout/{id_tryout}/{no_soal}', [TryoutController::class, 'solve'])->name('tryout.soal');
     Route::post('/answer/submit', [AnswerController::class, 'submit_answer'])->name('answer.submit');
 
