@@ -10,6 +10,9 @@
     <!-- Main Content goes here -->
         <div class="col-lg-12 mb-4">
             <div class="card shadow mb-4">
+                <div class="p-3">
+                    <a href="{{route('tryout.index')}}" class="btn btn-primary btn-sm">	&#8592; Kembali Ke Daftar Tryout</a>
+                </div>
                 <div class="card-header py-3 d-flex justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Edit Tryout</h6>
                     <!--<h6 class="m-0 font-weight-bold">Sisa Waktu: 00:30:00</h6>-->
@@ -35,7 +38,14 @@
                                 <td><input class="form-control form-control-sm" type="datetime-local" name="f_time_end" value="{{date('Y-m-d\TH:i:s', strtotime($tryout->time_end))}}"></td>
                             </tr>
                             <tr>
-                                <td colspan="3"><button type="submit" class="btn btn-primary btn-block">Simpan</button</td>
+                                <td colspan="3"><button type="submit" class="btn btn-primary btn-block"><i class="fa fa-save fa-fw"></i> Simpan</button</td>
+                            </tr>
+                        </form>
+                        <form action="{{route('tryout.destroy', $tryout->id)}}" method="post">
+                            @method('delete')
+                            @csrf
+                            <tr>
+                                <td colspan="3"><button type="submit" class="btn btn-danger btn-block"><i class="fa fa-trash fa-fw"></i> Hapus</button</td>
                             </tr>
                         </form>
                     </table>
@@ -62,8 +72,8 @@
                                     <td class="align-middle">{{$q->question_num}}</td>
                                     <td class="align-middle">{{\Illuminate\Support\Str::limit($q->question_text, 50, $end='...')}}</td>
                                     <td class="align-middle">
-                                        <a href="{{route('soal.edit', $q->id)}}" class="btn btn-primary btn-sm">Edit</a>
-                                        <a href="{{route('soal.destroy', $q->id)}}" class="btn btn-danger btn-sm">Hapus</a>
+                                        <a href="{{route('soal.edit', $q->id)}}" class="btn btn-primary btn-sm"><i class="fa fa-edit fa-fw"></i> Edit</a>
+                                        <a href="{{route('soal.destroy', $q->id)}}" class="btn btn-danger btn-sm"><i class="fa fa-trash fa-fw"></i> Hapus</a>
                                     </td>
                                 </tr>
                             @empty

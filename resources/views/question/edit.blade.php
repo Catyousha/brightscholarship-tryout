@@ -10,6 +10,9 @@
     <!-- Main Content goes here -->
         <div class="col-lg-12 mb-4">
             <div class="card shadow mb-4">
+                <div class="p-3">
+                    <a href="{{route('tryout.edit', $soal->tryout->id)}}" class="btn btn-primary btn-sm">	&#8592; Kembali Ke Tryout</a>
+                </div>
                 <div class="card-header py-3 d-flex justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Edit Soal No. {{$soal->question_num}}</h6>
                 </div>
@@ -45,7 +48,7 @@
                             @endforeach
 
                             <tr>
-                                <td colspan="3"><button type="submit" class="btn btn-primary btn-block">Simpan</button</td>
+                                <td colspan="3"><button type="submit" class="btn btn-primary btn-block"><i class="fa fa-save fa-fw"></i> Simpan</button</td>
                             </tr>
                         </form>
                     </table>

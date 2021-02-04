@@ -42,7 +42,7 @@
                     <!--<h6 class="m-0 font-weight-bold">Sisa Waktu: 00:30:00</h6>-->
                 </div>
                 <div class="card-body">
-                    <p>{{$soal->question_text}}</p>
+                    <p>{!! $soal->question_text !!}</p>
                     <div class="mt-4 d-flex flex-column">
                         @foreach ($soal->choice as $c)
                         <div class="form-check mb-2">
