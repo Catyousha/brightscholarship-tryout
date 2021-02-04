@@ -17,7 +17,21 @@ class TryoutController extends Controller
      */
     public function index()
     {
+        $tryout = Tryout::latest()->paginate(5);
+        return view('tryout.list', compact('tryout'));
+    }
 
+
+    public function solve($id_tryout, $no_soal)
+    {
+        $tryout         = Tryout::findOrFail($id_tryout);
+        //selain sedang berlangsung, tolak.
+        Gate::authorize('view', $tryout);
+
+        $soal           = $tryout->question()->where('question_num', $no_soal)->firstOrFail();
+        $soal->terakhir = ($tryout->question()->where('question_num', $no_soal+1)->first() == null);
+
+        return view('tryout.soal', compact('tryout', 'soal'));
     }
 
     /**
@@ -47,16 +61,9 @@ class TryoutController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id_tryout, $no_soal)
+    public function show($id)
     {
-        $tryout         = Tryout::findOrFail($id_tryout);
-        //selain sedang berlangsung, tolak.
-        Gate::authorize('view', $tryout);
-
-        $soal           = $tryout->question()->where('question_num', $no_soal)->firstOrFail();
-        $soal->terakhir = ($tryout->question()->where('question_num', $no_soal+1)->first() == null);
-
-        return view('tryout.soal', compact('tryout', 'soal'));
+        //
     }
 
     /**
@@ -67,7 +74,8 @@ class TryoutController extends Controller
      */
     public function edit($id)
     {
-        //
+        $tryout = Tryout::findOrFail($id);
+        return view('tryout.edit_tryout', compact('tryout'));
     }
 
     /**
@@ -79,7 +87,16 @@ class TryoutController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $tryout = Tryout::findOrFail($id);
+        $update_tryout = $tryout->update([
+            'name' => $request->f_name,
+            'time_start' => $request->f_time_start,
+            'time_end' => $request->f_time_end
+        ]);
+
+        if($update_tryout){
+            return redirect()->route('tryout.edit', $id)->with(['success' => 'Tryout Berhasil Diedit!']);
+        }
     }
 
     /**

@@ -21,7 +21,8 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function(){
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/profile', 'ProfileController@index')->name('profile');
-    Route::get('/tryout/{id_tryout}/{no_soal}', [TryoutController::class, 'show'])->name('tryout.soal');
+    Route::resource('/tryout', 'TryoutController');
+    Route::get('/tryout/{id_tryout}/{no_soal}', [TryoutController::class, 'solve'])->name('tryout.soal');
     Route::post('/answer/submit', [AnswerController::class, 'submit_answer'])->name('answer.submit');
 
     //AJAX

@@ -66,6 +66,20 @@
         </li>
 
         <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            {{ __('Menu Admin') }}
+        </div>
+        <li class="nav-item @if(Request::segment(1) == 'tryout') active @endif">
+            <a class="nav-link" href="{{ route('tryout.index') }}">
+                <i class="fas fa-fw fa-user"></i>
+                <span>{{ __('Daftar Tryout') }}</span>
+            </a>
+        </li>
+
+        <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 
         <!-- Sidebar Toggler (Sidebar) -->
