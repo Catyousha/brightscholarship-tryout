@@ -15,10 +15,10 @@ class Question extends Model
     ];
 
     public function tryout(){
-        $this->belongsTo(Tryout::class);
+        return $this->belongsTo(Tryout::class);
     }
 
     public function choice(){
-        $this->hasMany(Choice::class);
+        return $this->hasMany(Choice::class);
     }
 }
