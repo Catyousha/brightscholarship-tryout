@@ -1,4 +1,5 @@
 @extends('layouts.main')
+@section('title', "Profil")
 
 @section('main-content')
     <!-- Page Heading -->

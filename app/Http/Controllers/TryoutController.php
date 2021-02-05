@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tryout;
+use App\Models\User;
 use App\Models\UserAnswer;
 use App\Models\UserTryout;
 use Illuminate\Http\Request;
@@ -36,8 +37,16 @@ class TryoutController extends Controller
         return view('tryout.soal', compact('tryout', 'soal'));
     }
 
-    public function peserta_list($id_tryout){
-        
+    public function peserta_list($id){
+        $tryout         = Tryout::findOrFail($id);
+        $peserta_tryout = UserTryout::where('tryout_id', $id)->orderByDesc('score')->get();
+        return view('tryout.list_peserta', compact('peserta_tryout', 'tryout'));
+    }
+
+    public function lembar_jawaban($tryout_id, $user_id){
+        $usertryout      = UserTryout::where('tryout_id', $tryout_id)->where('user_id', $user_id)->firstOrFail();
+        $jawaban_peserta = UserAnswer::where('tryout_id', $tryout_id)->where('user_id', $user_id)->get();
+        return view('tryout.lembar_jawaban', compact('usertryout', 'jawaban_peserta'));
     }
 
     /**

@@ -1,5 +1,5 @@
 @extends('layouts.main')
-
+@section('title', "Edit Tryout")
 @push('css')
 @endpush
 
@@ -18,6 +18,7 @@
                     <!--<h6 class="m-0 font-weight-bold">Sisa Waktu: 00:30:00</h6>-->
                 </div>
                 <div class="card-body table-responsive ">
+
                     <table class="table">
                         <form action="{{route('tryout.update', $tryout->id)}}" method="post">
                             @method('put')
@@ -52,10 +53,18 @@
         <div class="col-lg-12 mb-4">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex justify-content-between">
+                    <a class="btn btn-block btn-success m-0 font-weight-bold" href="{{route('tryout.peserta', $tryout->id)}}"><i class="fa fa-user fa-fw"></i> Daftar Peserta Tryout</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Daftar Soal</h6>
-                    <!--<h6 class="m-0 font-weight-bold">Sisa Waktu: 00:30:00</h6>-->
                 </div>
                 <div class="card-body table-responsive ">
+                    <a href="#tambah-soal" class="btn btn-primary btn-sm mx-3"><i class="fa fa-plus fa-fw"></i> Tambahkan Soal</a>
                     <table class="table">
                             <tr>
                                 <th class="align-middle">No Soal</th>
@@ -83,7 +92,7 @@
             </div>
         </div>
 
-        <div class="col-lg-12 mb-4">
+        <div class="col-lg-12 mb-4" id="tambah-soal">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Tambah Soal Nomor {{$tryout->question->count()+1}}</h6>

@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', "Daftar Tryout")
+@section('title', "Daftar Peserta Tryout")
 @push('css')
 @endpush
 
@@ -10,27 +10,27 @@
     <!-- Main Content goes here -->
         <div class="col-lg-12 mb-4">
             <div class="card shadow mb-4">
+                <div class="p-3">
+                    <a href="{{route('tryout.edit', $tryout->id)}}" class="btn btn-primary btn-sm">	&#8592; Kembali Ke Tryout</a>
+                </div>
                 <div class="card-header py-3 d-flex justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Daftar Tryout</h6>
-                    <!--<h6 class="m-0 font-weight-bold">Sisa Waktu: 00:30:00</h6>-->
+                    <h6 class="m-0 font-weight-bold text-primary">Daftar Peserta Tryout: {{$tryout->name}}</h6>
                 </div>
                 <div class="card-body table-responsive">
                     <table class="table">
                         <thead>
-                            <th>Judul Tryout</th>
-                            <th>Waktu Dimulai</th>
-                            <th>Waktu Berakhir</th>
-                            <th>Jumlah Peserta Mengerjakan</th>
+                            <th>Nama Peserta</th>
+                            <th>Skor</th>
                             <th>Opsi</th>
                         </thead>
                         <tbody>
-                            @forelse ($tryout as $t)
+                            @forelse ($peserta_tryout as $pt)
                             <tr>
-                                <td>{{$t->name}}</td>
-                                <td>{{$t->time_start->translatedFormat('d M Y H:i')}}</td>
-                                <td>{{$t->time_end->translatedFormat('d M Y H:i')}}</td>
-                                <td>{{$t->user_tryout->count()}}</td>
-                                <td><a href="{{route('tryout.edit', $t->id )}}" class="btn btn-primary btn-sm">Detail</a></td>
+                                <td>{{$pt->user->name}}</td>
+                                <td>{{$pt->score}}</td>
+                                <td>
+                                    <a href="{{route('tryout.lembar', ['id_peserta' => $pt->user->id, 'id_tryout' => $tryout->id])}}" class="btn btn-primary btn-sm"><i class="fa fa-paste fa-fw"></i> Lembar Jawaban</a>
+                                </td>
                             </tr>
                             @empty
                             <tr>
@@ -39,9 +39,7 @@
                             @endforelse
                         </tbody>
                     </table>
-                    <div class="d-flex justify-content-center">
-                        {{ $tryout->links() }}
-                    </div>
+
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
 @extends('layouts.main')
-
+@section('title', "Edit Soal")
 @push('css')
 @endpush
 

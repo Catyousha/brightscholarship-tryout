@@ -1,6 +1,6 @@
 @extends('layouts.auth')
 
-@section('title', "Konfirmasi kata sandi")
+@section('title', "Konfirmasi Kata Sandi")
 
 @push('stylesheets')
 @endpush

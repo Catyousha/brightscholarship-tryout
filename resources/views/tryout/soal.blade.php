@@ -1,5 +1,5 @@
 @extends('layouts.main')
-
+@section('title', "Soal No.$soal->question_num")
 @push('css')
 <style>
     ul {list-style-type: none;}
