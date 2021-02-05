@@ -36,6 +36,10 @@ class TryoutController extends Controller
         return view('tryout.soal', compact('tryout', 'soal'));
     }
 
+    public function peserta_list($id_tryout){
+        
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -118,7 +122,7 @@ class TryoutController extends Controller
         }
         UserAnswer::where('tryout_id', $id)->delete();
         UserTryout::where('tryout_id', $id)->delete();
-        
+
         $tryout->delete();
 
         return redirect()->route('tryout.index')->with(['success' => 'Tryout Berhasil Dihapus!']);

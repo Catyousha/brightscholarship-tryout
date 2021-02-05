@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function(){
 
 
     Route::get('/tryout/{id_tryout}/{no_soal}', [TryoutController::class, 'solve'])->name('tryout.soal');
+    Route::get('/tryout/{id_tryout}/peserta-list', [TryoutController::class, 'peserta_list'])->name('tryout.peserta');
     Route::post('/answer/submit', [AnswerController::class, 'submit_answer'])->name('answer.submit');
 
     //AJAX

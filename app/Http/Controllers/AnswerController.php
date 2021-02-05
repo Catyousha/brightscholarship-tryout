@@ -26,7 +26,7 @@ class AnswerController extends Controller
         $jml_soal = Tryout::find($tryout_id)->question->count();
         $score = 0;
         foreach ($request->session()->get("$tryout_id") as $q_id => $c_id) {
-            $choice = Choice::find($c_id)->correct;
+            $choice = Choice::find($c_id);
             $submitted_answer = UserAnswer::updateOrCreate([
                 'user_id' => Auth::user()->id,
                 'tryout_id' => $tryout_id,
@@ -37,8 +37,11 @@ class AnswerController extends Controller
                 return redirect()->route('tryout.soal', ['id_tryout'=>$tryout_id, 'no_soal' => 1])->with(['error' => 'Jawaban Gagal Disimpan, Coba Beberapa Saat Lagi!']);
             }
 
-            if($choice){
-                $score+=1;
+            if($choice != null){
+                if($choice->correct){
+                    $score+=1;
+                }
+
             }
         }
         $skorAkhir = ($score/$jml_soal) * 100;
