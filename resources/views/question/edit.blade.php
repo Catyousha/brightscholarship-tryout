@@ -18,7 +18,7 @@
                 </div>
                 <div class="card-body table-responsive ">
                     <table class="table">
-                        <form action="{{route('soal.update', $soal->id)}}" method="post">
+                        <form action="{{route('soal.update', $soal->id)}}" method="post" autocomplete="off">
                             @method('put')
                             @csrf
                             <tr>

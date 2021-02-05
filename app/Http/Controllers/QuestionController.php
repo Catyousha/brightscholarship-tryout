@@ -36,7 +36,36 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'f_question_text'     => 'required',
+            'f_correct'           => 'required',
+         ]);
+
+         $soal = new Question();
+         $soal->tryout_id     = $request->f_tryout_id;
+         $soal->question_text = $request->f_question_text;
+         $soal->question_num  = $request->f_question_num;
+         if(!$soal->save()){
+            return redirect()->route('tryout.edit', $request->f_tryout_id)->with(['error' => 'Terjadi kesalahan, coba beberapa saat lagi...']);
+         }
+
+         $i = 0;
+         foreach ($request->f_choice_symbol as $c) {
+            $choice = Choice::create([
+                'question_id' => $soal->id,
+                'choice_text' => $request->f_choice_text[$i],
+                'choice_symbol' => $c,
+                'correct' => ($request->f_correct == $c) ? 1 : 0,
+            ]);
+            if(!$choice){
+                return redirect()->route('tryout.edit', $request->f_tryout_id)->with(['error' => 'Terjadi kesalahan, coba beberapa saat lagi...']);
+            }
+
+            $i++;
+         }
+
+         return redirect()->route('tryout.edit', $request->f_tryout_id)->with(['success' => 'Soal berhasil ditambahkan!']);
+
     }
 
     /**

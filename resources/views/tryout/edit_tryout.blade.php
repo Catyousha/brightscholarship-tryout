@@ -82,6 +82,71 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-lg-12 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Tambah Soal Nomor {{$tryout->question->count()+1}}</h6>
+                </div>
+                <div class="card-body table-responsive ">
+
+                    @error('f_correct')
+                        <div class="alert alert-danger mt-2">
+                            Wajib ada satu jawaban yang benar!
+                        </div>
+                    @enderror
+                    @error('f_question_text')
+                        <div class="alert alert-danger mt-2">
+                            Soal dan pilihan jawaban wajib diisi!
+                        </div>
+                    @enderror
+
+                    <table class="table">
+                        <form action="{{route('soal.store')}}" method="post" autocomplete="off">
+                            @csrf
+                            <tr>
+                                <th class="align-middle" colspan="2">Teks Soal</th>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="hidden" name="f_tryout_id" value="{{$tryout->id}}">
+                                    <input type="hidden" name="f_question_num" value="{{$tryout->question->count()+1}}">
+                                    <textarea class="form-control @error('f_question_text') is-invalid @enderror"
+                                     name="f_question_text" rows="5" required>
+                                     {{old('f_question_text')}}
+                                    </textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="align-middle text-primary" colspan="2">
+                                    Pilihan Jawaban
+                                <p class="text-small">Check salah satu jawaban yang benar.</p>
+                                </th>
+                            </tr>
+                            @php
+                                $symbol = ['A', 'B', 'C', 'D', 'E']
+                            @endphp
+                            @for ($i = 0; $i < 5; $i++)
+                            <tr>
+                                <td class="p-0 m-0 align-middle text-center">
+                                    <input class="form-check-input" type="radio" name="f_correct" id="{{ $symbol[$i] }}" @if(old('f_correct') == $symbol[$i] ) checked @endif value="{{$symbol[$i]}}">
+                                    <label class="form-check-label" for="{{$symbol[$i]}}">{{$symbol[$i]}}.</label>
+                                </td>
+                                <td>
+                                    <input type="hidden" name="f_choice_symbol[]" value="{{$symbol[$i]}}">
+                                    <input class="form-control form-control-sm" type="text" name="f_choice_text[]" value="{{old('f_choice_text.'.$i)}}" required>
+                                </td>
+                            </tr>
+                            @endfor
+
+                            <tr>
+                                <td colspan="3"><button type="submit" class="btn btn-primary btn-block"><i class="fa fa-save fa-fw"></i> Tambahkan</button</td>
+                            </tr>
+                        </form>
+                    </table>
+                </div>
+            </div>
+        </div>
     <!-- End of Main Content -->
 
 <!--Modal-->
@@ -181,5 +246,9 @@ crossorigin="anonymous"></script>
         });
     }
     document.getElementById('confirm-delete-soal-btn').addEventListener('click', d_q);
+</script>
+<script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace( 'f_question_text' );
 </script>
 @endpush
