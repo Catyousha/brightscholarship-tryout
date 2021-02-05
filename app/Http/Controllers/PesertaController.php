@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\UserTryout;
 use Illuminate\Http\Request;
+use Symfony\Component\Console\Input\Input;
 
 class PesertaController extends Controller
 {
@@ -13,9 +14,11 @@ class PesertaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $peserta = User::orderBy('name')->paginate(20);
+        $peserta = ($request->query('name')) ?
+                                            User::like('name', $request->query('name'))->orderBy('name')->paginate(20)
+                                           : User::orderBy('name')->paginate(20);
         return view('peserta.list', compact('peserta'));
     }
 

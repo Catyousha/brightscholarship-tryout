@@ -18,9 +18,11 @@ class TryoutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tryout = Tryout::latest()->paginate(5);
+        $tryout = ($request->query('name')) ?
+        Tryout::like('name', $request->query('name'))->orderBy('name')->paginate(10)
+       : Tryout::orderBy('name')->paginate(10);
         return view('tryout.list', compact('tryout'));
     }
 

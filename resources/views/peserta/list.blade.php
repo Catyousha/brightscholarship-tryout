@@ -10,8 +10,24 @@
     <!-- Main Content goes here -->
         <div class="col-lg-12 mb-4">
             <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Daftar Peserta Terdaftar</h6>
+                <div class="card-header py-3">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12">
+                            <h6 class="m-0 font-weight-bold text-primary mb-2">Daftar Peserta Terdaftar</h6>
+                        </div>
+                        <div class="col-lg-6 col-md-12">
+                            <form action="{{route('peserta.index')}}" method="GET" autocomplete="off">
+                                <div class="input-group">
+                                    <input name="name" type="text" class="form-control bg-light border-1 small" placeholder="Cari peserta...">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit">
+                                            <i class="fas fa-search fa-sm"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body table-responsive">
                     <table class="table">

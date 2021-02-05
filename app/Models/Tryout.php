@@ -18,6 +18,10 @@ class Tryout extends Model
 
     public $dates = ['time_start', 'time_end'];
 
+    public  function scopeLike($query, $field, $value){
+        return $query->where($field, 'LIKE', "%$value%");
+    }
+
     public function question(){
         return $this->hasMany(Question::class);
     }
