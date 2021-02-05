@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Choice;
 use App\Models\Question;
+use App\Models\UserAnswer;
+use App\Observers\UserAnswerObserver;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
@@ -112,10 +114,19 @@ class QuestionController extends Controller
         $i = 0;
         foreach ($request->f_choice_id as $cid) {
             $choice = Choice::find($cid);
+
             $upd_choice = $choice->update([
                 'choice_text' => $request->f_choice_text[$i],
                 'correct' => ($request->f_correct == $choice->choice_symbol) ? 1 : 0
             ]);
+
+
+            $userAnswer = UserAnswer::where('choice_id', $cid)->get();
+            $obs = new UserAnswerObserver();
+            foreach ($userAnswer as $u) {
+                $obs->perbaiki_skor($u);
+            }
+
             $i++;
             if(!$upd_choice){
                 return redirect()->route('soal.edit', $id)->with(['error' => 'Terjadi kesalahan, coba beberapa saat lagi...']);
@@ -147,6 +158,13 @@ class QuestionController extends Controller
         ]);
         $soal_next->decrement('question_num');
 
+        $userAnswer = UserAnswer::where('question_id', $id);
+        $obs = new UserAnswerObserver();
+        foreach ($userAnswer->get() as $u) {
+            $obs->perbaiki_skor($u);
+        }
+        $userAnswer->delete();
+        
         return response()->json(['data' => "success"]);
     }
 }

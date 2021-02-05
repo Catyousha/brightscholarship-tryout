@@ -238,6 +238,7 @@ crossorigin="anonymous"></script>
             data:{_token: "{{ csrf_token() }}", _method: 'delete'},
             success:function(data) {
                 location.reload();
+                //window.location.href = window.location.href;
                 //console.log(data.data);
             },
             error: function(err){

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tryout;
+use App\Models\UserAnswer;
+use App\Models\UserTryout;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
@@ -114,8 +116,11 @@ class TryoutController extends Controller
             $q->choice()->delete();
             $q->delete();
         }
-        $tryout->delete();
+        UserAnswer::where('tryout_id', $id)->delete();
+        UserTryout::where('tryout_id', $id)->delete();
         
+        $tryout->delete();
+
         return redirect()->route('tryout.index')->with(['success' => 'Tryout Berhasil Dihapus!']);
     }
 }

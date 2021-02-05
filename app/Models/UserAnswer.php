@@ -14,15 +14,15 @@ class UserAnswer extends Model
     ];
 
     public function question(){
-        return $this->hasOne(Question::class);
+        return $this->hasOne(Question::class, 'id', 'question_id');
     }
 
     public function choice(){
-        return $this->hasOne(Choice::class);
+        return $this->hasOne(Choice::class, 'id', 'choice_id');
     }
 
     public function tryout(){
-        return $this->hasMany(Tryout::class);
+        return $this->hasMany(Tryout::class, 'id', 'tryout_id');
     }
 
     public function checkCorrect(){
