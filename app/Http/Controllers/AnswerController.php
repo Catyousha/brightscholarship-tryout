@@ -9,17 +9,19 @@ use App\Models\UserTryout;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class AnswerController extends Controller
 {
     public function save_answer(Request $request){
-
       $request->session()->put("$request->t_id.$request->q_id", $request->c_id);
       return response()->json(['data' => "Jawaban tersimpan"]);
     }
 
     public function submit_answer(Request $request)
     {
+        Gate::authorize('view', Tryout::find($request->t_id));
+
         $tryout_id = $request->t_id;
         $jml_soal = Tryout::find($tryout_id)->question->count();
         $score = 0;
