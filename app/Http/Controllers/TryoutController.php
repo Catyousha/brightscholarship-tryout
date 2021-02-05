@@ -109,6 +109,13 @@ class TryoutController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $tryout = Tryout::findOrFail($id);
+        foreach($tryout->question as $q){
+            $q->choice()->delete();
+            $q->delete();
+        }
+        $tryout->delete();
+        
+        return redirect()->route('tryout.index')->with(['success' => 'Tryout Berhasil Dihapus!']);
     }
 }

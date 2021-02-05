@@ -41,13 +41,9 @@
                                 <td colspan="3"><button type="submit" class="btn btn-primary btn-block"><i class="fa fa-save fa-fw"></i> Simpan</button</td>
                             </tr>
                         </form>
-                        <form action="{{route('tryout.destroy', $tryout->id)}}" method="post">
-                            @method('delete')
-                            @csrf
                             <tr>
-                                <td colspan="3"><button type="submit" class="btn btn-danger btn-block"><i class="fa fa-trash fa-fw"></i> Hapus</button</td>
+                                <td colspan="3"><button id="delete-tryout-btn" type="submit" class="btn btn-danger btn-block" data-toggle="modal" data-target="#deleteTryoutModal" data-id="{{$tryout->id}}"><i class="fa fa-trash fa-fw"></i> Hapus</button</td>
                             </tr>
-                        </form>
                     </table>
                 </div>
             </div>
@@ -73,7 +69,7 @@
                                     <td class="align-middle">{{\Illuminate\Support\Str::limit($q->question_text, 50, $end='...')}}</td>
                                     <td class="align-middle">
                                         <a href="{{route('soal.edit', $q->id)}}" class="btn btn-primary btn-sm"><i class="fa fa-edit fa-fw"></i> Edit</a>
-                                        <a href="{{route('soal.destroy', $q->id)}}" class="btn btn-danger btn-sm"><i class="fa fa-trash fa-fw"></i> Hapus</a>
+                                        <a class="delete-soal-btn btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteSoalModal" data-id="{{$q->id}}"><i class="fa fa-trash fa-fw"></i> Hapus</a>
                                     </td>
                                 </tr>
                             @empty
@@ -87,6 +83,52 @@
             </div>
         </div>
     <!-- End of Main Content -->
+
+<!--Modal-->
+<div class="modal fade" id="deleteTryoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{ __('Ingin menghapus tryout?') }}</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Perhatian: Tryout beserta soal dan pilihan jawaban yang telah dihapus tidak dapat dikembalikan lagi! Masih ingin menghapus tryout?</div>
+            <div class="modal-footer">
+                <button class="btn btn-link" type="button" data-dismiss="modal">{{ __('Cancel') }}</button>
+                <a class="btn btn-danger" href="#" onclick="event.preventDefault(); document.getElementById('delete-tryout-form').submit();">{{ __('Hapus Tryout') }}</a>
+                <form id="delete-tryout-form" action="{{route('tryout.destroy', $tryout->id)}}" method="post" style="display: none;">
+                    @method('delete')
+                    @csrf
+                    <input type="hidden" name="f_delete_tryout" value="">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="modal fade" id="deleteSoalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{ __('Ingin menghapus soal?') }}</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Perhatian: Soal beserta pilihan jawaban yang telah dihapus tidak dapat dikembalikan lagi! Masih ingin menghapus soal?</div>
+            <div class="modal-footer">
+                <button class="btn btn-link" type="button" data-dismiss="modal">{{ __('Cancel') }}</button>
+                <a id="confirm-delete-soal-btn" class="btn btn-danger" href="#" onclick="event.preventDefault();">{{ __('Hapus Soal') }}</a>
+                <input type="hidden" id="delete_soal_inp" name="f_delete_soal" value="">
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('notif')
@@ -107,4 +149,37 @@
 @endpush
 
 @push('js')
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"
+integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $("#delete-tryout-btn").click(function () {
+        var tryout_id = $(this).attr('data-id');
+        document.getElementsByName('f_delete_tryout').value = tryout_id;
+    });
+
+    $(".delete-soal-btn").click(function () {
+        var soal_id = $(this).attr('data-id');
+        console.log(soal_id);
+        document.getElementById('delete_soal_inp').value = soal_id;
+    });
+
+    function d_q(event){
+        var soal_id = document.getElementById('delete_soal_inp').value;
+        console.log(soal_id);
+        $.ajax({
+            type:'POST',
+            url:'/soal/'+soal_id,
+            data:{_token: "{{ csrf_token() }}", _method: 'delete'},
+            success:function(data) {
+                location.reload();
+                //console.log(data.data);
+            },
+            error: function(err){
+                console.log(err)
+            }
+        });
+    }
+    document.getElementById('confirm-delete-soal-btn').addEventListener('click', d_q);
+</script>
 @endpush

@@ -120,7 +120,6 @@ crossorigin="anonymous">
     const answ = document.getElementsByName('{{"ans_$soal->question_num"}}');
 
     function s_ans(event){
-        console.log(event.target.value)
         $.ajax({
             type:'POST',
             url:'/answer',

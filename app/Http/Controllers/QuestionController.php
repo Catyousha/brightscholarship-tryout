@@ -105,6 +105,19 @@ class QuestionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $soal = Question::findOrFail($id);
+        $no_soal = $soal->question_num;
+        $id_to = $soal->tryout_id;
+
+        $soal->choice()->delete();
+        $soal->delete();
+
+        $soal_next = Question::where([
+            ['question_num', '>', $no_soal],
+            ['tryout_id', '=', $id_to],
+        ]);
+        $soal_next->decrement('question_num');
+
+        return response()->json(['data' => "success"]);
     }
 }
