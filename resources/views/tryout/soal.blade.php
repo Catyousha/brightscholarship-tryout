@@ -46,7 +46,7 @@
                     <div class="mt-4 d-flex flex-column">
                         @foreach ($soal->choice as $c)
                         <div class="form-check mb-2">
-                            <input class="form-check-input mr-3" type="radio" name="ans_{{$soal->question_num}}" id="{{$c->id}}" value="{{$c->id}}" @if(Session::get("$tryout->id.$soal->id") == $c->id) checked @endif>
+                            <input class="await-answer form-check-input mr-3" type="radio" name="ans_{{$soal->question_num}}" id="{{$c->id}}" value="{{$c->id}}" @if(Session::get("$tryout->id.$soal->id") == $c->id) checked @endif>
                             <label class="form-check-label" for="{{$c->id}}">{{$c->choice_symbol}}. {{$c->choice_text}}</label>
                         </div>
                         @endforeach
@@ -54,10 +54,10 @@
 
                     <div class="mt-4 d-flex @if($soal->question_num == 1)justify-content-end @else justify-content-between @endif">
                         @if($soal->question_num != 1)
-                        <a href="{{route('tryout.soal', ['id_tryout' => $tryout->id, 'no_soal' => $soal->question_num-1])}}" class="btn btn-primary">Sebelumnya</a>
+                        <a href="{{route('tryout.soal', ['id_tryout' => $tryout->id, 'no_soal' => $soal->question_num-1])}}" class="await-answer btn btn-primary">Sebelumnya</a>
                         @endif
                         @if(!$soal->terakhir)
-                        <a href="{{route('tryout.soal', ['id_tryout' => $tryout->id, 'no_soal' => $soal->question_num+1])}}" class="btn btn-primary">Selanjutnya</a>
+                        <a href="{{route('tryout.soal', ['id_tryout' => $tryout->id, 'no_soal' => $soal->question_num+1])}}" class="await-answer btn btn-primary">Selanjutnya</a>
                         @endif
                     </div>
                 </div>
@@ -83,7 +83,7 @@
                         @csrf
                         <input type="hidden" name="t_id" value="{{$tryout->id}}"/>
                         <small class="text-danger">Pastikan semua soal sudah dijawab!</small>
-                        <input type="submit" class="btn btn-success" value="Submit Pengerjaan">
+                        <input type="submit" class="await-answer btn btn-success" value="Submit Pengerjaan">
                         </form>
                     </div>
                 </div>
@@ -118,8 +118,12 @@ crossorigin="anonymous">
 </script>
 <script>
     const answ = document.getElementsByName('{{"ans_$soal->question_num"}}');
-
     function s_ans(event){
+        var await_comp = document.getElementsByClassName('await-answer');
+        Array.from(await_comp).forEach((el) => {
+            el.classList.add("disabled");
+            el.disabled = true;
+        });
         $.ajax({
             type:'POST',
             url:'/answer',
@@ -129,6 +133,10 @@ crossorigin="anonymous">
                     c_id: event.target.value
                 },
             success:function(data) {
+                Array.from(await_comp).forEach((el) => {
+                    el.classList.remove("disabled");
+                    el.disabled = false;
+                });
                 console.log("200")
             },
             error: function(err){
