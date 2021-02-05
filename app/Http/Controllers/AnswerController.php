@@ -15,7 +15,6 @@ class AnswerController extends Controller
     public function save_answer(Request $request){
 
       $request->session()->put("$request->t_id.$request->q_id", $request->c_id);
-
       return response()->json(['data' => "Jawaban tersimpan"]);
     }
 
@@ -24,10 +23,11 @@ class AnswerController extends Controller
         $tryout_id = $request->t_id;
         $jml_soal = Tryout::find($tryout_id)->question->count();
         $score = 0;
-        foreach ($request->session()->get($tryout_id) as $q_id => $c_id) {
+        foreach ($request->session()->get("$tryout_id") as $q_id => $c_id) {
             $choice = Choice::find($c_id)->correct;
             $submitted_answer = UserAnswer::updateOrCreate([
                 'user_id' => Auth::user()->id,
+                'tryout_id' => $tryout_id,
                 'question_id' => $q_id,
                 'choice_id' => $c_id
             ]);
