@@ -14,8 +14,8 @@
                     <a href="{{route('tryout.peserta', $usertryout->tryout->id)}}" class="btn btn-primary btn-sm">	&#8592; Kembali Ke Daftar Peserta</a>
                 </div>
                 <div class="card-header py-3 d-flex justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">{{$usertryout->user->name}}</h6>
-                    <h6 class="m-0 font-weight-bold badge-lg badge-success badge-pill p-2">Skor: {{$usertryout->score}}</h6>
+                    <a href="{{route('peserta.show', $usertryout->user->id)}}" class="m-0 font-weight-bold text-primary">{{$usertryout->user->name}}</a>
+                    <a class="m-0 font-weight-bold badge-lg badge-success badge-pill p-2">Skor: {{$usertryout->score}}</a>
                 </div>
             </div>
         </div>

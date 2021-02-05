@@ -43,7 +43,7 @@
                             </tr>
                         </form>
                             <tr>
-                                <td colspan="3"><button id="delete-tryout-btn" type="submit" class="btn btn-danger btn-block" data-toggle="modal" data-target="#deleteTryoutModal" data-id="{{$tryout->id}}"><i class="fa fa-trash fa-fw"></i> Hapus</button</td>
+                                <td colspan="3"><button id="delete-tryout-btn" type="submit" class="btn btn-danger btn-block" data-toggle="modal" data-target="#deleteTryoutModal" data-id="{{$tryout->id}}"><i class="fa fa-trash fa-fw"></i> Hapus</button></td>
                             </tr>
                     </table>
                 </div>

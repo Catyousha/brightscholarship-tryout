@@ -74,8 +74,15 @@
         </div>
         <li class="nav-item @if(Request::segment(1) == 'tryout') active @endif">
             <a class="nav-link" href="{{ route('tryout.index') }}">
-                <i class="fas fa-fw fa-user"></i>
+                <i class="fas fa-fw fa-copy"></i>
                 <span>{{ __('Daftar Tryout') }}</span>
+            </a>
+        </li>
+
+        <li class="nav-item @if(Request::segment(1) == 'peserta') active @endif">
+            <a class="nav-link" href="{{ route('peserta.index') }}">
+                <i class="fas fa-fw fa-user"></i>
+                <span>{{ __('Daftar Peserta') }}</span>
             </a>
         </li>
 

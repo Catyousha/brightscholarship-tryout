@@ -23,10 +23,10 @@ Route::middleware('auth')->group(function(){
     Route::get('/profile', 'ProfileController@index')->name('profile');
     Route::resource('/tryout', 'TryoutController');
     Route::resource('/soal', 'QuestionController');
+    Route::resource('/peserta', 'PesertaController');
 
     Route::get('/tryout/{id}/peserta-list', [TryoutController::class, 'peserta_list'])->name('tryout.peserta');
     Route::get('/tryout/{id_tryout}/{no_soal}', [TryoutController::class, 'solve'])->name('tryout.soal');
-
     Route::get('/lembar/{id_tryout}/{id_peserta}', [TryoutController::class, 'lembar_jawaban'])->name('tryout.lembar');
 
     Route::post('/answer/submit', [AnswerController::class, 'submit_answer'])->name('answer.submit');
