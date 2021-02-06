@@ -3,17 +3,16 @@
 namespace Database\Factories;
 
 use App\Models\Pilihan;
-use App\Models\Tryout;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class TryoutFactory extends Factory
+class PilihanFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Tryout::class;
+    protected $model = Pilihan::class;
 
     /**
      * Define the model's default state.
@@ -23,10 +22,7 @@ class TryoutFactory extends Factory
     public function definition()
     {
         return [
-            'name' => "Tryout Test",
-            'pilihan_id' => Pilihan::Factory(),
-            'time_start' => $this->faker->dateTimeBetween('-1 days'),
-            'time_end' => $this->faker->dateTimeBetween('-1 days', '1 days')
+            'name' => "SAINTEK"
         ];
     }
 }

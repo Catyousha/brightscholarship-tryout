@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Choice;
+use App\Models\Pilihan;
 use App\Models\Question;
 use App\Models\Tryout;
 use Illuminate\Database\Eloquent\Factories\Sequence;
@@ -18,8 +19,12 @@ class TryoutSeeder extends Seeder
      */
     public function run()
     {
-
-        Tryout::factory(10)->has(
+        $pilihan = Pilihan::all();
+        Tryout::factory(10)->state(new Sequence(
+            ['pilihan_id' => $pilihan->get(0)->id],
+            ['pilihan_id' => $pilihan->get(1)->id],
+            ['pilihan_id' => $pilihan->get(2)->id]
+        ))->has(
             Question::factory()->count(5)->state(new Sequence(
                 ['question_num' => 1], ['question_num' => 2],
                 ['question_num' => 3], ['question_num' => 4],

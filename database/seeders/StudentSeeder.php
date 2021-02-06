@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Pilihan;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 
 class StudentSeeder extends Seeder{
@@ -13,7 +15,12 @@ class StudentSeeder extends Seeder{
      * @return void
      */
     public function run(){
-        User::factory(10)->create();
+        $pilihan = Pilihan::all();
+        User::factory(10)->state(new Sequence(
+            ['pilihan_id' => $pilihan->get(0)->id],
+            ['pilihan_id' => $pilihan->get(1)->id],
+            ['pilihan_id' => $pilihan->get(2)->id]
+        ))->create();
 
     }
 }

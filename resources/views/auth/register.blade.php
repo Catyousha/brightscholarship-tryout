@@ -22,7 +22,7 @@
 
 							<form action="{{ route('register') }}" method="post" id="form-register" enctype="multipart/form-data">
 								@csrf
-								
+
 								<div class="form-group">
 									<input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Nama Lengkap" required>
 									@error('name')
@@ -32,6 +32,16 @@
 								<div class="form-group">
 									<input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Alamat Email" required>
 									@error('email')
+									<div class="invalid-feedback">{{ $message }}</div>
+									@enderror
+								</div>
+                                <div class="form-group">
+                                    <select class="custom-select" name="pilihan">
+                                        <option value="1">Saintek</option>
+                                        <option value="2">Soshum</option>
+                                        <option value="3">Campuran</option>
+                                      </select>
+									@error('pilihan')
 									<div class="invalid-feedback">{{ $message }}</div>
 									@enderror
 								</div>

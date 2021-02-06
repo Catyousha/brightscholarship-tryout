@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTryoutTable extends Migration
+class CreatePilihanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateTryoutTable extends Migration
      */
     public function up()
     {
-        Schema::create('tryout', function (Blueprint $table) {
+        Schema::create('pilihan', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('pilihan_id');
-            $table->dateTime('time_start');
-            $table->dateTime('time_end');
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreateTryoutTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tryout');
+        Schema::dropIfExists('pilihan');
     }
 }

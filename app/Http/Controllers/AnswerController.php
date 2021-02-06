@@ -39,9 +39,6 @@ class AnswerController extends Controller
         $score = 0;
         $answer_data = Session::get("tryout_$tryout_id");
 
-        //$answer_data = $_SESSION["$tryout_id"];
-        //dd($answer_data);
-
         foreach ($answer_data as $q_id => $c_id) {
             $choice = Choice::find($c_id);
             $question = Question::find($q_id);

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Tryout;
+use Database\Seeders\PilihanSeeder;
 use Database\Seeders\StudentSeeder;
 use Database\Seeders\TryoutSeeder;
 use Illuminate\Database\Seeder;
@@ -14,6 +15,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([StudentSeeder::class, TryoutSeeder::class]);
+        $this->call([PilihanSeeder::class, StudentSeeder::class, TryoutSeeder::class]);
     }
 }

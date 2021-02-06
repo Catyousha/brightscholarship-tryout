@@ -33,9 +33,9 @@
                         <div class="col mr-2">
                             <div class="h5 mb-1 font-weight-bold text-gray-800 mb-3">{{$t->name}}</div>
                             <div class="text-xs font-weight-bold {{$stat->teks}} mb-1">
-                                {{$t->time_start->translatedFormat('d/m/Y')}} {{$t->time_start->translatedFormat('H:i')}}
+                                {{$t->time_start->translatedFormat('d/m/Y')}} {{$t->time_start->translatedFormat('H:i')}} WIB
                                 <br>s/d<br>
-                                {{$t->time_end->translatedFormat('d/m/Y')}} {{$t->time_end->translatedFormat('H:i')}}
+                                {{$t->time_end->translatedFormat('d/m/Y')}} {{$t->time_end->translatedFormat('H:i')}} WIB
                             </div>
                             <span class="badge badge-pill {{$stat->badge}} mb-2">Status: {{$t->tryout_status()}}</span>
                             @if($t->tryout_status() == "Telah Diselesaikan")
