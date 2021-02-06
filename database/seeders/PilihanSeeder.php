@@ -14,6 +14,7 @@ class PilihanSeeder extends Seeder
      */
     public function run()
     {
+        echo("P");
         Pilihan::create([
             'name' => 'SAINTEK'
         ]);

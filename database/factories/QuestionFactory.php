@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Mapel;
 use App\Models\Question;
+use App\Models\Sesi;
 use App\Models\Tryout;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -24,8 +25,13 @@ class QuestionFactory extends Factory
     public function definition()
     {
         return [
-            'tryout_id' => Tryout::factory(),
-            'mapel_id' => Mapel::factory(),
+            'tryout_id' => function (array $attributes) {
+                return Sesi::find($attributes['sesi_id'])->tryout_id;
+            },
+            'mapel_id' => function (array $attributes) {
+                return Sesi::find($attributes['sesi_id'])->mapel_id;
+            },
+            'sesi_id' => Sesi::factory(),
             'question_text' => $this->faker->text,
             'question_num' => 1
         ];

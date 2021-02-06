@@ -31,6 +31,7 @@
                     <table class="table">
                         <thead>
                             <th>Judul Tryout</th>
+                            <th>Pilihan</th>
                             <th>Waktu Dimulai</th>
                             <th>Waktu Berakhir</th>
                             <th>Jumlah Peserta Mengerjakan</th>
@@ -40,6 +41,7 @@
                             @forelse ($tryout as $t)
                             <tr>
                                 <td>{{$t->name}}</td>
+                                <td>{{$t->pilihan->name}}</td>
                                 <td>{{$t->time_start->translatedFormat('d M Y H:i')}}</td>
                                 <td>{{$t->time_end->translatedFormat('d M Y H:i')}}</td>
                                 <td>{{$t->user_tryout->count()}}</td>

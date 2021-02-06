@@ -20,4 +20,8 @@ class UserTryout extends Model
     public function tryout(){
         return $this->belongsToMany(Tryout::class);
     }
+
+    public function sesi(){
+        return $this->hasOne(Sesi::class);
+    }
 }

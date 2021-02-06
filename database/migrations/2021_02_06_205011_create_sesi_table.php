@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuestionTable extends Migration
+class CreateSesiTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateQuestionTable extends Migration
      */
     public function up()
     {
-        Schema::create('question', function (Blueprint $table) {
+        Schema::create('sesi', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tryout_id');
             $table->foreignId('mapel_id');
-            $table->foreignId('sesi_id');
-            $table->integer('question_num');
-            $table->text('question_text');
+            $table->dateTime('time_start');
+            $table->dateTime('time_end');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateQuestionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('question');
+        Schema::dropIfExists('sesi');
     }
 }

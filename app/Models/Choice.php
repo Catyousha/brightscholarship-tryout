@@ -23,6 +23,6 @@ class Choice extends Model
     }
 
     public function user_answer(){
-        return $this->belongsTo(UserAnswer::class, 'id');
+        return $this->belongsToMany(UserAnswer::class);
     }
 }

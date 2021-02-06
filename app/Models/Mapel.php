@@ -17,4 +17,8 @@ class Mapel extends Model
     public function question(){
         return $this->belongsToMany(Question::class);
     }
+
+    public function sesi(){
+        return $this->hasMany(Sesi::class);
+    }
 }

@@ -22,6 +22,10 @@ class Question extends Model
         return $this->hasOne(Mapel::class);
     }
 
+    public function sesi(){
+        return $this->belongsTo(Sesi::class);
+    }
+
     public function choice(){
         return $this->hasMany(Choice::class);
     }

@@ -23,7 +23,7 @@ class Tryout extends Model
     }
 
     public function pilihan(){
-        return $this->hasOne(Pilihan::class, 'id', 'pilihan_id');
+        return $this->belongsTo(Pilihan::class);
     }
 
     public function question(){
@@ -32,6 +32,10 @@ class Tryout extends Model
 
     public function user_tryout(){
         return $this->hasMany(UserTryout::class);
+    }
+
+    public function sesi(){
+        return $this->hasMany(Sesi::class);
     }
 
     public function user_score(){
