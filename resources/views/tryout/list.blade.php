@@ -59,6 +59,54 @@
             </div>
         </div>
 
+        <div class="col-lg-12 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary mb-2">Tambah Tryout</h6>
+                </div>
+                <div class="card-body table-responsive">
+                    @error('f_time_end')
+                    <div class="alert alert-danger mt-2">
+                        Waktu berakhirnya tryout haruslah setelah waktu tryout dimulai!
+                    </div>
+                    @enderror
+                    <table class="table">
+                        <form action="{{route('tryout.store')}}" method="post" autocomplete="off">
+                            @csrf
+                            <tr>
+                                <th class="align-middle">Judul Tryout</th>
+                                <td class="align-middle">:</td>
+                                <td><input class="form-control form-control-sm" type="text" name="f_name" value="{{old('f_name')}}" required></td>
+                            </tr>
+                            <tr>
+                                <th class="align-middle">Pilihan</th>
+                                <td class="align-middle">:</td>
+                                <td>
+                                    <select class="custom-select" name="f_pilihan" required>
+                                        @foreach (\App\Models\Pilihan::all() as $p)
+                                        <option value="{{$p->id}}" @if(old('f_pilihan') == $p->id) selected @endif>{{$p->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="align-middle">Waktu Dimulai</th>
+                                <td class="align-middle">:</td>
+                                <td><input class="form-control form-control-sm" type="datetime-local" name="f_time_start" value="{{old('f_time_start')}}" required></td>
+                            </tr>
+                            <tr>
+                                <th class="align-middle">Waktu Berakhir</th>
+                                <td class="align-middle">:</td>
+                                <td><input class="form-control form-control-sm" type="datetime-local" name="f_time_end" value="{{old('f_time_end')}}" required></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><button type="submit" class="btn btn-primary btn-block"><i class="fa fa-save fa-fw"></i> Simpan</button</td>
+                            </tr>
+                        </form>
+                    </table>
+                </div>
+            </div>
+        </div>
     <!-- End of Main Content -->
 @endsection
 

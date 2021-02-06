@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Choice;
+use App\Models\Mapel;
 use App\Models\Pilihan;
 use App\Models\Question;
 use App\Models\Tryout;
@@ -20,15 +21,16 @@ class TryoutSeeder extends Seeder
     public function run()
     {
         $pilihan = Pilihan::all();
+        $mapel = Mapel::all();
         Tryout::factory(10)->state(new Sequence(
             ['pilihan_id' => $pilihan->get(0)->id],
             ['pilihan_id' => $pilihan->get(1)->id],
             ['pilihan_id' => $pilihan->get(2)->id]
         ))->has(
             Question::factory()->count(5)->state(new Sequence(
-                ['question_num' => 1], ['question_num' => 2],
-                ['question_num' => 3], ['question_num' => 4],
-                ['question_num' => 5]
+                ['question_num' => 1, 'mapel_id' => $mapel->get(0)->id], ['question_num' => 2, 'mapel_id' => $mapel->get(1)->id],
+                ['question_num' => 3, 'mapel_id' => $mapel->get(2)->id], ['question_num' => 4, 'mapel_id' => $mapel->get(3)->id],
+                ['question_num' => 5, 'mapel_id' => $mapel->get(4)->id]
             ))->has(
                 Choice::factory()->count(5)->state( new Sequence(
                     ['choice_symbol' => 'A'], ['choice_symbol' => 'B'],

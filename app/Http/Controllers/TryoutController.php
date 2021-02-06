@@ -69,7 +69,24 @@ class TryoutController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'f_name'               => 'required',
+            'f_pilihan'            => 'required',
+            'f_time_start'         => 'required',
+            'f_time_end'           => 'required|after:f_time_start',
+         ]);
 
+         $tryout             = new Tryout();
+         $tryout->name       = $request->f_name;
+         $tryout->pilihan_id = $request->f_pilihan;
+         $tryout->time_start = $request->f_time_start;
+         $tryout->time_end   = $request->f_time_end;
+
+         if($tryout->save()){
+            return redirect()->route('tryout.edit', $tryout->id)->with(['success' => 'Tryout berhasil ditambahkan!']);
+         }else{
+            return redirect()->route('tryout.list')->with(['error' => 'Terjadi kesalahan, coba beberapa saat lagi...']);
+         }
     }
 
     /**
@@ -112,7 +129,7 @@ class TryoutController extends Controller
             'time_start' => $request->f_time_start,
             'time_end' => $request->f_time_end
         ]);
-        
+
         if($update_tryout){
             return redirect()->route('tryout.edit', $id)->with(['success' => 'Tryout Berhasil Diedit!']);
         } else{

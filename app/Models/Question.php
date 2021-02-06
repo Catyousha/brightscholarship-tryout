@@ -18,6 +18,10 @@ class Question extends Model
         return $this->belongsTo(Tryout::class);
     }
 
+    public function mapel(){
+        return $this->hasOne(Mapel::class);
+    }
+
     public function choice(){
         return $this->hasMany(Choice::class);
     }

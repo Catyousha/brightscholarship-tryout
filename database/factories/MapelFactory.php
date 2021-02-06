@@ -3,18 +3,16 @@
 namespace Database\Factories;
 
 use App\Models\Mapel;
-use App\Models\Question;
-use App\Models\Tryout;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class QuestionFactory extends Factory
+class MapelFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Question::class;
+    protected $model = Mapel::class;
 
     /**
      * Define the model's default state.
@@ -24,10 +22,7 @@ class QuestionFactory extends Factory
     public function definition()
     {
         return [
-            'tryout_id' => Tryout::factory(),
-            'mapel_id' => Mapel::factory(),
-            'question_text' => $this->faker->text,
-            'question_num' => 1
+            'name' => "Kimia"
         ];
     }
 }
