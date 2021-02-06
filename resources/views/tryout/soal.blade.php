@@ -30,13 +30,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
 <script>
     var eventTime= {{$tryout->time_end->getTimestamp()}};
-    var currentTime = {{now()->getTimestamp()}};
+    var currentTime = {{\Carbon\Carbon::now()->getTimestamp()}};
     var diffTime = eventTime - currentTime;
     var duration = moment.duration(diffTime*1000, 'milliseconds');
     var interval = 1000;
 
-    setInterval(function(){
+    var i = setInterval(function(){
       duration = moment.duration(duration - interval, 'milliseconds');
+      if(duration < 0){
+        alert("Waktu Pengerjaan Telah Habis!");
+        document.getElementById('submit-jawaban').submit();
+        clearInterval(i);
+      }
+
         $('#countdown').text(duration.hours() + " jam " + duration.minutes() + " menit " + duration.seconds() + " detik ")
         //$('#coundown').text(moment(duration).format("HH:mm", { trim: false }))
     }, interval);
