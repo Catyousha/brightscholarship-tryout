@@ -22,6 +22,10 @@ class Tryout extends Model
         return $query->where($field, 'LIKE', "%$value%");
     }
 
+    public function pilihan(){
+        return $this->hasOne(Pilihan::class, 'id', 'pilihan_id');
+    }
+    
     public function question(){
         return $this->hasMany(Question::class);
     }

@@ -42,12 +42,16 @@ class User extends Authenticatable
         return $query->where($field, 'LIKE', "%$value%");
     }
 
+    public function pilihan(){
+        return $this->hasOne(Pilihan::class, 'id', 'pilihan_id');
+    }
+
     public function user_answer(){
-        return $this->hasMany(UserAnswer::class);
+        return $this->hasMany(UserAnswer::class, 'id');
     }
 
     public function user_tryout(){
-        return $this->hasMany(UserTryout::class);
+        return $this->hasMany(UserTryout::class, 'id');
     }
 
     public function getFullNameAttribute()

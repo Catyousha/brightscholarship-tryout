@@ -37,9 +37,9 @@
 								</div>
                                 <div class="form-group">
                                     <select class="custom-select" name="pilihan">
-                                        <option value="1">Saintek</option>
-                                        <option value="2">Soshum</option>
-                                        <option value="3">Campuran</option>
+                                        @foreach (\App\Models\Pilihan::all() as $p)
+                                        <option value="{{$p->id}}" @if(old('pilihan') == $p->id) selected @endif>{{$p->name}}</option>
+                                        @endforeach
                                       </select>
 									@error('pilihan')
 									<div class="invalid-feedback">{{ $message }}</div>
