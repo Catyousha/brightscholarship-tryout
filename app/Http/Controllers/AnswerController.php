@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Choice;
+use App\Models\Question;
 use App\Models\Tryout;
 use App\Models\UserAnswer;
 use App\Models\UserTryout;
@@ -10,11 +11,20 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Session;
 
 class AnswerController extends Controller
 {
     public function save_answer(Request $request){
-      $request->session()->put("$request->t_id.$request->q_id", $request->c_id);
+        $tryout_id = $request->t_id;
+        $question_id = $request->q_id;
+      $choice_id = $request->c_id;
+      Session::put("tryout_$tryout_id.$question_id", "$choice_id");
+      //session(["$request->t_id.$request->q_id", "$request->c_id"]);
+      Session::save();
+
+      //$_SESSION["$request->t_id"]["$request->q_id"] = "$request->c_id";
+
       return response()->json(['data' => "Jawaban tersimpan"]);
     }
 
@@ -25,23 +35,31 @@ class AnswerController extends Controller
         $tryout_id = $request->t_id;
         $jml_soal = Tryout::find($tryout_id)->question->count();
         $score = 0;
-        foreach ($request->session()->get("$tryout_id") as $q_id => $c_id) {
-            $choice = Choice::find($c_id);
-            $submitted_answer = UserAnswer::updateOrCreate([
-                'user_id' => Auth::user()->id,
-                'tryout_id' => $tryout_id,
-                'question_id' => $q_id,
-                'choice_id' => $c_id
-            ]);
-            if(!$submitted_answer){
-                return redirect()->route('tryout.soal', ['id_tryout'=>$tryout_id, 'no_soal' => 1])->with(['error' => 'Jawaban Gagal Disimpan, Coba Beberapa Saat Lagi!']);
-            }
+        $answer_data = Session::get("tryout_$tryout_id");
 
-            if($choice != null){
-                if($choice->correct){
-                    $score+=1;
+        //$answer_data = $_SESSION["$tryout_id"];
+        //dd($answer_data);
+
+        foreach ($answer_data as $q_id => $c_id) {
+            $choice = Choice::find($c_id);
+            $question = Question::find($q_id);
+            if($question->tryout->id == $tryout_id){
+                $submitted_answer = UserAnswer::updateOrCreate([
+                    'user_id' => Auth::user()->id,
+                    'tryout_id' => $tryout_id,
+                    'question_id' => $q_id,
+                    'choice_id' => $c_id
+                ]);
+                if(!$submitted_answer){
+                    return redirect()->route('tryout.soal', ['id_tryout'=>$tryout_id, 'no_soal' => 1])->with(['error' => 'Jawaban Gagal Disimpan, Coba Beberapa Saat Lagi!']);
                 }
 
+                if($choice != null){
+                    if($choice->correct){
+                        $score+=1;
+                    }
+
+                }
             }
         }
         $skorAkhir = ($score/$jml_soal) * 100;
@@ -51,6 +69,8 @@ class AnswerController extends Controller
         $userTO->tryout_id = $tryout_id;
         $userTO->score = $skorAkhir;
 
+        //dd($request->session()->all());
+        $request->session()->forget("tryout_$tryout_id");
         if($userTO->save()){
             return redirect()->route('home')->with(['success' => 'Tryout Telah Selesai Dikerjakan! Skor: '.$skorAkhir]);
         } else{

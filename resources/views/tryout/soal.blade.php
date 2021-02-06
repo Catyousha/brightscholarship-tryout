@@ -46,7 +46,7 @@
                     <div class="mt-4 d-flex flex-column">
                         @foreach ($soal->choice as $c)
                         <div class="form-check mb-2">
-                            <input class="await-answer form-check-input mr-3" type="radio" name="ans_{{$soal->question_num}}" id="{{$c->id}}" value="{{$c->id}}" @if(Session::get("$tryout->id.$soal->id") == $c->id) checked @endif>
+                            <input class="await-answer form-check-input mr-3" type="radio" name="ans_{{$soal->question_num}}" id="{{$c->id}}" value="{{$c->id}}" @if(Session::get("tryout_$tryout->id.$soal->id") == $c->id) checked @endif>
                             <label class="form-check-label" for="{{$c->id}}">{{$c->choice_symbol}}. {{$c->choice_text}}</label>
                         </div>
                         @endforeach
@@ -141,6 +141,7 @@ crossorigin="anonymous">
             },
             error: function(err){
                 console.log(err)
+                Location.reload()
             }
         });
     }
