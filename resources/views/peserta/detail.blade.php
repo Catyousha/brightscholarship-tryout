@@ -29,6 +29,11 @@
                                 <td class="align-middle">{{$peserta->name}}</td>
                             </tr>
                             <tr>
+                                <th class="align-middle">Pilihan</th>
+                                <td class="align-middle">:</td>
+                                <td class="align-middle">{{$peserta->pilihan->name}}</td>
+                            </tr>
+                            <tr>
                                 <th class="align-middle">Email Peserta</th>
                                 <td class="align-middle">:</td>
                                 <td class="align-middle">{{$peserta->email}}</td>

@@ -105,12 +105,14 @@ class TryoutController extends Controller
     public function update(Request $request, $id)
     {
         $tryout = Tryout::findOrFail($id);
+
         $update_tryout = $tryout->update([
             'name' => $request->f_name,
+            'pilihan_id' =>$request->f_pilihan,
             'time_start' => $request->f_time_start,
             'time_end' => $request->f_time_end
         ]);
-
+        
         if($update_tryout){
             return redirect()->route('tryout.edit', $id)->with(['success' => 'Tryout Berhasil Diedit!']);
         } else{

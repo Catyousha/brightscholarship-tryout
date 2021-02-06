@@ -34,6 +34,7 @@
                         <thead>
                             <th>Nama Peserta</th>
                             <th>Email</th>
+                            <th>Pilihan</th>
                             <th>Tryout Diikuti</th>
                             <th>Opsi</th>
                         </thead>
@@ -42,6 +43,7 @@
                             <tr>
                                 <td>{{$p->name}}</td>
                                 <td>{{$p->email}}</td>
+                                <td>{{$p->pilihan->name}}</td>
                                 <td class="pl-5">{{$p->user_tryout->count()}}</td>
                                 <td>
                                     <a href="{{route('peserta.show', $p->id)}}" class="btn btn-primary btn-sm"><i class="fa fa-user fa-fw"></i> Detail</a>

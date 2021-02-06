@@ -29,6 +29,17 @@
                                 <td><input class="form-control form-control-sm" type="text" name="f_name" value="{{$tryout->name}}"></td>
                             </tr>
                             <tr>
+                                <th class="align-middle">Pilihan</th>
+                                <td class="align-middle">:</td>
+                                <td>
+                                    <select class="custom-select" name="f_pilihan">
+                                        @foreach (\App\Models\Pilihan::all() as $p)
+                                        <option value="{{$p->id}}" @if($tryout->pilihan_id == $p->id) selected @endif>{{$p->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
                                 <th class="align-middle">Waktu Dimulai</th>
                                 <td class="align-middle">:</td>
                                 <td><input class="form-control form-control-sm" type="datetime-local" name="f_time_start" value="{{date('Y-m-d\TH:i:s', strtotime($tryout->time_start))}}"></td>

@@ -13,7 +13,7 @@ class Tryout extends Model
     protected $table = 'tryout';
 
     protected $fillable = [
-        'name', 'time_start', 'time_end'
+        'name', 'pilihan_id', 'time_start', 'time_end'
     ];
 
     public $dates = ['time_start', 'time_end'];
@@ -25,7 +25,7 @@ class Tryout extends Model
     public function pilihan(){
         return $this->hasOne(Pilihan::class, 'id', 'pilihan_id');
     }
-    
+
     public function question(){
         return $this->hasMany(Question::class);
     }

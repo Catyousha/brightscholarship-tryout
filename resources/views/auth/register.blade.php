@@ -40,7 +40,7 @@
                                         @foreach (\App\Models\Pilihan::all() as $p)
                                         <option value="{{$p->id}}" @if(old('pilihan') == $p->id) selected @endif>{{$p->name}}</option>
                                         @endforeach
-                                      </select>
+                                    </select>
 									@error('pilihan')
 									<div class="invalid-feedback">{{ $message }}</div>
 									@enderror
