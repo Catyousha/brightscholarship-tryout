@@ -27,6 +27,20 @@
         color: white !important;
     }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
+<script>
+    var eventTime= {{$tryout->time_end->getTimestamp()}};
+    var currentTime = {{now()->getTimestamp()}};
+    var diffTime = eventTime - currentTime;
+    var duration = moment.duration(diffTime*1000, 'milliseconds');
+    var interval = 1000;
+
+    setInterval(function(){
+      duration = moment.duration(duration - interval, 'milliseconds');
+        $('#countdown').text(duration.hours() + " jam " + duration.minutes() + " menit " + duration.seconds() + " detik ")
+        //$('#coundown').text(moment(duration).format("HH:mm", { trim: false }))
+    }, interval);
+    </script>
 @endpush
 
 @section('main-content')
@@ -39,14 +53,15 @@
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">{{$tryout->name}}: Soal No. {{$soal->question_num}}</h6>
-                    <!--<h6 class="m-0 font-weight-bold">Sisa Waktu: 00:30:00</h6>-->
+                    <h6 class="m-0 font-weight-bold">Sisa Waktu: <span id="countdown"><script>moment().format('MMMM Do YYYY, h:mm:ss a');</script></span></h6>
                 </div>
                 <div class="card-body">
                     <p>{!! $soal->question_text !!}</p>
                     <div class="mt-4 d-flex flex-column">
                         @foreach ($soal->choice as $c)
                         <div class="form-check mb-2">
-                            <input class="await-answer form-check-input mr-3" type="radio" name="ans_{{$soal->question_num}}" id="{{$c->id}}" value="{{$c->id}}" @if(Session::get("tryout_$tryout->id.$soal->id") == $c->id) checked @endif>
+                            <input class="await-answer form-check-input mr-3" type="radio" name="ans_{{$soal->question_num}}" id="{{$c->id}}" value="{{$c->id}}"
+                            @if(Session::get("tryout_$tryout->id.$soal->id") == $c->id) checked @endif>
                             <label class="form-check-label" for="{{$c->id}}">{{$c->choice_symbol}}. {{$c->choice_text}}</label>
                         </div>
                         @endforeach
@@ -79,7 +94,7 @@
                     <div class="text-center mt-3">
 
                         <p id="test">@php /*var_dump(Session::get("$tryout->id"))*/@endphp</p>
-                        <form action="{{route('answer.submit')}}" method="POST">
+                        <form action="{{route('answer.submit')}}" method="POST" id="submit-jawaban">
                         @csrf
                         <input type="hidden" name="t_id" value="{{$tryout->id}}"/>
                         <small class="text-danger">Pastikan semua soal sudah dijawab!</small>
@@ -133,11 +148,17 @@ crossorigin="anonymous">
                     c_id: event.target.value
                 },
             success:function(data) {
-                Array.from(await_comp).forEach((el) => {
+                if(data.data != "timeout"){
+                    Array.from(await_comp).forEach((el) => {
                     el.classList.remove("disabled");
                     el.disabled = false;
                 });
-                console.log("200")
+                    console.log("200")
+                }
+                else{
+                    alert("Waktu Pengerjaan Telah Habis!");
+                    document.getElementById('submit-jawaban').submit();
+                }
             },
             error: function(err){
                 console.log(err)
@@ -149,4 +170,6 @@ crossorigin="anonymous">
         radio.addEventListener('change', s_ans);
     });
 </script>
+
+
 @endpush

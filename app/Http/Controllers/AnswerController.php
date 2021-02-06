@@ -17,20 +17,22 @@ class AnswerController extends Controller
 {
     public function save_answer(Request $request){
         $tryout_id = $request->t_id;
-        $question_id = $request->q_id;
+        $to = Tryout::find($tryout_id);
+        if($to->tryout_status() == "Telah Berakhir"){
+            return response()->json(['data' => "timeout"]);
+        }
+
+      $question_id = $request->q_id;
       $choice_id = $request->c_id;
       Session::put("tryout_$tryout_id.$question_id", "$choice_id");
-      //session(["$request->t_id.$request->q_id", "$request->c_id"]);
       Session::save();
+      return response()->json(['data' => "jawaban tersimpan"]);
 
-      //$_SESSION["$request->t_id"]["$request->q_id"] = "$request->c_id";
-
-      return response()->json(['data' => "Jawaban tersimpan"]);
     }
 
     public function submit_answer(Request $request)
     {
-        Gate::authorize('view', Tryout::find($request->t_id));
+        //Gate::authorize('view', Tryout::find($request->t_id));
 
         $tryout_id = $request->t_id;
         $jml_soal = Tryout::find($tryout_id)->question->count();
