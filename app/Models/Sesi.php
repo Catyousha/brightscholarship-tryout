@@ -15,6 +15,8 @@ class Sesi extends Model
         'tryout_id', 'mapel_id', 'time_start', 'time_end'
     ];
 
+    public $dates = ['time_start', 'time_end'];
+
     public function tryout(){
         return $this->belongsTo(Tryout::class);
     }

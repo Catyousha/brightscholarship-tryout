@@ -25,8 +25,8 @@ class TryoutFactory extends Factory
         return [
             'name' => "Tryout Test",
             'pilihan_id' => 1,
-            'time_start' => $this->faker->dateTimeBetween('-1 days'),
-            'time_end' => $this->faker->dateTimeBetween('-1 days', '1 days')
+            'time_start' => $this->faker->dateTimeBetween('-3 days'),
+            'time_end' => $this->faker->dateTimeBetween('4 days', '10 days')
         ];
     }
 }

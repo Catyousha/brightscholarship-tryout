@@ -72,6 +72,100 @@
         <div class="col-lg-12 mb-4">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Daftar Sesi</h6>
+                </div>
+                <div class="card-body table-responsive ">
+                    <a href="#tambah-soal" class="btn btn-primary btn-sm mx-3"><i class="fa fa-plus fa-fw"></i> Tambahkan Sesi</a>
+                    <table class="table">
+                            <tr>
+                                <th class="align-middle">Mata Pelajaran</th>
+                                <th class="align-middle">Waktu Dimulai</th>
+                                <th class="align-middle">Waktu Berakhir</th>
+                                <th class="align-middle">Opsi</th>
+
+                            </tr>
+                            @forelse ($tryout->sesi as $s)
+                                <tr>
+                                    <td class="align-middle">{{$s->mapel->name}}</td>
+                                    <td class="align-middle">{{$s->time_start->translatedFormat('d M Y H:i')}}</td>
+                                    <td class="align-middle">{{$s->time_end->translatedFormat('d M Y H:i')}}</td>
+                                    <td>
+                                        <a href="{{route('sesi.edit', $s->id)}}" class="btn btn-primary btn-sm"><i class="fa fa-edit fa-fw"></i> Edit</a>
+                                        <a class="delete-soal-btn btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteSesiModal" data-id="{{$s->id}}"><i class="fa fa-trash fa-fw"></i> Hapus</a>
+                                    </td>
+                                </tr>
+                            @empty
+                            <tr>
+                                <td colspan="3" align="center"><span class="text-muted">Data tidak ditemukan</span></td>
+                            </tr>
+                            @endforelse
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary mb-2">Tambah Sesi</h6>
+                </div>
+                <div class="card-body table-responsive">
+                    @error('f_time_end')
+                    <div class="alert alert-danger mt-2">
+                        Waktu berakhirnya sesi haruslah setelah waktu sesi tersebut dimulai!
+                    </div>
+                    @enderror
+                    <table class="table">
+                        <form action="{{route('sesi.store')}}" method="post" autocomplete="off">
+                            @csrf
+                            <input type="hidden" name="f_tryout_id" value="{{$tryout->id}}">
+                            <tr>
+                                <th class="align-middle">Mata Pelajaran</th>
+                                <td class="align-middle">:</td>
+                                <td>
+                                    <select class="custom-select" name="f_mapel" required>
+                                        @foreach (\App\Models\Mapel::all() as $m)
+                                        <option value="{{$m->id}}" @if(old('f_mapel') == $m->id) selected @endif>
+                                            {{$m->name}}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="align-middle">Waktu Dimulai</th>
+                                <td class="align-middle">:</td>
+                                <td>
+                                    <input class="form-control form-control-sm" type="datetime-local"
+                                    min="{{date('Y-m-d\TH:i:s', strtotime($tryout->sesi()->latest()->first()->time_end??$tryout->time_start))}}"
+                                    max="{{date('Y-m-d\TH:i:s', strtotime($tryout->time_end))}}"
+                                    step="any"
+                                    name="f_time_start" value="{{old('f_time_start')}}" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="align-middle">Waktu Berakhir</th>
+                                <td class="align-middle">:</td>
+                                <td><input class="form-control form-control-sm" type="datetime-local"
+                                    min="{{date('Y-m-d\TH:i:s', strtotime($tryout->sesi()->latest()->first()->time_start??$tryout->time_start))}}"
+                                    max="{{date('Y-m-d\TH:i:s', strtotime($tryout->time_end))}}"
+                                    step="any"
+                                    name="f_time_end" value="{{old('f_time_end')}}" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><button type="submit" class="btn btn-primary btn-block"><i class="fa fa-save fa-fw"></i> Simpan</button</td>
+                            </tr>
+                        </form>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Daftar Soal</h6>
                 </div>
                 <div class="card-body table-responsive ">
@@ -193,9 +287,6 @@
     </div>
 </div>
 
-
-
-
 <div class="modal fade" id="deleteSoalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -210,6 +301,25 @@
                 <button class="btn btn-link" type="button" data-dismiss="modal">{{ __('Cancel') }}</button>
                 <a id="confirm-delete-soal-btn" class="btn btn-danger" href="#" onclick="event.preventDefault();">{{ __('Hapus Soal') }}</a>
                 <input type="hidden" id="delete_soal_inp" name="f_delete_soal" value="">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteSesiModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{ __('Ingin menghapus sesi?') }}</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Perhatian: Sesi beserta soal dan pilihan jawaban yang telah dihapus tidak dapat dikembalikan lagi! Masih ingin menghapus sesi?</div>
+            <div class="modal-footer">
+                <button class="btn btn-link" type="button" data-dismiss="modal">{{ __('Cancel') }}</button>
+                <a class="btn btn-danger" href="#" onclick="event.preventDefault();">{{ __('Hapus Sesi') }}</a>
+                <input type="hidden" id="delete_sesi_inp" name="f_delete_sesi" value="">
             </div>
         </div>
     </div>
@@ -249,6 +359,12 @@ crossorigin="anonymous"></script>
         document.getElementById('delete_soal_inp').value = soal_id;
     });
 
+    $(".delete-sesi-btn").click(function () {
+        var sesi_id = $(this).attr('data-id');
+        console.log(sesi_id);
+        document.getElementById('delete_sesi_inp').value = sesi_id;
+    });
+
     function d_q(event){
         var soal_id = document.getElementById('delete_soal_inp').value;
         console.log(soal_id);
@@ -266,6 +382,25 @@ crossorigin="anonymous"></script>
             }
         });
     }
+
+    function d_s(event){
+        var sesi_id = document.getElementById('delete_sesi_inp').value;
+        console.log(sesi_id);
+        $.ajax({
+            type:'POST',
+            url:'/sesi/'+sesi_id,
+            data:{_token: "{{ csrf_token() }}", _method: 'delete'},
+            success:function(data) {
+                location.reload();
+                //window.location.href = window.location.href;
+                //console.log(data.data);
+            },
+            error: function(err){
+                console.log(err)
+            }
+        });
+    }
+    document.getElementById('confirm-delete-sesi-btn').addEventListener('click', d_s);
     document.getElementById('confirm-delete-soal-btn').addEventListener('click', d_q);
 </script>
 <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>

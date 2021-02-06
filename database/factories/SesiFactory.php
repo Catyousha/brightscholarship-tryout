@@ -27,7 +27,7 @@ class SesiFactory extends Factory
             'tryout_id' => Tryout::factory(),
             'mapel_id' => 1,
             'time_start' => $this->faker->dateTimeBetween('-1 days'),
-            'time_end' => $this->faker->dateTimeBetween('-1 days', '1 days')
+            'time_end' => $this->faker->dateTimeBetween('2 days', '3 days')
         ];
     }
 }

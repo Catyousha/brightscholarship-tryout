@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/profile', 'ProfileController@index')->name('profile');
     Route::resource('/tryout', 'TryoutController');
     Route::resource('/soal', 'QuestionController');
+    Route::resource('/sesi', 'SesiController');
     Route::resource('/peserta', 'PesertaController');
 
     Route::get('/tryout/{id}/peserta-list', [TryoutController::class, 'peserta_list'])->name('tryout.peserta');
