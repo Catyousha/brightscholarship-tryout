@@ -31,7 +31,7 @@ class TryoutController extends Controller
     {
         $tryout         = Tryout::findOrFail($id_tryout);
         //selain sedang berlangsung, tolak.
-        //Gate::authorize('view', $tryout);
+        Gate::authorize('view', $tryout);
 
         $soal           = $tryout->question()->where('question_num', $no_soal)->firstOrFail();
         $soal->terakhir = ($tryout->question()->where('question_num', $no_soal+1)->first() == null);

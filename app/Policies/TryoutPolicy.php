@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Tryout;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Session;
 
 class TryoutPolicy
 {
@@ -30,7 +31,7 @@ class TryoutPolicy
      */
     public function view(User $user, Tryout $tryout)
     {
-        return ($tryout->tryout_status() == "Sedang Berlangsung");
+        return ($tryout->tryout_status() == "Sedang Berlangsung" || Session::has('tryout_'.$tryout->id));
     }
 
     /**

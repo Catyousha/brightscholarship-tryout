@@ -32,7 +32,7 @@ class AnswerController extends Controller
 
     public function submit_answer(Request $request)
     {
-        //Gate::authorize('view', Tryout::find($request->t_id));
+        Gate::authorize('view', Tryout::find($request->t_id));
 
         $tryout_id = $request->t_id;
         $jml_soal = Tryout::find($tryout_id)->question->count();
