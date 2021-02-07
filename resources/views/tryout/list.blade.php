@@ -44,7 +44,7 @@
                                 <td>{{$t->pilihan->name}}</td>
                                 <td>{{$t->time_start->translatedFormat('d M Y H:i')}}</td>
                                 <td>{{$t->time_end->translatedFormat('d M Y H:i')}}</td>
-                                <td>{{$t->user_tryout->count()}}</td>
+                                <td>{{$t->user_tryout->unique('user_id')->count()}}</td>
                                 <td><a href="{{route('tryout.edit', $t->id )}}" class="btn btn-primary btn-sm">Detail</a></td>
                             </tr>
                             @empty
