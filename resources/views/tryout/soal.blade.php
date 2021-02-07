@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', "Soal No.$soal->question_num")
+@section('title', "{$sesi->mapel->name} - Soal No.{$soal->question_num}")
 @push('css')
 <style>
     ul {list-style-type: none;}
@@ -58,7 +58,7 @@
         <div class="col-lg-8 mb-4">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">{{$tryout->name}}: Sesi {{$sesi->mapel->name}} Soal No. {{$soal->question_num}}</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{{$tryout->name}}: {{$sesi->mapel->name}} Soal No. {{$soal->question_num}}</h6>
                     <h6 class="m-0 font-weight-bold">Sisa Waktu: <span id="countdown"><script>moment().format('MMMM Do YYYY, h:mm:ss a');</script></span></h6>
                 </div>
                 <div class="card-body">
@@ -71,7 +71,7 @@
                             name="ans_{{$soal->question_num}}"
                             id="{{$c->id}}"
                             value="{{$c->id}}"
-                            @if(Session::get("tryout_$tryout->id.$soal->id") == $c->id)
+                            @if(Session::get("tryout_{$tryout->id}_sesi_{$sesi->id}.{$soal->id}") == $c->id)
                                 checked
                             @endif>
                             <label class="form-check-label" for="{{$c->id}}">

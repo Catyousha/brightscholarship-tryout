@@ -24,7 +24,7 @@ class TryoutSeeder extends Seeder
     {
         $pilihan = Pilihan::all();
         $mapel = Mapel::all();
-        Tryout::factory(10)->state(new Sequence(
+        Tryout::factory(3)->state(new Sequence(
             ['pilihan_id' => $pilihan->get(0)->id],
             ['pilihan_id' => $pilihan->get(1)->id],
             ['pilihan_id' => $pilihan->get(2)->id]
@@ -36,16 +36,16 @@ class TryoutSeeder extends Seeder
             ],
             [
                 'mapel_id' => $mapel->get(1)->id,
-                'time_start' => Carbon::now()->addHours(2), 'time_end' => Carbon::now()->addHours(3)
+                'time_start' => Carbon::now()->addHours(1), 'time_end' => Carbon::now()->addHours(2)
 
             ],
             [
                 'mapel_id' => $mapel->get(2)->id,
-                'time_start' => Carbon::now()->addHours(4), 'time_end' => Carbon::now()->addHours(5)
+                'time_start' => Carbon::now()->addHours(2), 'time_end' => Carbon::now()->addHours(3)
             ],
             [
                 'mapel_id' => $mapel->get(3)->id,
-                'time_start' => Carbon::now()->addHours(6), 'time_end' => Carbon::now()->addHours(7)
+                'time_start' => Carbon::now()->addHours(3), 'time_end' => Carbon::now()->addHours(4)
             ]
             ))->has(
                 Question::factory()->count(5)->state( new Sequence(

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Choice;
 use App\Models\Question;
+use App\Models\Sesi;
 use App\Models\Tryout;
 use App\Models\UserAnswer;
 use App\Models\UserTryout;
@@ -33,10 +34,11 @@ class AnswerController extends Controller
 
     public function submit_answer(Request $request)
     {
-        Gate::authorize('view', Tryout::find($request->t_id));
+
 
         $tryout_id = $request->t_id;
         $sesi_id = $request->s_id;
+        Gate::authorize('view', [Tryout::find($tryout_id), Sesi::find($sesi_id)]);
         $jml_soal = Tryout::find($tryout_id)->question->count();
         $score = 0;
         $answer_data = Session::get("tryout_{$tryout_id}_sesi_{$sesi_id}");
@@ -76,8 +78,10 @@ class AnswerController extends Controller
         //dd($request->session()->all());
         $request->session()->forget("tryout_{$tryout_id}_sesi_{$sesi_id}");
         if($userTO->save()){
-            return redirect()->route('home')
-            ->with(['success' => 'Tryout Telah Selesai Dikerjakan! Skor: '.$skorAkhir]);
+            $next_sesi = Sesi::find($sesi_id+1);
+            if($next_sesi && $next_sesi->tryout_id == $tryout_id){
+                return redirect()->route('tryout.soal', ['id_tryout' => $tryout_id, 'no_soal' => 1]);
+            }
         } else{
             return redirect()->route('tryout.soal', ['id_tryout'=>$tryout_id, 'no_soal' => 1])
             ->with(['error' => 'Jawaban Gagal Disimpan, Coba Beberapa Saat Lagi!']);

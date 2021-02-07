@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Sesi;
 use App\Models\Tryout;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -29,9 +30,9 @@ class TryoutPolicy
      * @param  \App\Models\Tryout  $tryout
      * @return mixed
      */
-    public function view(User $user, Tryout $tryout)
+    public function view(User $user, Tryout $tryout, Sesi $sesi)
     {
-        return ($tryout->tryout_status() == "Sedang Berlangsung" || Session::has('tryout_'.$tryout->id));
+        return ($tryout->tryout_status() == "Sedang Berlangsung" || Session::has("tryout_{$tryout->id}_sesi_{$sesi->id}"));
     }
 
     /**

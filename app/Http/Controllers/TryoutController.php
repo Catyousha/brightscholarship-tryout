@@ -32,11 +32,12 @@ class TryoutController extends Controller
     {
         $tryout         = Tryout::findOrFail($id_tryout);
         //selain sedang berlangsung, tolak.
-        Gate::authorize('view', $tryout);
+
 
         $sesi           = $tryout->sesi()->where('time_start', '<=', Carbon::now())
-                                         ->where('time_end', '>=', Carbon::now())
+                                         ->where('time_end', '>', Carbon::now())
                                          ->firstOrFail();
+        Gate::authorize('view', [$tryout, $sesi]);
 
         $soal           = $tryout->question()
                                          ->where('sesi_id', $sesi->id)

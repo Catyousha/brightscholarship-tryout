@@ -219,7 +219,7 @@
             <div class="modal-body">Perhatian: Sesi beserta soal dan pilihan jawaban yang telah dihapus tidak dapat dikembalikan lagi! Masih ingin menghapus sesi?</div>
             <div class="modal-footer">
                 <button class="btn btn-link" type="button" data-dismiss="modal">{{ __('Cancel') }}</button>
-                <a class="btn btn-danger" href="#" onclick="event.preventDefault();">{{ __('Hapus Sesi') }}</a>
+                <a id="confirm-delete-sesi-btn" class="btn btn-danger" href="#" onclick="event.preventDefault();">{{ __('Hapus Sesi') }}</a>
                 <input type="hidden" id="delete_sesi_inp" name="f_delete_sesi" value="">
             </div>
         </div>
@@ -293,8 +293,6 @@ crossorigin="anonymous"></script>
             data:{_token: "{{ csrf_token() }}", _method: 'delete'},
             success:function(data) {
                 location.reload();
-                //window.location.href = window.location.href;
-                //console.log(data.data);
             },
             error: function(err){
                 console.log(err)

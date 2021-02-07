@@ -51,9 +51,6 @@ class Tryout extends Model
             return 'Dijadwalkan';
         } else if($this->time_end < $time_now){
             return 'Telah Berakhir';
-        }
-         else if($user_check != null){
-            return 'Telah Diselesaikan';
         } else{
             return 'Sedang Berlangsung';
         }
