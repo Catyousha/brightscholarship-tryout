@@ -6,6 +6,7 @@ use App\Models\Tryout;
 use App\Models\User;
 use App\Models\UserAnswer;
 use App\Models\UserTryout;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
@@ -33,10 +34,17 @@ class TryoutController extends Controller
         //selain sedang berlangsung, tolak.
         Gate::authorize('view', $tryout);
 
-        $soal           = $tryout->question()->where('question_num', $no_soal)->firstOrFail();
+        $sesi           = $tryout->sesi()->where('time_start', '<=', Carbon::now())
+                                         ->where('time_end', '>=', Carbon::now())
+                                         ->firstOrFail();
+
+        $soal           = $tryout->question()
+                                         ->where('sesi_id', $sesi->id)
+                                         ->where('question_num', $no_soal)
+                                         ->firstOrFail();
         $soal->terakhir = ($tryout->question()->where('question_num', $no_soal+1)->first() == null);
 
-        return view('tryout.soal', compact('tryout', 'soal'));
+        return view('tryout.soal', compact('tryout', 'soal', 'sesi'));
     }
 
     public function peserta_list($id){

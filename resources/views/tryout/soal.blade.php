@@ -93,7 +93,7 @@
                 </div>
                 <div class="card-body">
                     <ul class="nav-soal">
-                        @foreach ($tryout->question as $q)
+                        @foreach ($sesi->question as $q)
                            <li class="@if($q->question_num == $soal->question_num) active @endif"><a href="{{route('tryout.soal', ['id_tryout' => $tryout->id, 'no_soal' =>$q->question_num])}}">{{$q->question_num}}</a></li>
                         @endforeach
                     </ul>
