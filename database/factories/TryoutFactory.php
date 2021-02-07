@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Pilihan;
 use App\Models\Tryout;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TryoutFactory extends Factory
@@ -25,8 +26,8 @@ class TryoutFactory extends Factory
         return [
             'name' => "Tryout Test",
             'pilihan_id' => 1,
-            'time_start' => $this->faker->dateTimeBetween('-3 days'),
-            'time_end' => $this->faker->dateTimeBetween('4 days', '10 days')
+            'time_start' => Carbon::now(),
+            'time_end' => Carbon::now()->addHours(8)
         ];
     }
 }

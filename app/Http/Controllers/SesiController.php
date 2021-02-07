@@ -48,9 +48,9 @@ class SesiController extends Controller
          $sesi->time_end   = $request->f_time_end;
 
          if($sesi->save()){
-            return redirect()->route('sesi.edit', $sesi->id)->with(['success' => 'Tryout berhasil ditambahkan!']);
+            return redirect()->route('sesi.edit', $sesi->id)->with(['success' => 'Sesi berhasil ditambahkan!']);
          }else{
-            return redirect()->route('tryout.edit', $sesi->tryout->id)->with(['error' => 'Terjadi kesalahan, coba beberapa saat lagi...']);
+            return redirect()->route('sesi.edit', $sesi->sesi->id)->with(['error' => 'Terjadi kesalahan, coba beberapa saat lagi...']);
          }
     }
 
@@ -73,7 +73,8 @@ class SesiController extends Controller
      */
     public function edit($id)
     {
-        //
+        $sesi = Sesi::findOrFail($id);
+        return view('sesi.edit_sesi', compact('sesi'));
     }
 
     /**
@@ -85,7 +86,24 @@ class SesiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'f_mapel'            => 'required',
+            'f_time_start'         => 'required',
+            'f_time_end'           => 'required|after:f_time_start',
+         ]);
+
+         $sesi = Sesi::findOrFail($id);
+         $update_sesi = $sesi->update([
+            'mapel' => $request->f_mapel,
+            'time_start' => $request->f_time_start,
+            'time_end' => $request->f_time_end
+        ]);
+
+         if($update_sesi){
+            return redirect()->route('sesi.edit', $sesi->id)->with(['success' => 'Sesi berhasil diubah!']);
+         }else{
+            return redirect()->route('sesi.edit', $sesi->id)->with(['error' => 'Terjadi kesalahan, coba beberapa saat lagi...']);
+         }
     }
 
     /**

@@ -8,6 +8,7 @@ use App\Models\Pilihan;
 use App\Models\Question;
 use App\Models\Sesi;
 use App\Models\Tryout;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 
@@ -29,8 +30,23 @@ class TryoutSeeder extends Seeder
             ['pilihan_id' => $pilihan->get(2)->id]
         ))->has(
             Sesi::factory()->count(4)->state(new Sequence(
-                ['mapel_id' => $mapel->get(0)->id], ['mapel_id' => $mapel->get(1)->id],
-                ['mapel_id' => $mapel->get(2)->id], ['mapel_id' => $mapel->get(3)->id]
+            [
+                'mapel_id' => $mapel->get(0)->id,
+                'time_start' => Carbon::now(), 'time_end' => Carbon::now()->addHours(1)
+            ],
+            [
+                'mapel_id' => $mapel->get(1)->id,
+                'time_start' => Carbon::now()->addHours(2), 'time_end' => Carbon::now()->addHours(3)
+
+            ],
+            [
+                'mapel_id' => $mapel->get(2)->id,
+                'time_start' => Carbon::now()->addHours(4), 'time_end' => Carbon::now()->addHours(5)
+            ],
+            [
+                'mapel_id' => $mapel->get(3)->id,
+                'time_start' => Carbon::now()->addHours(6), 'time_end' => Carbon::now()->addHours(7)
+            ]
             ))->has(
                 Question::factory()->count(5)->state( new Sequence(
                     ['question_num' => 1], ['question_num' => 2],

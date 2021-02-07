@@ -45,6 +45,8 @@ class QuestionController extends Controller
 
          $soal = new Question();
          $soal->tryout_id     = $request->f_tryout_id;
+         $soal->sesi_id      = $request->f_sesi_id;
+         $soal->mapel_id      = $request->f_mapel_id;
          $soal->question_text = $request->f_question_text;
          $soal->question_num  = $request->f_question_num;
          if(!$soal->save()){
@@ -60,13 +62,13 @@ class QuestionController extends Controller
                 'correct' => ($request->f_correct == $c) ? 1 : 0,
             ]);
             if(!$choice){
-                return redirect()->route('tryout.edit', $request->f_tryout_id)->with(['error' => 'Terjadi kesalahan, coba beberapa saat lagi...']);
+                return redirect()->route('sesi.edit', $request->f_sesi_id)->with(['error' => 'Terjadi kesalahan, coba beberapa saat lagi...']);
             }
 
             $i++;
          }
 
-         return redirect()->route('tryout.edit', $request->f_tryout_id)->with(['success' => 'Soal berhasil ditambahkan!']);
+         return redirect()->route('sesi.edit', $request->f_sesi_id)->with(['success' => 'Soal berhasil ditambahkan!']);
 
     }
 
@@ -164,7 +166,7 @@ class QuestionController extends Controller
             $obs->perbaiki_skor($u);
         }
         $userAnswer->delete();
-        
+
         return response()->json(['data' => "success"]);
     }
 }

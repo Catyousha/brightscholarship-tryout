@@ -11,7 +11,7 @@
         <div class="col-lg-12 mb-4">
             <div class="card shadow mb-4">
                 <div class="p-3">
-                    <a href="{{route('tryout.edit', $soal->tryout->id)}}" class="btn btn-primary btn-sm">	&#8592; Kembali Ke Tryout</a>
+                    <a href="{{route('sesi.edit', $soal->sesi_id)}}" class="btn btn-primary btn-sm">	&#8592; Kembali Ke Sesi</a>
                 </div>
                 <div class="card-header py-3 d-flex justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Edit Soal No. {{$soal->question_num}}</h6>

@@ -26,8 +26,12 @@ class SesiFactory extends Factory
         return [
             'tryout_id' => Tryout::factory(),
             'mapel_id' => 1,
-            'time_start' => $this->faker->dateTimeBetween('-1 days'),
-            'time_end' => $this->faker->dateTimeBetween('2 days', '3 days')
+            'time_start' => function (array $attributes) {
+                return Tryout::find($attributes['tryout_id'])->time_start->addHours();
+            },
+            'time_end' => function (array $attributes) {
+                return Tryout::find($attributes['tryout_id'])->time_start->addHours(1);
+            },
         ];
     }
 }

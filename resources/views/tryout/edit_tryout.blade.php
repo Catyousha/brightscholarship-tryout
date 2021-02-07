@@ -148,7 +148,7 @@
                                 <th class="align-middle">Waktu Berakhir</th>
                                 <td class="align-middle">:</td>
                                 <td><input class="form-control form-control-sm" type="datetime-local"
-                                    min="{{date('Y-m-d\TH:i:s', strtotime($tryout->sesi()->latest()->first()->time_start??$tryout->time_start))}}"
+                                    min="{{date('Y-m-d\TH:i:s', strtotime($tryout->time_start))}}"
                                     max="{{date('Y-m-d\TH:i:s', strtotime($tryout->time_end))}}"
                                     step="any"
                                     name="f_time_end" value="{{old('f_time_end')}}" required>
@@ -156,105 +156,6 @@
                             </tr>
                             <tr>
                                 <td colspan="3"><button type="submit" class="btn btn-primary btn-block"><i class="fa fa-save fa-fw"></i> Simpan</button</td>
-                            </tr>
-                        </form>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-12 mb-4">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Daftar Soal</h6>
-                </div>
-                <div class="card-body table-responsive ">
-                    <a href="#tambah-soal" class="btn btn-primary btn-sm mx-3"><i class="fa fa-plus fa-fw"></i> Tambahkan Soal</a>
-                    <table class="table">
-                            <tr>
-                                <th class="align-middle">No Soal</th>
-                                <th class="align-middle">Teks Soal</th>
-                                <th class="align-middle">Opsi</th>
-
-                            </tr>
-                            @forelse ($tryout->question as $q)
-                                <tr>
-                                    <td class="align-middle">{{$q->question_num}}</td>
-                                    <td class="align-middle">{{\Illuminate\Support\Str::limit($q->question_text, 50, $end='...')}}</td>
-                                    <td class="align-middle">
-                                        <a href="{{route('soal.edit', $q->id)}}" class="btn btn-primary btn-sm"><i class="fa fa-edit fa-fw"></i> Edit</a>
-                                        <a class="delete-soal-btn btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteSoalModal" data-id="{{$q->id}}"><i class="fa fa-trash fa-fw"></i> Hapus</a>
-                                    </td>
-                                </tr>
-                            @empty
-                            <tr>
-                                <td colspan="3" align="center"><span class="text-muted">Data tidak ditemukan</span></td>
-                            </tr>
-                            @endforelse
-
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-12 mb-4" id="tambah-soal">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Tambah Soal Nomor {{$tryout->question->count()+1}}</h6>
-                </div>
-                <div class="card-body table-responsive ">
-
-                    @error('f_correct')
-                        <div class="alert alert-danger mt-2">
-                            Wajib ada satu jawaban yang benar!
-                        </div>
-                    @enderror
-                    @error('f_question_text')
-                        <div class="alert alert-danger mt-2">
-                            Soal dan pilihan jawaban wajib diisi!
-                        </div>
-                    @enderror
-
-                    <table class="table">
-                        <form action="{{route('soal.store')}}" method="post" autocomplete="off">
-                            @csrf
-                            <tr>
-                                <th class="align-middle" colspan="2">Teks Soal</th>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <input type="hidden" name="f_tryout_id" value="{{$tryout->id}}">
-                                    <input type="hidden" name="f_question_num" value="{{$tryout->question->count()+1}}">
-                                    <textarea class="form-control @error('f_question_text') is-invalid @enderror"
-                                     name="f_question_text" rows="5" required>
-                                     {{old('f_question_text')}}
-                                    </textarea>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th class="align-middle text-primary" colspan="2">
-                                    Pilihan Jawaban
-                                <p class="text-small">Check salah satu jawaban yang benar.</p>
-                                </th>
-                            </tr>
-                            @php
-                                $symbol = ['A', 'B', 'C', 'D', 'E']
-                            @endphp
-                            @for ($i = 0; $i < 5; $i++)
-                            <tr>
-                                <td class="p-0 m-0 align-middle text-center">
-                                    <input class="form-check-input" type="radio" name="f_correct" id="{{ $symbol[$i] }}" @if(old('f_correct') == $symbol[$i] ) checked @endif value="{{$symbol[$i]}}">
-                                    <label class="form-check-label" for="{{$symbol[$i]}}">{{$symbol[$i]}}.</label>
-                                </td>
-                                <td>
-                                    <input type="hidden" name="f_choice_symbol[]" value="{{$symbol[$i]}}">
-                                    <input class="form-control form-control-sm" type="text" name="f_choice_text[]" value="{{old('f_choice_text.'.$i)}}" required>
-                                </td>
-                            </tr>
-                            @endfor
-
-                            <tr>
-                                <td colspan="3"><button type="submit" class="btn btn-primary btn-block"><i class="fa fa-save fa-fw"></i> Tambahkan</button</td>
                             </tr>
                         </form>
                     </table>
