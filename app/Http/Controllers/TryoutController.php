@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Sesi;
 use App\Models\Tryout;
 use App\Models\User;
 use App\Models\UserAnswer;
@@ -160,6 +161,7 @@ class TryoutController extends Controller
             $q->choice()->delete();
             $q->delete();
         }
+        Sesi::where('tryout_id', $id)->delete();
         UserAnswer::where('tryout_id', $id)->delete();
         UserTryout::where('tryout_id', $id)->delete();
 

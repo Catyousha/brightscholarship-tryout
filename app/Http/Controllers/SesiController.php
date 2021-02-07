@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sesi;
+use App\Models\UserAnswer;
+use App\Models\UserTryout;
 use Illuminate\Http\Request;
 
 class SesiController extends Controller
@@ -114,6 +116,18 @@ class SesiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $sesi = Sesi::findOrFail($id);
+        $tryout_id = $sesi->tryout_id;
+        foreach($sesi->question as $q){
+            $q->choice()->delete();
+            $q->delete();
+        }
+
+        UserAnswer::where('sesi_id', $id)->delete();
+        UserTryout::where('sesi_id', $id)->delete();
+
+        $sesi->delete();
+
+        return redirect()->route('tryout.edit', $tryout_id)->with(['success' => 'Tryout Berhasil Dihapus!']);
     }
 }

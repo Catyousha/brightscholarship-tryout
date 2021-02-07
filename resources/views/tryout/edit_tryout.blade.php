@@ -91,7 +91,7 @@
                                     <td class="align-middle">{{$s->time_end->translatedFormat('d M Y H:i')}}</td>
                                     <td>
                                         <a href="{{route('sesi.edit', $s->id)}}" class="btn btn-primary btn-sm"><i class="fa fa-edit fa-fw"></i> Edit</a>
-                                        <a class="delete-soal-btn btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteSesiModal" data-id="{{$s->id}}"><i class="fa fa-trash fa-fw"></i> Hapus</a>
+                                        <a class="delete-sesi-btn btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteSesiModal" data-id="{{$s->id}}"><i class="fa fa-trash fa-fw"></i> Hapus</a>
                                     </td>
                                 </tr>
                             @empty
@@ -254,35 +254,11 @@ crossorigin="anonymous"></script>
         document.getElementsByName('f_delete_tryout').value = tryout_id;
     });
 
-    $(".delete-soal-btn").click(function () {
-        var soal_id = $(this).attr('data-id');
-        console.log(soal_id);
-        document.getElementById('delete_soal_inp').value = soal_id;
-    });
-
     $(".delete-sesi-btn").click(function () {
         var sesi_id = $(this).attr('data-id');
         console.log(sesi_id);
         document.getElementById('delete_sesi_inp').value = sesi_id;
     });
-
-    function d_q(event){
-        var soal_id = document.getElementById('delete_soal_inp').value;
-        console.log(soal_id);
-        $.ajax({
-            type:'POST',
-            url:'/soal/'+soal_id,
-            data:{_token: "{{ csrf_token() }}", _method: 'delete'},
-            success:function(data) {
-                location.reload();
-                //window.location.href = window.location.href;
-                //console.log(data.data);
-            },
-            error: function(err){
-                console.log(err)
-            }
-        });
-    }
 
     function d_s(event){
         var sesi_id = document.getElementById('delete_sesi_inp').value;
@@ -300,10 +276,5 @@ crossorigin="anonymous"></script>
         });
     }
     document.getElementById('confirm-delete-sesi-btn').addEventListener('click', d_s);
-    document.getElementById('confirm-delete-soal-btn').addEventListener('click', d_q);
-</script>
-<script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
-<script>
-    CKEDITOR.replace( 'f_question_text' );
 </script>
 @endpush
