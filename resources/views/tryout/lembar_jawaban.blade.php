@@ -35,34 +35,34 @@
                     </div>
                 </div>
             </div>
-            @forelse ($jawaban_peserta->where('sesi_id', $s->id)->orderBy('question_id')->get() as $jp)
-            <div class="col-lg-12 mb-4">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3 d-flex justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">Soal No.{{$jp->question->question_num}}</h6>
-                    </div>
-                    <div class="card-body">
-                        <div>
-                            {!! $jp->question->question_text !!}
+                @forelse ($jawaban_peserta->where('sesi_id', $s->id)->orderBy('question_id')->get() as $jp)
+                <div class="col-lg-12 mb-4">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 d-flex justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-primary">Soal No.{{$jp->question->question_num}}</h6>
                         </div>
-                        <div class="mt-4 d-flex flex-column">
-                            @foreach ($jp->question->choice as $c)
-                            <div class="form-check mb-2">
-                                <input class="await-answer form-check-input mr-3" type="radio" id="{{$c->id}}" value="{{$c->id}}" disabled  @if($jp->choice->id == $c->id) checked @endif>
-                                <label class="form-check-label
-                                    @if($jp->choice->id == $c->id && !$c->correct) text-danger font-weight-bold
-                                    @elseif($c->correct) text-success font-weight-bold
-                                    @endif"
-                                for="{{$c->id}}">{{$c->choice_symbol}}. {{$c->choice_text}}</label>
+                        <div class="card-body">
+                            <div>
+                                {!! $jp->question->question_text !!}
                             </div>
-                            @endforeach
+                            <div class="mt-4 d-flex flex-column">
+                                @foreach ($jp->question->choice as $c)
+                                <div class="form-check mb-2">
+                                    <input class="await-answer form-check-input mr-3" type="radio" id="{{$c->id}}" value="{{$c->id}}" disabled  @if($jp->choice->id == $c->id) checked @endif>
+                                    <label class="form-check-label
+                                        @if($jp->choice->id == $c->id && !$c->correct) text-danger font-weight-bold
+                                        @elseif($c->correct) text-success font-weight-bold
+                                        @endif"
+                                    for="{{$c->id}}">{{$c->choice_symbol}}. {{$c->choice_text}}</label>
+                                </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        @empty
+            @empty
 
-        @endforelse
+            @endforelse
         @endforeach
 
 

@@ -18,7 +18,7 @@ class UserTryout extends Model
     }
 
     public function tryout(){
-        return $this->belongsToMany(Tryout::class);
+        return $this->belongsTo(Tryout::class);
     }
 
     public function sesi(){

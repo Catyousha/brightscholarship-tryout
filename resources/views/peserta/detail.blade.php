@@ -57,14 +57,17 @@
                     <table class="table">
                             <thead>
                                 <th>Judul Tryout</th>
-                                <th>Skor</th>
+                                <th>Skor Rata-Rata</th>
                                 <th>Opsi</th>
                             </thead>
                             <tbody>
-                                @forelse ($tryout_peserta as $tp)
+                                @forelse ($tryout_peserta->unique('tryout_id') as $tp)
                                 <tr>
                                     <td>{{$tp->tryout->name}}</td>
-                                    <td>{{$tp->score}}</td>
+                                    <td>{{\App\Models\UserTryout::where('tryout_id', $tp->tryout_id)
+                                        ->where('user_id', $peserta->id)
+                                        ->sum('score')/$tp->tryout->sesi->count()}}
+                                    </td>
                                     <td><a class="btn btn-primary btn-sm" href="{{route('tryout.lembar', ['id_peserta'=>$peserta->id, 'id_tryout'=>$tp->tryout->id])}}">
                                         <i class="fa fa-paste fa-fw"></i> Lembar Jawaban
                                         </a>
