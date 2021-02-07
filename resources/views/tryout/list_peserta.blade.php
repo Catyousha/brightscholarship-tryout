@@ -27,13 +27,14 @@
                         </thead>
                         <tbody>
                             @forelse ($peserta_tryout->unique('user_id') as $pt)
-                            @php
-                            $user = \App\Models\User::find($pt->user_id)
-                            @endphp
                             <tr>
-                                <td>{{$user->name}}</td>
+                                <td>{{$pt->user->name}}</td>
                                 @foreach($tryout->sesi as $s)
-                                <td class="text-center">{{\App\Models\UserTryout::where('sesi_id', $s->id)->where('user_id', $user->id)->first()->score ?? 0}}</td>
+                                <td class="text-center">{{\App\Models\UserTryout::where('sesi_id', $s->id)
+                                                                                ->where('user_id', $pt->user_id)
+                                                                                ->first()
+                                                                                ->score ?? 0}}
+                                </td>
                                 @endforeach
                                 <td>
                                     <a href="{{route('tryout.lembar', ['id_peserta' => $pt->user_id, 'id_tryout' => $tryout->id])}}" class="btn btn-primary btn-sm"><i class="fa fa-paste fa-fw"></i> Lembar Jawaban</a>

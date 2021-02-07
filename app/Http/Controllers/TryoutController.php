@@ -55,9 +55,10 @@ class TryoutController extends Controller
     }
 
     public function lembar_jawaban($tryout_id, $user_id){
-        $usertryout      = UserTryout::where('tryout_id', $tryout_id)->where('user_id', $user_id)->firstOrFail();
-        $jawaban_peserta = UserAnswer::where('tryout_id', $tryout_id)->where('user_id', $user_id)->get()->sortBy('question_id');
-        return view('tryout.lembar_jawaban', compact('usertryout', 'jawaban_peserta'));
+        $tryout          = Tryout::findOrFail($tryout_id);
+        $usertryout      = UserTryout::where('tryout_id', $tryout_id)->where('user_id', $user_id)->get();
+        $jawaban_peserta = UserAnswer::where('tryout_id', $tryout_id)->where('user_id', $user_id);
+        return view('tryout.lembar_jawaban', compact('tryout', 'usertryout', 'jawaban_peserta'));
     }
 
     /**

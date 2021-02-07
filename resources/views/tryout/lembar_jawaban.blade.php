@@ -11,16 +11,31 @@
         <div class="col-lg-12 mb-4">
             <div class="card shadow mb-4">
                 <div class="p-3">
-                    <a href="{{route('tryout.peserta', $usertryout->tryout->id)}}" class="btn btn-primary btn-sm">	&#8592; Kembali Ke Daftar Peserta</a>
+                    <a href="{{route('tryout.peserta', $tryout->id)}}" class="btn btn-primary btn-sm">	&#8592; Kembali Ke Daftar Peserta</a>
                 </div>
                 <div class="card-header py-3 d-flex justify-content-between">
-                    <a href="{{route('peserta.show', $usertryout->user->id)}}" class="m-0 font-weight-bold text-primary">{{$usertryout->user->name}}</a>
-                    <a class="m-0 font-weight-bold badge-lg badge-success badge-pill p-2">Skor: {{$usertryout->score}}</a>
+                    <a href="{{route('peserta.show', $usertryout[0]->user_id)}}" class="m-0 font-weight-bold text-primary">{{$usertryout[0]->user->name}}</a>
                 </div>
             </div>
         </div>
 
-        @forelse ($jawaban_peserta as $jp)
+        @foreach ($tryout->sesi as $s)
+            <div class="col-lg-12 mb-4">
+                <div class="card shadow mb-4">
+                    <div class="card header p-3">
+                        <div class="d-flex justify-content-between">
+                            <a class="m-0 font-weight-bold text-primary">{{$s->mapel->name}}</a>
+                            <a class="m-0 font-weight-bold badge-lg badge-success badge-pill p-2">
+                                Skor: {{\App\Models\UserTryout::where('user_id', $usertryout[0]->user_id)
+                                                              ->where('sesi_id', $s->id)->first()
+                                                              ->score??0
+                                       }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @forelse ($jawaban_peserta->where('sesi_id', $s->id)->orderBy('question_id')->get() as $jp)
             <div class="col-lg-12 mb-4">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3 d-flex justify-content-between">
@@ -48,6 +63,8 @@
         @empty
 
         @endforelse
+        @endforeach
+
 
     <!-- End of Main Content -->
 @endsection
