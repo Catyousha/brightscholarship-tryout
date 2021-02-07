@@ -39,7 +39,7 @@ class AnswerController extends Controller
         $tryout_id = $request->t_id;
         $sesi_id = $request->s_id;
         Gate::authorize('view', [Tryout::find($tryout_id), Sesi::find($sesi_id)]);
-        $jml_soal = Tryout::find($tryout_id)->question->count();
+        $jml_soal = Sesi::find($sesi_id)->question->count();
         $score = 0;
         $answer_data = Session::get("tryout_{$tryout_id}_sesi_{$sesi_id}");
 

@@ -50,7 +50,7 @@ class TryoutController extends Controller
 
     public function peserta_list($id){
         $tryout         = Tryout::findOrFail($id);
-        $peserta_tryout = UserTryout::where('tryout_id', $id)->orderByDesc('score')->get();
+        $peserta_tryout = UserTryout::where('tryout_id', $id)->get();
         return view('tryout.list_peserta', compact('peserta_tryout', 'tryout'));
     }
 

@@ -117,7 +117,7 @@
                         <input type="hidden" name="t_id" value="{{$tryout->id}}"/>
                         <input type="hidden" name="s_id" value="{{$sesi->id}}"/>
                         <!--small class="text-danger">Pastikan semua soal sudah dijawab!</small-->
-                        <!--input type="submit" class="await-answer btn btn-success" value="Submit Pengerjaan"-->
+                        <input type="submit" class="await-answer btn btn-success" value="Submit Pengerjaan">
                         </form>
                     </div>
                 </div>

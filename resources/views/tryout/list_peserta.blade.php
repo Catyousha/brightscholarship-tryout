@@ -20,16 +20,23 @@
                     <table class="table">
                         <thead>
                             <th>Nama Peserta</th>
-                            <th>Skor</th>
+                            @foreach ($tryout->sesi as $s)
+                            <th class="text-center">Skor {{$s->mapel->name}}</th>
+                            @endforeach
                             <th>Opsi</th>
                         </thead>
                         <tbody>
-                            @forelse ($peserta_tryout as $pt)
+                            @forelse ($peserta_tryout->unique('user_id') as $pt)
+                            @php
+                            $user = \App\Models\User::find($pt->user_id)
+                            @endphp
                             <tr>
-                                <td>{{$pt->user->name}}</td>
-                                <td>{{$pt->score}}</td>
+                                <td>{{$user->name}}</td>
+                                @foreach($tryout->sesi as $s)
+                                <td class="text-center">{{\App\Models\UserTryout::where('sesi_id', $s->id)->where('user_id', $user->id)->first()->score ?? 0}}</td>
+                                @endforeach
                                 <td>
-                                    <a href="{{route('tryout.lembar', ['id_peserta' => $pt->user->id, 'id_tryout' => $tryout->id])}}" class="btn btn-primary btn-sm"><i class="fa fa-paste fa-fw"></i> Lembar Jawaban</a>
+                                    <a href="{{route('tryout.lembar', ['id_peserta' => $pt->user_id, 'id_tryout' => $tryout->id])}}" class="btn btn-primary btn-sm"><i class="fa fa-paste fa-fw"></i> Lembar Jawaban</a>
                                 </td>
                             </tr>
                             @empty
