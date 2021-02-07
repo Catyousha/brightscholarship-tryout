@@ -10,7 +10,7 @@ class UserAnswer extends Model
     use HasFactory;
     protected $table = 'user_answer';
     protected $fillable = [
-        'user_id', 'tryout_id', 'question_id', 'choice_id'
+        'user_id', 'tryout_id', 'sesi_id', 'question_id', 'choice_id'
     ];
 
     public function question(){
@@ -23,6 +23,10 @@ class UserAnswer extends Model
 
     public function tryout(){
         return $this->hasMany(Tryout::class, 'id', 'tryout_id');
+    }
+
+    public function sesi(){
+        return $this->hasMany(Sesi::class, 'id', 'sesi_id');
     }
 
     public function checkCorrect(){

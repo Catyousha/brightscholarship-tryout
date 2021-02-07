@@ -17,6 +17,7 @@ class CreateUserAnswerTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('tryout_id');
+            $table->foreignId('sesi_id');
             $table->foreignId('question_id');
             $table->foreignId('choice_id');
             $table->timestamps();

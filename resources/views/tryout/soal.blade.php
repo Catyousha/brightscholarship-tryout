@@ -29,7 +29,7 @@
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
 <script>
-    var eventTime= {{$tryout->time_end->getTimestamp()}};
+    var eventTime= {{$sesi->time_end->getTimestamp()}};
     var currentTime = {{\Carbon\Carbon::now()->getTimestamp()}};
     var diffTime = eventTime - currentTime;
     var duration = moment.duration(diffTime*1000, 'milliseconds');
@@ -58,7 +58,7 @@
         <div class="col-lg-8 mb-4">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">{{$tryout->name}}: Soal No. {{$soal->question_num}}</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{{$tryout->name}}: Sesi {{$sesi->mapel->name}} Soal No. {{$soal->question_num}}</h6>
                     <h6 class="m-0 font-weight-bold">Sisa Waktu: <span id="countdown"><script>moment().format('MMMM Do YYYY, h:mm:ss a');</script></span></h6>
                 </div>
                 <div class="card-body">
@@ -66,9 +66,17 @@
                     <div class="mt-4 d-flex flex-column">
                         @foreach ($soal->choice as $c)
                         <div class="form-check mb-2">
-                            <input class="await-answer form-check-input mr-3" type="radio" name="ans_{{$soal->question_num}}" id="{{$c->id}}" value="{{$c->id}}"
-                            @if(Session::get("tryout_$tryout->id.$soal->id") == $c->id) checked @endif>
-                            <label class="form-check-label" for="{{$c->id}}">{{$c->choice_symbol}}. {{$c->choice_text}}</label>
+                            <input class="await-answer form-check-input mr-3"
+                            type="radio"
+                            name="ans_{{$soal->question_num}}"
+                            id="{{$c->id}}"
+                            value="{{$c->id}}"
+                            @if(Session::get("tryout_$tryout->id.$soal->id") == $c->id)
+                                checked
+                            @endif>
+                            <label class="form-check-label" for="{{$c->id}}">
+                                {{$c->choice_symbol}}. {{$c->choice_text}}
+                            </label>
                         </div>
                         @endforeach
                     </div>
@@ -94,7 +102,11 @@
                 <div class="card-body">
                     <ul class="nav-soal">
                         @foreach ($sesi->question as $q)
-                           <li class="@if($q->question_num == $soal->question_num) active @endif"><a href="{{route('tryout.soal', ['id_tryout' => $tryout->id, 'no_soal' =>$q->question_num])}}">{{$q->question_num}}</a></li>
+                        <li class="@if($q->question_num == $soal->question_num) active @endif">
+                            <a href="{{route('tryout.soal', ['id_tryout' => $tryout->id, 'no_soal' =>$q->question_num])}}">
+                                {{$q->question_num}}
+                            </a>
+                        </li>
                         @endforeach
                     </ul>
                     <div class="text-center mt-3">
@@ -103,8 +115,9 @@
                         <form action="{{route('answer.submit')}}" method="POST" id="submit-jawaban">
                         @csrf
                         <input type="hidden" name="t_id" value="{{$tryout->id}}"/>
-                        <small class="text-danger">Pastikan semua soal sudah dijawab!</small>
-                        <input type="submit" class="await-answer btn btn-success" value="Submit Pengerjaan">
+                        <input type="hidden" name="s_id" value="{{$sesi->id}}"/>
+                        <!--small class="text-danger">Pastikan semua soal sudah dijawab!</small-->
+                        <!--input type="submit" class="await-answer btn btn-success" value="Submit Pengerjaan"-->
                         </form>
                     </div>
                 </div>
@@ -151,6 +164,7 @@ crossorigin="anonymous">
             data:{_token: "{{ csrf_token() }}",
                     t_id: {{$tryout->id}},
                     q_id: {{$soal->id}},
+                    s_id: {{$sesi->id}},
                     c_id: event.target.value
                 },
             success:function(data) {
