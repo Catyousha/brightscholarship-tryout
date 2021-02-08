@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Session;
 
 class TryoutController extends Controller
 {
@@ -45,7 +46,9 @@ class TryoutController extends Controller
                                          ->where('question_num', $no_soal)
                                          ->firstOrFail();
         $soal->terakhir = ($tryout->question()->where('question_num', $no_soal+1)->first() == null);
-
+        if(!Session::has('ongoing_tryout')){
+            Session::put('ongoing_tryout', $tryout->id);
+        }
         return view('tryout.soal', compact('tryout', 'soal', 'sesi'));
     }
 

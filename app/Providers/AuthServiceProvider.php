@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Tryout;
+use App\Models\User;
 use App\Policies\TryoutPolicy;
+use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 

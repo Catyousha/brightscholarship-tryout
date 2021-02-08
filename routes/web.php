@@ -2,6 +2,7 @@
 use App\Http\Controllers\TryoutController;
 use App\Http\Controllers\AnswerController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    if(Session::has('ongoing_tryout')){
+        $id = Session::get('ongoing_tryout');
+        return redirect()->route('tryout.soal', ['id_tryout'=>$id, 'no_soal'=>1]);
+    }
+
     return view('welcome');
 });
 

@@ -81,6 +81,9 @@ class AnswerController extends Controller
             $next_sesi = Sesi::find($sesi_id+1);
             if($next_sesi && $next_sesi->tryout_id == $tryout_id){
                 return redirect()->route('tryout.soal', ['id_tryout' => $tryout_id, 'no_soal' => 1]);
+            } else{
+                $request->session()->forget("ongoing_tryout");
+                return redirect()->route('home');
             }
         } else{
             return redirect()->route('tryout.soal', ['id_tryout'=>$tryout_id, 'no_soal' => 1])

@@ -6,12 +6,18 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class ProfileController extends Controller
 {
 
     public function index()
     {
+        if(Session::has('ongoing_tryout')){
+            $id = Session::get('ongoing_tryout');
+            return redirect()->route('tryout.soal', ['id_tryout'=>$id, 'no_soal'=>1]);
+        }
+
         return view('profile');
     }
 

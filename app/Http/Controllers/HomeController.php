@@ -17,6 +17,11 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+        if(Session::has('ongoing_tryout')){
+            $id = Session::get('ongoing_tryout');
+            return redirect()->route('tryout.soal', ['id_tryout'=>$id, 'no_soal'=>1]);
+        }
+
         $tryout = Tryout::latest()->get();
         return view('home', compact('tryout'));
     }
