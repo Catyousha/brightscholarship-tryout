@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuestionTable extends Migration
+class CreateBobotTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateQuestionTable extends Migration
      */
     public function up()
     {
-        Schema::create('question', function (Blueprint $table) {
+        Schema::create('bobot', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('tryout_id');
-            $table->foreignId('mapel_id');
-            $table->foreignId('sesi_id');
-            $table->integer('question_num');
-            $table->text('question_text');
-            $table->foreignId('bobot_id');
+            $table->string('name');
+            $table->float('nilai_bobot');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreateQuestionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('question');
+        Schema::dropIfExists('bobot');
     }
 }

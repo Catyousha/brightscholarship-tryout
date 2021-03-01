@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Bobot;
 use App\Models\Choice;
 use App\Models\Mapel;
 use App\Models\Pilihan;
@@ -22,8 +23,10 @@ class TryoutSeeder extends Seeder
      */
     public function run()
     {
+        $bobot = Bobot::all();
         $pilihan = Pilihan::all();
         $mapel = Mapel::all();
+
         Tryout::factory(3)->state(new Sequence(
             ['pilihan_id' => $pilihan->get(0)->id],
             ['pilihan_id' => $pilihan->get(1)->id],
@@ -49,9 +52,9 @@ class TryoutSeeder extends Seeder
             ]
             ))->has(
                 Question::factory()->count(5)->state( new Sequence(
-                    ['question_num' => 1], ['question_num' => 2],
-                    ['question_num' => 3], ['question_num' => 4],
-                    ['question_num' => 5]
+                    ['question_num' => 1, 'bobot_id' => $bobot->get(0)->id], ['question_num' => 2, 'bobot_id' => $bobot->get(1)->id],
+                    ['question_num' => 3, 'bobot_id' => $bobot->get(2)->id], ['question_num' => 4, 'bobot_id' => $bobot->get(2)->id],
+                    ['question_num' => 5, 'bobot_id' => $bobot->get(1)->id]
                 ))->has(
                     Choice::factory()->count(5)->state( new Sequence(
                         ['choice_symbol' => 'A'], ['choice_symbol' => 'B'],

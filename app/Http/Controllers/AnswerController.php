@@ -34,8 +34,6 @@ class AnswerController extends Controller
 
     public function submit_answer(Request $request)
     {
-
-
         $tryout_id = $request->t_id;
         $sesi_id = $request->s_id;
         Gate::authorize('view', [Tryout::find($tryout_id), Sesi::find($sesi_id)]);
@@ -61,19 +59,18 @@ class AnswerController extends Controller
 
                 if($choice != null){
                     if($choice->correct){
-                        $score+=1;
+                        $score+=$question->bobot->nilai_bobot;
                     }
 
                 }
             }
         }
-        $skorAkhir = ($score/$jml_soal) * 100;
 
         $userTO = new UserTryout();
         $userTO->user_id   = Auth::user()->id;
         $userTO->tryout_id = $tryout_id;
         $userTO->sesi_id = $sesi_id;
-        $userTO->score = $skorAkhir;
+        $userTO->score = $score;
 
         //dd($request->session()->all());
         $request->session()->forget("tryout_{$tryout_id}_sesi_{$sesi_id}");

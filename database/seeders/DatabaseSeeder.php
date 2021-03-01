@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Tryout;
+use Database\Seeders\BobotSeeder;
 use Database\Seeders\MapelSeeder;
 use Database\Seeders\PilihanSeeder;
 use Database\Seeders\StudentSeeder;
@@ -17,6 +18,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            BobotSeeder::class,
             PilihanSeeder::class,
             MapelSeeder::class,
             StudentSeeder::class,

@@ -45,8 +45,9 @@ class QuestionController extends Controller
 
          $soal = new Question();
          $soal->tryout_id     = $request->f_tryout_id;
-         $soal->sesi_id      = $request->f_sesi_id;
+         $soal->sesi_id       = $request->f_sesi_id;
          $soal->mapel_id      = $request->f_mapel_id;
+         $soal->bobot_id      = $request->f_bobot_id;
          $soal->question_text = $request->f_question_text;
          $soal->question_num  = $request->f_question_num;
          if(!$soal->save()){
@@ -106,7 +107,8 @@ class QuestionController extends Controller
     {
         $soal = Question::findOrFail($id);
         $update_soal = $soal->update([
-            'question_text' => $request->f_question_text
+            'question_text' => $request->f_question_text,
+            'bobot_id' => $request->f_bobot_id
         ]);
 
         if(!$update_soal){

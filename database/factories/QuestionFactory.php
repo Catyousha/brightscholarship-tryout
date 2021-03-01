@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Bobot;
 use App\Models\Mapel;
 use App\Models\Question;
 use App\Models\Sesi;
@@ -33,7 +34,8 @@ class QuestionFactory extends Factory
             },
             'sesi_id' => Sesi::factory(),
             'question_text' => $this->faker->text,
-            'question_num' => 1
+            'question_num' => 1,
+            'bobot_id' => Bobot::factory()
         ];
     }
 }

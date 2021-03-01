@@ -11,7 +11,7 @@ class Question extends Model
     protected $table = 'question';
 
     protected $fillable = [
-        'tryout_id', 'question_num', 'question_text'
+        'tryout_id', 'mapel_id', 'sesi_id', 'question_num', 'question_text', 'bobot_id'
     ];
 
     public function tryout(){
@@ -28,5 +28,9 @@ class Question extends Model
 
     public function choice(){
         return $this->hasMany(Choice::class);
+    }
+
+    public function bobot(){
+        return $this->hasOne(Bobot::class, 'id', 'bobot_id');
     }
 }

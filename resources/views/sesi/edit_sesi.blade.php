@@ -87,6 +87,7 @@
                             <tr>
                                 <th class="align-middle">No Soal</th>
                                 <th class="align-middle">Teks Soal</th>
+                                <th class="align-middle">Bobot Soal</th>
                                 <th class="align-middle">Opsi</th>
 
                             </tr>
@@ -94,6 +95,7 @@
                                 <tr>
                                     <td class="align-middle">{{$q->question_num}}</td>
                                     <td class="align-middle">{{\Illuminate\Support\Str::limit($q->question_text, 50, $end='...')}}</td>
+                                    <td class="align-middle">{{$q->bobot->name}} (Bobot nilai: {{$q->bobot->nilai_bobot}})</td>
                                     <td class="align-middle">
                                         <a href="{{route('soal.edit', $q->id)}}" class="btn btn-primary btn-sm"><i class="fa fa-edit fa-fw"></i> Edit</a>
                                         <a class="delete-soal-btn btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteSoalModal" data-id="{{$q->id}}"><i class="fa fa-trash fa-fw"></i> Hapus</a>
@@ -144,6 +146,20 @@
                                      name="f_question_text" rows="5" required>
                                      {{old('f_question_text')}}
                                     </textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="align-middle" colspan="2">Bobot Soal</th>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <select class="custom-select" name="f_bobot_id" required>
+                                        @foreach (\App\Models\Bobot::all() as $b)
+                                        <option value="{{$b->id}}">
+                                            {{$b->name}} (Bobot nilai: {{$b->nilai_bobot}})
+                                        </option>
+                                        @endforeach
+                                    </select>
                                 </td>
                             </tr>
                             <tr>

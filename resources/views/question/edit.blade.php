@@ -28,6 +28,20 @@
                                 <td colspan="2"><textarea class="form-control @error('f_question_text') is-invalid @enderror" name="f_question_text" rows="5">{{$soal->question_text}}</textarea></td>
                             </tr>
                             <tr>
+                                <th class="align-middle" colspan="2">Bobot Soal</th>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <select class="custom-select" name="f_bobot_id" required>
+                                        @foreach (\App\Models\Bobot::all() as $b)
+                                        <option value="{{$b->id}}" @if($soal->bobot_id == $b->id) selected @endif>
+                                            {{$b->name}} (Bobot nilai: {{$b->nilai_bobot}})
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
                                 <th class="align-middle text-primary" colspan="2">
                                     Pilihan Jawaban
                                 <p class="text-small">Check salah satu jawaban yang benar.</p>
