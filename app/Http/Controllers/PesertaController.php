@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\UserTryout;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\Console\Input\Input;
 
 class PesertaController extends Controller
@@ -16,6 +17,7 @@ class PesertaController extends Controller
      */
     public function index(Request $request)
     {
+        Gate::authorize('isAdmin');
         $peserta = ($request->query('name')) ?
                                             User::like('name', $request->query('name'))->orderBy('name')->paginate(20)
                                            : User::orderBy('name')->paginate(20);
@@ -51,6 +53,7 @@ class PesertaController extends Controller
      */
     public function show($id)
     {
+        Gate::authorize('isAdmin');
         $peserta        = User::findOrFail($id);
         $tryout_peserta = $peserta->user_tryout;
         return view('peserta.detail', compact('peserta', 'tryout_peserta'));
@@ -87,6 +90,7 @@ class PesertaController extends Controller
      */
     public function destroy($id)
     {
+        Gate::authorize('isAdmin');
         $user = User::findOrFail($id);
         $user->user_answer()->delete();
         $user->user_tryout()->delete();

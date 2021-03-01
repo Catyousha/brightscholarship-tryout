@@ -6,6 +6,7 @@ use App\Models\Sesi;
 use App\Models\UserAnswer;
 use App\Models\UserTryout;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class SesiController extends Controller
 {
@@ -37,6 +38,7 @@ class SesiController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('isAdmin');
         $this->validate($request, [
             'f_mapel'               => 'required',
             'f_time_start'         => 'required',
@@ -75,6 +77,7 @@ class SesiController extends Controller
      */
     public function edit($id)
     {
+        Gate::authorize('isAdmin');
         $sesi = Sesi::findOrFail($id);
         return view('sesi.edit_sesi', compact('sesi'));
     }
@@ -88,6 +91,7 @@ class SesiController extends Controller
      */
     public function update(Request $request, $id)
     {
+        Gate::authorize('isAdmin');
         $this->validate($request, [
             'f_mapel'            => 'required',
             'f_time_start'         => 'required',
@@ -116,6 +120,7 @@ class SesiController extends Controller
      */
     public function destroy($id)
     {
+        Gate::authorize('isAdmin');
         $sesi = Sesi::findOrFail($id);
         $tryout_id = $sesi->tryout_id;
         foreach($sesi->question as $q){

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Tryout;
+use Database\Seeders\AdminSeeder;
 use Database\Seeders\BobotSeeder;
 use Database\Seeders\MapelSeeder;
 use Database\Seeders\PilihanSeeder;
@@ -21,6 +22,7 @@ class DatabaseSeeder extends Seeder
             BobotSeeder::class,
             PilihanSeeder::class,
             MapelSeeder::class,
+            AdminSeeder::class,
             StudentSeeder::class,
             TryoutSeeder::class
         ]);

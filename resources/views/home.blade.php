@@ -21,6 +21,7 @@
         </div>
     @endif
 
+    @can('isStudent')
     <div class="row">
         @foreach ($tryout as $t)
         @php
@@ -54,4 +55,5 @@
         </div>
         @endforeach
     </div>
+    @endcan
 @endsection

@@ -23,6 +23,7 @@ class TryoutController extends Controller
      */
     public function index(Request $request)
     {
+        Gate::authorize('isAdmin');
         $tryout = ($request->query('name')) ?
         Tryout::like('name', $request->query('name'))->orderBy('name')->paginate(10)
        : Tryout::orderBy('name')->paginate(10);
@@ -53,12 +54,14 @@ class TryoutController extends Controller
     }
 
     public function peserta_list($id){
+        Gate::authorize('isAdmin');
         $tryout         = Tryout::findOrFail($id);
         $peserta_tryout = UserTryout::where('tryout_id', $id)->get();
         return view('tryout.list_peserta', compact('peserta_tryout', 'tryout'));
     }
 
     public function lembar_jawaban($tryout_id, $user_id){
+        Gate::authorize('isAdmin');
         $tryout          = Tryout::findOrFail($tryout_id);
         $usertryout      = UserTryout::where('tryout_id', $tryout_id)->where('user_id', $user_id)->get();
         $jawaban_peserta = UserAnswer::where('tryout_id', $tryout_id)->where('user_id', $user_id);
@@ -83,6 +86,7 @@ class TryoutController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('isAdmin');
         $this->validate($request, [
             'f_name'               => 'required',
             'f_pilihan'            => 'required',
@@ -122,6 +126,7 @@ class TryoutController extends Controller
      */
     public function edit($id)
     {
+        Gate::authorize('isAdmin');
         $tryout = Tryout::findOrFail($id);
         return view('tryout.edit_tryout', compact('tryout'));
     }
@@ -135,6 +140,7 @@ class TryoutController extends Controller
      */
     public function update(Request $request, $id)
     {
+        Gate::authorize('isAdmin');
         $tryout = Tryout::findOrFail($id);
 
         $update_tryout = $tryout->update([
@@ -159,6 +165,7 @@ class TryoutController extends Controller
      */
     public function destroy($id)
     {
+        Gate::authorize('isAdmin');
         $tryout = Tryout::findOrFail($id);
         foreach($tryout->question as $q){
             $q->choice()->delete();

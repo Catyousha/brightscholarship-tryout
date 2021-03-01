@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Models\Choice;
-use App\Models\Tryout;
 use App\Models\UserAnswer;
 use App\Models\UserTryout;
 use Illuminate\Support\Facades\Auth;
@@ -12,18 +11,17 @@ class UserAnswerObserver
 {
     public function perbaiki_skor(UserAnswer $userAnswer){
         $usertryout   =  UserTryout::where('user_id', $userAnswer->user_id)->where('tryout_id', $userAnswer->tryout_id)->first();
-        $jml_soal     =  Tryout::find($userAnswer->tryout_id)->question->count();
         $soal_dijawab =  UserAnswer::where('tryout_id', $userAnswer->tryout_id)->where('user_id', $userAnswer->user_id)->get();
-        $jml_benar    =  0;
+        $skor         =  0;
 
         foreach ($soal_dijawab as $s) {
 
             if(Choice::find($s->choice_id)->correct ?? false){
-                $jml_benar += 1;
+                $skor += $s->question->bobot->nilai_bobot;
             }
         }
 
-        $usertryout->score = ($jml_benar/$jml_soal) * 100;
+        $usertryout->score = $skor;
         $usertryout->save();
     }
 

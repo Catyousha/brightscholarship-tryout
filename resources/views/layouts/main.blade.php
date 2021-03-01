@@ -68,6 +68,7 @@
         <!-- Divider -->
         <hr class="sidebar-divider">
 
+        @can('isAdmin')
         <!-- Heading -->
         <div class="sidebar-heading">
             {{ __('Menu Admin') }}
@@ -85,7 +86,7 @@
                 <span>{{ __('Daftar Peserta') }}</span>
             </a>
         </li>
-
+        @endcan
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 
