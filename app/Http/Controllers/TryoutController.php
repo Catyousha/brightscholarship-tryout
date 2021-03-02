@@ -78,7 +78,10 @@ class TryoutController extends Controller
     }
 
     public function pemeringkatan($name){
-
+        if(Session::has('ongoing_tryout')){
+            $id = Session::get('ongoing_tryout');
+            return redirect()->route('tryout.soal', ['id_tryout'=>$id, 'no_soal'=>1]);
+        }
         if($name == "ALL"){
             return $this->all_pemeringkatan();
         }

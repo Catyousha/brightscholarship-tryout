@@ -58,7 +58,7 @@
         <div class="col-lg-8 mb-4">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">{{$tryout->name}}: {{$sesi->mapel->name}} Soal No. {{$soal->question_num}}</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{{$tryout->name}}: {{$sesi->mapel->name}}<br>Soal No. {{$soal->question_num}}</h6>
                     <h6 class="m-0 font-weight-bold">Sisa Waktu: <span id="countdown"><script>moment().format('MMMM Do YYYY, h:mm:ss a');</script></span></h6>
                 </div>
                 <div class="card-body">
@@ -124,7 +124,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- End of Main Content -->
 @endsection
 
