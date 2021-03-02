@@ -16,9 +16,10 @@ class CreateSesiTable extends Migration
         Schema::create('sesi', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tryout_id');
-            $table->foreignId('mapel_id');
+            $table->foreignId('mapel_id')->nullable();
             $table->dateTime('time_start');
             $table->dateTime('time_end');
+            $table->boolean('istirahat')->default(0);
             $table->timestamps();
         });
     }

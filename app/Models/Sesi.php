@@ -12,7 +12,7 @@ class Sesi extends Model
     protected $table = 'sesi';
 
     protected $fillable = [
-        'tryout_id', 'mapel_id', 'time_start', 'time_end'
+        'tryout_id', 'mapel_id', 'time_start', 'time_end', 'istirahat'
     ];
 
     public $dates = ['time_start', 'time_end'];

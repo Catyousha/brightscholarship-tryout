@@ -32,6 +32,7 @@ class SesiFactory extends Factory
             'time_end' => function (array $attributes) {
                 return Tryout::find($attributes['tryout_id'])->time_start->addHours(1);
             },
+            'istirahat' => 0
         ];
     }
 }

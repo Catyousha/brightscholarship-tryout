@@ -50,6 +50,7 @@ class SesiController extends Controller
          $sesi->mapel_id   = $request->f_mapel;
          $sesi->time_start = $request->f_time_start;
          $sesi->time_end   = $request->f_time_end;
+         $sesi->istirahat  = $request->f_istirahat??0;
 
          if($sesi->save()){
             return redirect()->route('sesi.edit', $sesi->id)->with(['success' => 'Sesi berhasil ditambahkan!']);
@@ -102,7 +103,8 @@ class SesiController extends Controller
          $update_sesi = $sesi->update([
             'mapel' => $request->f_mapel,
             'time_start' => $request->f_time_start,
-            'time_end' => $request->f_time_end
+            'time_end' => $request->f_time_end,
+            'istirahat' => $request->f_istirahat??0
         ]);
 
          if($update_sesi){

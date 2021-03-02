@@ -155,6 +155,15 @@
                                 </td>
                             </tr>
                             <tr>
+                                <th class="align-middle">Istirahat?</th>
+                                <td class="align-middle">
+                                    <div class="form-check">
+                                        <input type="checkbox" name="f_istirahat" class="form-check-input" id="istirahatCheck" value="1">
+                                        <label class="form-check-label" for="istirahatCheck">Checklist untuk menandai sesi ini sebagai waktu istirahat</label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td colspan="3"><button type="submit" class="btn btn-primary btn-block"><i class="fa fa-save fa-fw"></i> Simpan</button</td>
                             </tr>
                         </form>

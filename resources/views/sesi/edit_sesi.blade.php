@@ -30,6 +30,15 @@
                                 @method('put')
                                 <input type="hidden" name="f_sesi_id" value="{{$sesi->id}}">
                                 <tr>
+                                    <th class="align-middle">Istirahat?</th>
+                                    <td class="align-middle">
+                                        <div class="form-check">
+                                            <input type="checkbox" name="f_istirahat" class="form-check-input" id="istirahatCheck" @if($sesi->istirahat) checked="checked" @endif value="1">
+                                            <label class="form-check-label" for="istirahatCheck">Checklist untuk menandai sesi ini sebagai waktu istirahat</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th class="align-middle">Mata Pelajaran</th>
                                     <td class="align-middle">:</td>
                                     <td>

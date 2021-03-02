@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function(){
     Route::resource('/peserta', 'PesertaController');
 
     Route::get('/tryout/{id}/peserta-list', [TryoutController::class, 'peserta_list'])->name('tryout.peserta');
+    Route::get('/tryout/{id_tryout}/istirahat', [TryoutController::class, 'istirahat'])->name('tryout.istirahat');
     Route::get('/tryout/{id_tryout}/{no_soal}', [TryoutController::class, 'solve'])->name('tryout.soal');
     Route::get('/lembar/{id_tryout}/{id_peserta}', [TryoutController::class, 'lembar_jawaban'])->name('tryout.lembar');
 

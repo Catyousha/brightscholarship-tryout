@@ -40,6 +40,9 @@ class TryoutController extends Controller
         $sesi           = $tryout->sesi()->where('time_start', '<=', Carbon::now())
                                          ->where('time_end', '>', Carbon::now())
                                          ->firstOrFail();
+        if($sesi->istirahat){
+            return redirect()->route('tryout.istirahat', ['id_tryout' => $tryout->id]);
+        }
         Gate::authorize('view', [$tryout, $sesi]);
 
         $soal           = $tryout->question()
@@ -51,6 +54,26 @@ class TryoutController extends Controller
             Session::put('ongoing_tryout', $tryout->id);
         }
         return view('tryout.soal', compact('tryout', 'soal', 'sesi'));
+    }
+
+    public function istirahat($id_tryout){
+
+        $tryout         = Tryout::findOrFail($id_tryout);
+        //selain sedang berlangsung, tolak.
+
+
+        $sesi           = $tryout->sesi()->where('time_start', '<=', Carbon::now())
+                                         ->where('time_end', '>', Carbon::now())
+                                         ->where('istirahat', 1)
+                                         ->firstOrFail();
+
+        Gate::authorize('view', [$tryout, $sesi]);
+
+        if(!Session::has('ongoing_tryout')){
+            Session::put('ongoing_tryout', $tryout->id);
+        }
+
+        return view('tryout.istirahat', compact('tryout', 'sesi'));
     }
 
     public function peserta_list($id){
