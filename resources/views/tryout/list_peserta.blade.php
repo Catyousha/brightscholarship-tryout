@@ -39,11 +39,13 @@
                                 <td class="text-center">{{$rank}}</td>
                                 <td>{{\App\Models\User::where('id', $pt->user_id)->first()->name}}</td>
                                 @foreach($tryout->sesi as $s)
+                                    @if($s->istirahat != 0)
                                 <td class="text-center">{{\App\Models\UserTryout::where('sesi_id', $s->id)
                                                                                 ->where('user_id', $pt->user_id)
                                                                                 ->first()
                                                                                 ->score ?? 0}}
                                 </td>
+                                    @endif
                                 @endforeach
                                 <td class="text-center">{{$pt->avg_score}}</td>
                                 @can('isAdmin')

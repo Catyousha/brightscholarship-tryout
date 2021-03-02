@@ -79,7 +79,9 @@ class TryoutController extends Controller
     public function peserta_list($id){
         $tryout         = Tryout::findOrFail($id);
         //$peserta_tryout = UserTryout::where('tryout_id', $id)->orderBy('score')->get();
-        $peserta_tryout = DB::table('user_tryout AS ut1')->select(DB::raw("*, (SELECT SUM(score)/".$tryout->sesi->count()." AS avg_score FROM `user_tryout` WHERE user_id = ut1.user_id) AS avg_score"))->orderByDesc('avg_score')->get();
+        $peserta_tryout = DB::table('user_tryout AS ut1')->select(DB::raw("*, (SELECT SUM(score)/".$tryout->sesi->where('istirahat', 0)->count()." AS avg_score FROM `user_tryout` WHERE user_id = ut1.user_id) AS avg_score"))
+                                                         ->orderByDesc('avg_score')
+                                                         ->get();
         return view('tryout.list_peserta', compact('peserta_tryout', 'tryout'));
     }
 

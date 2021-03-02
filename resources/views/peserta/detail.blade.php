@@ -66,7 +66,7 @@
                                     <td>{{$tp->tryout->name}}</td>
                                     <td>{{\App\Models\UserTryout::where('tryout_id', $tp->tryout_id)
                                         ->where('user_id', $peserta->id)
-                                        ->sum('score')/$tp->tryout->sesi->count()}}
+                                        ->sum('score')/$tp->tryout->sesi->where('istirahat', 0)->count()}}
                                     </td>
                                     <td><a class="btn btn-primary btn-sm" href="{{route('tryout.lembar', ['id_peserta'=>$peserta->id, 'id_tryout'=>$tp->tryout->id])}}">
                                         <i class="fa fa-paste fa-fw"></i> Lembar Jawaban
