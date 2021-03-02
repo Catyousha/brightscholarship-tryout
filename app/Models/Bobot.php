@@ -11,7 +11,7 @@ class Bobot extends Model
     protected $table = 'bobot';
 
     protected $fillable = [
-        'name', 'nilai_bobot'
+        'name', 'nilai_bobot', 'has_deleted'
     ];
 
     public function question(){

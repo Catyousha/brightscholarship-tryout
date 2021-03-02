@@ -17,6 +17,7 @@ class CreateBobotTable extends Migration
             $table->id();
             $table->string('name');
             $table->float('nilai_bobot');
+            $table->boolean('has_deleted')->default(0);
             $table->timestamps();
         });
     }

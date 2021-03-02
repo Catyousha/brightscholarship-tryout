@@ -163,7 +163,7 @@
                             <tr>
                                 <td colspan="2">
                                     <select class="custom-select" name="f_bobot_id" required>
-                                        @foreach (\App\Models\Bobot::all() as $b)
+                                        @foreach (\App\Models\Bobot::where('has_deleted', 0) as $b)
                                         <option value="{{$b->id}}">
                                             {{$b->name}} (Bobot nilai: {{$b->nilai_bobot}})
                                         </option>
