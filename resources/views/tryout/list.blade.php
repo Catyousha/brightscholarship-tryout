@@ -45,7 +45,10 @@
                                 <td>{{$t->time_start->translatedFormat('d M Y H:i')}}</td>
                                 <td>{{$t->time_end->translatedFormat('d M Y H:i')}}</td>
                                 <td>{{$t->user_tryout->unique('user_id')->count()}}</td>
-                                <td><a href="{{route('tryout.edit', $t->id )}}" class="btn btn-primary btn-sm">Detail</a></td>
+                                <td colspan="2">
+                                    @can('isAdmin')<a href="{{route('tryout.edit', $t->id )}}" class="btn btn-primary btn-sm">Detail</a>@endcan
+                                    <a href="{{route('tryout.peserta', $t->id )}}" class="btn btn-info btn-sm">Pemeringkatan</a>
+                                </td>
                             </tr>
                             @empty
                             <tr>
@@ -61,6 +64,7 @@
             </div>
         </div>
 
+        @can('isAdmin')
         <div class="col-lg-12 mb-4">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex justify-content-between">
@@ -109,6 +113,7 @@
                 </div>
             </div>
         </div>
+        @endcan
     <!-- End of Main Content -->
 @endsection
 

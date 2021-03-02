@@ -51,7 +51,7 @@ class User extends Authenticatable
     }
 
     public function user_tryout(){
-        return $this->hasMany(UserTryout::class, 'id');
+        return $this->hasMany(UserTryout::class, 'user_id', 'id');
     }
 
     public function getFullNameAttribute()

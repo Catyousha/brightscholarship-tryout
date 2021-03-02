@@ -65,6 +65,12 @@
             </a>
         </li>
 
+        <li class="nav-item @if(Request::segment(1) == 'tryout') active @endif">
+            <a class="nav-link" href="{{ route('tryout.index') }}">
+                <i class="fas fa-fw fa-copy"></i>
+                <span>{{ __('Tryout') }}</span>
+            </a>
+        </li>
         <!-- Divider -->
         <hr class="sidebar-divider">
 
@@ -73,12 +79,7 @@
         <div class="sidebar-heading">
             {{ __('Menu Admin') }}
         </div>
-        <li class="nav-item @if(Request::segment(1) == 'tryout') active @endif">
-            <a class="nav-link" href="{{ route('tryout.index') }}">
-                <i class="fas fa-fw fa-copy"></i>
-                <span>{{ __('Daftar Tryout') }}</span>
-            </a>
-        </li>
+
 
         <li class="nav-item @if(Request::segment(1) == 'peserta') active @endif">
             <a class="nav-link" href="{{ route('peserta.index') }}">

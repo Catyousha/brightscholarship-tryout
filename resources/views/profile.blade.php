@@ -60,7 +60,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group focused">
                                         <label class="form-control-label" for="name">Nama Lengkap<span class="small text-danger">*</span></label>
-                                        <input type="text" id="name" class="form-control" name="name" placeholder="Nama Lengkap" value="{{ old('name', Auth::user()->name) }}">
+                                        <input type="text" id="name" class="form-control" name="name" placeholder="Nama Lengkap" value="{{ old('name', Auth::user()->name) }}" disabled>
                                     </div>
                                 </div>
                             </div>

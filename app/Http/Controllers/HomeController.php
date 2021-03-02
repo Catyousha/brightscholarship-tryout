@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Tryout;
 use App\Models\User;
+use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
@@ -22,7 +24,7 @@ class HomeController extends Controller
             return redirect()->route('tryout.soal', ['id_tryout'=>$id, 'no_soal'=>1]);
         }
 
-        $tryout = Tryout::latest()->get();
+        $tryout = Tryout::latest()->where('pilihan_id', Auth::user()->pilihan_id)->get();
         return view('home', compact('tryout'));
     }
 }

@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 
@@ -23,7 +24,6 @@ class TryoutController extends Controller
      */
     public function index(Request $request)
     {
-        Gate::authorize('isAdmin');
         $tryout = ($request->query('name')) ?
         Tryout::like('name', $request->query('name'))->orderBy('name')->paginate(10)
        : Tryout::orderBy('name')->paginate(10);
@@ -54,9 +54,9 @@ class TryoutController extends Controller
     }
 
     public function peserta_list($id){
-        Gate::authorize('isAdmin');
         $tryout         = Tryout::findOrFail($id);
-        $peserta_tryout = UserTryout::where('tryout_id', $id)->get();
+        //$peserta_tryout = UserTryout::where('tryout_id', $id)->orderBy('score')->get();
+        $peserta_tryout = DB::table('user_tryout AS ut1')->select(DB::raw("*, (SELECT SUM(score)/".$tryout->sesi->count()." AS avg_score FROM `user_tryout` WHERE user_id = ut1.user_id) AS avg_score"))->orderByDesc('avg_score')->get();
         return view('tryout.list_peserta', compact('peserta_tryout', 'tryout'));
     }
 
