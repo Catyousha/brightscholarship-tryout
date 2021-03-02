@@ -45,6 +45,9 @@ Route::middleware('auth')->group(function(){
     //AJAX
     Route::post('/answer', [AnswerController::class, 'save_answer'])->name('answer.save');
 
+    //PDF Creator
+    Route::get('/print/{type}', 'PdfController@index')->name('print');
+
 });
 
 Route::get('/blank', function () {
