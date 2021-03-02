@@ -40,7 +40,7 @@
                             </div>
                             <span class="badge badge-pill {{$stat->badge}} mb-2">Status: {{$t->tryout_status()}}</span>
                             @if($t->tryout_status() == "Telah Diselesaikan")
-                            <span class="badge badge-pill {{$stat->badge}} mb-2">Skor: {{$t->user_score() ?? 0}}/100</span>
+                            <a class="btn btn-sm {{$stat->btn}} btn-block" href="{{route('tryout.lembar', ['id_tryout' => $t->id, 'id_peserta' => Illuminate\Support\Facades\Auth::user()->id])}}">Lihat Lembar Jawaban</a>
                             @endif
                             @if($t->tryout_status() == "Sedang Berlangsung")
                             <a class="btn btn-sm {{$stat->btn}} btn-block" href="{{route('tryout.soal', ['id_tryout' => $t->id, 'no_soal' => 1])}}">Kerjakan</a>

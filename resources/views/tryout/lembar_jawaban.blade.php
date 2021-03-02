@@ -10,9 +10,11 @@
     <!-- Main Content goes here -->
         <div class="col-lg-12 mb-4">
             <div class="card shadow mb-4">
+                @can('isAdmin')
                 <div class="p-3">
                     <a href="{{route('tryout.peserta', $tryout->id)}}" class="btn btn-primary btn-sm">	&#8592; Kembali Ke Daftar Peserta</a>
                 </div>
+                @endcan
                 <div class="card-header py-3 d-flex justify-content-between">
                     <a href="{{route('peserta.show', $usertryout[0]->user_id)}}" class="m-0 font-weight-bold text-primary">{{$usertryout[0]->user->name}}</a>
                 </div>
@@ -35,7 +37,7 @@
                     </div>
                 </div>
             </div>
-                @forelse ($jawaban_peserta->where('sesi_id', $s->id)->orderBy('question_id')->get() as $jp)
+                @forelse (\App\Models\UserAnswer::where('tryout_id', $tryout->id)->where('user_id', $usertryout[0]->user_id)->where('sesi_id', $s->id)->orderBy('question_id')->get() as $jp)
                 <div class="col-lg-12 mb-4">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-between">
@@ -60,9 +62,9 @@
                         </div>
                     </div>
                 </div>
-            @empty
+                @empty
 
-            @endforelse
+                @endforelse
         @endforeach
 
 

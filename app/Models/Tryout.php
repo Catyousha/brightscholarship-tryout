@@ -46,11 +46,15 @@ class Tryout extends Model
         $time_now = now();
         $user_check = $this->user_tryout()
                                     ->where('user_id', Auth::user()->id)
-                                    ->first();
+                                    ->count();
         if($this->time_start > $time_now){
             return 'Dijadwalkan';
         } else if($this->time_end < $time_now){
-            return 'Telah Berakhir';
+            if($user_check > 0){
+                return 'Telah Diselesaikan';
+            } else{
+                return 'Telah Berakhir';
+            }
         } else{
             return 'Sedang Berlangsung';
         }

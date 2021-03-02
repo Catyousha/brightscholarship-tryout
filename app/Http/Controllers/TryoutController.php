@@ -61,7 +61,9 @@ class TryoutController extends Controller
     }
 
     public function lembar_jawaban($tryout_id, $user_id){
-        Gate::authorize('isAdmin');
+        if(Auth::user()->role != 'admin' && Auth::user()->id != $user_id){
+            return redirect()->route('home');
+        }
         $tryout          = Tryout::findOrFail($tryout_id);
         $usertryout      = UserTryout::where('tryout_id', $tryout_id)->where('user_id', $user_id)->get();
         $jawaban_peserta = UserAnswer::where('tryout_id', $tryout_id)->where('user_id', $user_id);
