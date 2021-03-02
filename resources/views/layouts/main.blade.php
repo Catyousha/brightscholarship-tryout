@@ -80,13 +80,6 @@
             {{ __('Menu Admin') }}
         </div>
 
-        <li class="nav-item @if(Request::segment(1) == 'bobot') active @endif">
-            <a class="nav-link" href="{{ route('bobot.index') }}">
-                <i class="fas fa-fw fa-balance-scale"></i>
-                <span>{{ __('Pembobotan') }}</span>
-            </a>
-        </li>
-
         <li class="nav-item @if(Request::segment(1) == 'peserta') active @endif">
             <a class="nav-link" href="{{ route('peserta.index') }}">
                 <i class="fas fa-fw fa-user"></i>

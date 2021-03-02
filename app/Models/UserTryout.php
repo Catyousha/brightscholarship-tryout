@@ -10,7 +10,7 @@ class UserTryout extends Model
     use HasFactory;
     protected $table = 'user_tryout';
     protected $fillable = [
-        'user_id', 'tryout_id', 'score'
+        'user_id', 'tryout_id', 'sesi_id', 'mapel_id', 'score'
     ];
 
     public function user(){
@@ -23,5 +23,9 @@ class UserTryout extends Model
 
     public function sesi(){
         return $this->hasOne(Sesi::class);
+    }
+
+    public function mapel(){
+        return $this->hasOne(Mapel::class);
     }
 }

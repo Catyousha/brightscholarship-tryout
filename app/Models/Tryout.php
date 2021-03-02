@@ -23,7 +23,7 @@ class Tryout extends Model
     }
 
     public function pilihan(){
-        return $this->belongsTo(Pilihan::class);
+        return $this->belongsTo(Pilihan::class, 'pilihan_id', 'id');
     }
 
     public function question(){

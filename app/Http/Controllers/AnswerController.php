@@ -70,6 +70,7 @@ class AnswerController extends Controller
         $userTO->user_id   = Auth::user()->id;
         $userTO->tryout_id = $tryout_id;
         $userTO->sesi_id = $sesi_id;
+        $userTO->mapel_id = Sesi::find($sesi_id)->mapel_id;
         $userTO->score = $score;
 
         //dd($request->session()->all());

@@ -21,4 +21,8 @@ class Mapel extends Model
     public function sesi(){
         return $this->hasMany(Sesi::class);
     }
+
+    public function user_tryout(){
+        return $this->hasMany(UserTryout::class);
+    }
 }

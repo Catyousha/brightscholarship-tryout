@@ -18,6 +18,7 @@ class CreateUserTryoutTable extends Migration
             $table->foreignId('user_id');
             $table->foreignId('tryout_id');
             $table->foreignId('sesi_id');
+            $table->foreignId('mapel_id');
             $table->float('score')->nullable();
             $table->timestamps();
         });

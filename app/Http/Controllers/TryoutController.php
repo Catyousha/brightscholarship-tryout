@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pilihan;
 use App\Models\Sesi;
 use App\Models\Tryout;
 use App\Models\User;
@@ -76,10 +77,36 @@ class TryoutController extends Controller
         return view('tryout.istirahat', compact('tryout', 'sesi'));
     }
 
+    public function pemeringkatan($name){
+
+        if($name == "ALL"){
+            return $this->all_pemeringkatan();
+        }
+        $pilihan = Pilihan::where('name', $name)->first();
+        $tryout  = Tryout::where('pilihan_id', $pilihan->id);
+        if($tryout->count() > 1){
+            return view('tryout.list', compact('tryout'));
+        } else{
+            return $this->peserta_list($tryout->first()->id);
+        }
+
+    }
+
+    public function all_pemeringkatan(){
+        $tryout         = Tryout::all();
+        //$peserta_tryout = UserTryout::where('tryout_id', $id)->orderBy('score')->get();
+        $peserta_tryout = DB::table('user_tryout AS ut1')->select(DB::raw("*, (SELECT SUM(score)/8 AS avg_score FROM `user_tryout` WHERE user_id = ut1.user_id) AS avg_score"))
+                                                         ->orderByDesc('avg_score')
+                                                         ->get();
+        return view('tryout.all_ranking', compact('peserta_tryout', 'tryout'));
+    }
+
+    //AKA RANKING SALAH SATU TO
     public function peserta_list($id){
         $tryout         = Tryout::findOrFail($id);
         //$peserta_tryout = UserTryout::where('tryout_id', $id)->orderBy('score')->get();
         $peserta_tryout = DB::table('user_tryout AS ut1')->select(DB::raw("*, (SELECT SUM(score)/".$tryout->sesi->where('istirahat', 0)->count()." AS avg_score FROM `user_tryout` WHERE user_id = ut1.user_id) AS avg_score"))
+                                                         ->where('tryout_id', $id)
                                                          ->orderByDesc('avg_score')
                                                          ->get();
         return view('tryout.list_peserta', compact('peserta_tryout', 'tryout'));
