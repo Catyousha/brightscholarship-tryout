@@ -100,7 +100,7 @@ class TryoutController extends Controller
         //$peserta_tryout = UserTryout::where('tryout_id', $id)->orderBy('score')->get();
         $peserta_tryout = DB::table('user_tryout AS ut1')->select(DB::raw("*, (SELECT SUM(score)/8 AS avg_score FROM `user_tryout` WHERE user_id = ut1.user_id) AS avg_score"))
                                                          ->orderByDesc('avg_score')
-                                                         ->get();
+                                                         ->get()->unique('user_id');
         return view('tryout.all_ranking', compact('peserta_tryout', 'tryout'));
     }
 
@@ -111,7 +111,7 @@ class TryoutController extends Controller
         $peserta_tryout = DB::table('user_tryout AS ut1')->select(DB::raw("*, (SELECT SUM(score)/".$tryout->sesi->where('istirahat', 0)->count()." AS avg_score FROM `user_tryout` WHERE user_id = ut1.user_id) AS avg_score"))
                                                          ->where('tryout_id', $id)
                                                          ->orderByDesc('avg_score')
-                                                         ->get();
+                                                         ->get()->unique('user_id');
         return view('tryout.list_peserta', compact('peserta_tryout', 'tryout'));
     }
 

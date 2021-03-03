@@ -34,7 +34,7 @@
                         </thead>
                         <tbody>
                             @php $rank = 0@endphp
-                            @forelse ($peserta_tryout->unique('user_id') as $pt)
+                            @forelse ($peserta_tryout as $pt)
                             <tr>
                                 @php $rank += 1@endphp
                                 <td class="text-center">{{$rank}}</td>

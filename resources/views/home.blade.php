@@ -96,7 +96,7 @@
     <h1 class="h5 mb-4 text-gray-500">{{ __('Selamat kepada 3 besar SAINTEK!') }}</h1>
     <div class="row">
         @php $rank = 1; @endphp
-        @foreach($peserta_tryout->unique('user_id')->take(3) as $pt)
+        @foreach($peserta_tryout as $pt)
         @php
         $user = \App\Models\User::where('id', $pt->user_id)->first();
         @endphp
