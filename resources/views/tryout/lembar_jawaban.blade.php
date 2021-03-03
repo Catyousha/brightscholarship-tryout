@@ -16,7 +16,7 @@
                 </div>
                 @endcan
                 <div class="card-header py-3 d-flex justify-content-between">
-                    <a href="{{route('peserta.show', $usertryout[0]->user_id)}}" class="m-0 font-weight-bold text-primary">{{$usertryout[0]->user->name}}</a>
+                    <a @can('isAdmin') href="{{route('peserta.show', $usertryout[0]->user_id)}}" @endcan class="m-0 font-weight-bold text-primary">{{$usertryout[0]->user->name}}</a>
                 </div>
             </div>
         </div>

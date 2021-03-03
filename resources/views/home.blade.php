@@ -3,9 +3,6 @@
 
 @section('main-content')
 
-    <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">{{ __('Dashboard') }}</h1>
-
     @if (session('success'))
     <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
         {{ session('success') }}
@@ -22,6 +19,7 @@
     @endif
 
     @can('isAdmin')
+    <h1 class="h3 mb-4 text-gray-800">{{ __('Dashboard') }}</h1>
     <div class="row">
         <div class="col-xl-4 col-md-6 mb-4">
             <div class="card border-primary shadow h-100 py-2">
@@ -93,6 +91,37 @@
     @endcan
 
     @can('isStudent')
+    <h1 class="h3 mb-4 text-gray-800">{{ __('Selamat datang di BrightScholarship Tryout!') }}</h1>
+    @if($peserta_tryout != null)
+    <h1 class="h5 mb-4 text-gray-500">{{ __('Selamat kepada 3 besar SAINTEK!') }}</h1>
+    <div class="row">
+        @php $rank = 1; @endphp
+        @foreach($peserta_tryout->unique('user_id')->take(3) as $pt)
+        @php
+        $user = \App\Models\User::where('id', $pt->user_id)->first();
+        @endphp
+        <div class="col-xl-4 col-md-4 mb-4">
+            <div class="card shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col-md-2 mr-3">
+                            <figure class="img-profile rounded-circle avatar font-weight-bold" data-initial="{{$user->name[0]}}"></figure>
+                        </div>
+                        <div class="col md-10">
+                            <div class="h5 mb-1 font-weight-bold text-gray-800 mb-1">{{$user->name}}</div>
+                            <div class="text-xs mb-1 font-weight-bold text-gray-700">Ranking #{{$rank}} {{$user->pilihan->name}}</div>
+                            <div class="text-xs font-weight-bold text-primary mb-1">Skor rata-rata: {{round($pt->avg_score, 2)}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @php $rank+=1; @endphp
+        @endforeach
+    </div>
+    @endif
+
+    <h1 class="h5 mb-4 text-gray-500">{{ __('Laman Tryout') }}</h1>
     <div class="row">
         @foreach ($tryout as $t)
         @php

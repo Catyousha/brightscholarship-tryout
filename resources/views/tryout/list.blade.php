@@ -47,7 +47,9 @@
                                 <td>{{$t->user_tryout->unique('user_id')->count()}}</td>
                                 <td colspan="2">
                                     @can('isAdmin')<a href="{{route('tryout.edit', $t->id )}}" class="btn btn-primary btn-sm">Detail</a>@endcan
-                                    <a href="{{route('tryout.peserta', $t->id )}}" class="btn btn-info btn-sm">Pemeringkatan</a>
+                                    @if($t->time_end < Carbon\Carbon::now() || Auth::user()->role == "admin")
+                                        <a href="{{route('tryout.peserta', $t->id )}}" class="btn btn-info btn-sm">Pemeringkatan</a>
+                                    @endif
                                 </td>
                             </tr>
                             @empty
