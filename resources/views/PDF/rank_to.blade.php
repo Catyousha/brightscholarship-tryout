@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Hasil Pemeringkatan Seluruh Peserta BSTO UM</title>
+    <title>Hasil Pemeringkatan Peserta {{$pilihan}} BSTO UM</title>
 </head>
 <body>
     <style>
@@ -25,7 +25,7 @@
     </style>
     <div class="main">
     <h2 class="text-center" style="margin-top: 50px; font-size: 42px;">
-        Hasil Pemeringkatan Seluruh Peserta Tryout Brightscholarship UM
+        Hasil Pemeringkatan Peserta {{$pilihan}} BSTO UM
     </h2>
 
     <div class="table">

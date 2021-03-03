@@ -46,7 +46,7 @@ Route::middleware('auth')->group(function(){
     Route::post('/answer', [AnswerController::class, 'save_answer'])->name('answer.save');
 
     //PDF Creator
-    Route::get('/print/{type}', 'PdfController@index')->name('print');
+    Route::get('/print/{type}/{id_tryout?}', 'PdfController@index')->name('cetak');
 
 });
 

@@ -57,7 +57,9 @@
                             @endforelse
                         </tbody>
                     </table>
-
+                    @can('isAdmin')
+                        <a class="btn btn-success" href="{{route('cetak',['type' => 'ALL'])}}"><i class="fa fa-print"></i> Cetak Ranking</a>
+                    @endcan
                 </div>
             </div>
         </div>

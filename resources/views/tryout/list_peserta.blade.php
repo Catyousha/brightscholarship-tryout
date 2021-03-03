@@ -1,6 +1,6 @@
 @extends('layouts.main')
-@php  @endphp
-@section('title', "Ranking")
+@php $pilihan = $tryout->pilihan->name; @endphp
+@section('title', "Ranking $pilihan")
 @push('css')
 @endpush
 
@@ -62,7 +62,9 @@
                             @endforelse
                         </tbody>
                     </table>
-
+                    @can('isAdmin')
+                        <a class="btn btn-success" href="{{route('cetak',['type' => $pilihan, 'id_tryout' => $tryout->id])}}"><i class="fa fa-print"></i> Cetak Ranking</a>
+                    @endcan
                 </div>
             </div>
         </div>
