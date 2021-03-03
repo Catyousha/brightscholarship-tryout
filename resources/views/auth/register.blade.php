@@ -45,6 +45,18 @@
 									<div class="invalid-feedback">{{ $message }}</div>
 									@enderror
 								</div>
+                                <div class="form-group">
+									<input type="text" class="form-control @error('asal_sekolah') is-invalid @enderror" name="asal_sekolah" value="{{ old('asal_sekolah') }}" placeholder="Asal Sekolah" required>
+									@error('asal_sekolah')
+									<div class="invalid-feedback">{{ $message }}</div>
+									@enderror
+								</div>
+                                <div class="form-group">
+									<input type="file" class="form-control  @error('foto_profil') is-invalid @enderror" name="foto_profil" placeholder="Foto Profil" required>
+									@error('foto_profil')
+									<div class="invalid-feedback">{{ $message }}</div>
+									@enderror
+								</div>
 								<div class="form-group row">
 									<div class="col-sm-6 mb-3 mb-sm-0">
 										<input type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}" placeholder="Kata Sandi" required>

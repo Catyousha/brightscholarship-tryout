@@ -27,7 +27,9 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'max:255',
                 Rule::unique('users')->ignore($user->id),
             ],
-        ])->validateWithBag('updateProfileInformation');
+            'asal_sekolah' => ['required', 'string', 'max:255'],
+            'foto_profil' => ['image']
+        ])->validate();
 
         if ($input['email'] !== $user->email &&
             $user instanceof MustVerifyEmail) {
@@ -36,6 +38,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $user->forceFill([
                 'name' => $input['name'],
                 'email' => $input['email'],
+                'asal_sekolah' => $input['asal_sekolah'],
+                'foto_profil' => $input['foto_profil']
             ])->save();
         }
     }

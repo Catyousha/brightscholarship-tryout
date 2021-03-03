@@ -30,14 +30,19 @@ class CreateNewUser implements CreatesNewUsers
                 Rule::unique(User::class),
             ],
             'pilihan' => ['required', 'string', 'max:255'],
+            'asal_sekolah' => ['required', 'string', 'max:255'],
             'password' => $this->passwordRules(),
+            'foto_profil' => ['required|image']
         ])->validate();
 
         return User::create([
             'name' => $input['name'],
             'email' => $input['email'],
-            'pilihan' => $input['pilihan'],
+            'role' => 'student',
+            'pilihan_id' => $input['pilihan'],
             'password' => Hash::make($input['password']),
+            'asal_sekolah' => $input['asal_sekolah'],
+            'foto_profil' => basename($input['foto_profil']->store('foto_profil'))
         ]);
     }
 }
