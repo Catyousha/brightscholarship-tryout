@@ -38,7 +38,7 @@
     var i = setInterval(function(){
       duration = moment.duration(duration - interval, 'milliseconds');
       if(duration < 0){
-        alert("Waktu Pengerjaan Telah Habis!");
+        alert("Waktu pengerjaan telah habis, klik OK untuk melanjutkan ke sesi berikutnya.");
         document.getElementById('submit-jawaban').submit();
         clearInterval(i);
       }

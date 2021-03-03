@@ -81,7 +81,7 @@ class AnswerController extends Controller
                 return redirect()->route('tryout.soal', ['id_tryout' => $tryout_id, 'no_soal' => 1]);
             } else{
                 $request->session()->forget("ongoing_tryout");
-                return redirect()->route('home');
+                return redirect()->route('tryout.lembar', ['id_tryout' => $tryout_id, 'id_peserta' => Auth::user()->id]);
             }
         } else{
             return redirect()->route('tryout.soal', ['id_tryout'=>$tryout_id, 'no_soal' => 1])

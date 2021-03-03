@@ -35,8 +35,6 @@ class TryoutController extends Controller
     public function solve($id_tryout, $no_soal)
     {
         $tryout         = Tryout::findOrFail($id_tryout);
-        //selain sedang berlangsung, tolak.
-
 
         $sesi           = $tryout->sesi()->where('time_start', '<=', Carbon::now())
                                          ->where('time_end', '>', Carbon::now())
@@ -60,8 +58,6 @@ class TryoutController extends Controller
     public function istirahat($id_tryout){
 
         $tryout         = Tryout::findOrFail($id_tryout);
-        //selain sedang berlangsung, tolak.
-
 
         $sesi           = $tryout->sesi()->where('time_start', '<=', Carbon::now())
                                          ->where('time_end', '>', Carbon::now())
@@ -120,7 +116,11 @@ class TryoutController extends Controller
             return redirect()->route('home');
         }
         $tryout          = Tryout::findOrFail($tryout_id);
-        $usertryout      = UserTryout::where('tryout_id', $tryout_id)->where('user_id', $user_id)->get();
+        //$usertryout      = UserTryout::where('tryout_id', $tryout_id)->where('user_id', $user_id)->get();
+        $usertryout = DB::table('user_tryout AS ut1')->select(DB::raw("*, (SELECT SUM(score)/".$tryout->sesi->where('istirahat', 0)->count()." AS avg_score FROM `user_tryout` WHERE user_id = ut1.user_id) AS avg_score"))
+            ->where('tryout_id', $tryout_id)
+            ->where('user_id', $user_id)
+            ->get();
         $jawaban_peserta = UserAnswer::where('tryout_id', $tryout_id)->where('user_id', $user_id);
         return view('tryout.lembar_jawaban', compact('tryout', 'usertryout', 'jawaban_peserta'));
     }
