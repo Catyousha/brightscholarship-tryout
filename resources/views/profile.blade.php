@@ -21,7 +21,11 @@
 
             <div class="card shadow mb-4">
                 <div class="card-profile-image mt-4">
-                    <figure class="rounded-circle avatar avatar font-weight-bold" style="font-size: 60px; height: 180px; width: 180px;" data-initial="{{ Auth::user()->name[0] }}"></figure>
+                    @if(Auth::user()->foto_profil != null)
+                    <img  class="img-profile rounded-circle avatar" style="font-size: 60px; height: 180px; width: 180px;" src="{{url('storage/foto_profil/'.Auth::user()->foto_profil) }}" />
+                    @else
+                    <figure class="img-profile rounded-circle avatar font-weight-bold" style="font-size: 60px; height: 180px; width: 180px;" data-initial="{{ Auth::user()->name[0] }}"></figure>
+                    @endif
                 </div>
                 <div class="card-body">
 
@@ -29,7 +33,8 @@
                         <div class="col-lg-12">
                             <div class="text-center">
                                 <h5 class="font-weight-bold">{{  Auth::user()->fullName }}</h5>
-                                <p>{{Auth::user()->pilihan->name}}</p>
+                                <a class="text-sm font-weight-bold text-primary mb-2">{{Auth::user()->asal_sekolah}}</a><br/>
+                                <p class="mt-1 font-weight-bold">{{Auth::user()->pilihan->name}}</p>
                             </div>
                         </div>
                     </div>
@@ -49,7 +54,7 @@
 
                 <div class="card-body">
                     @include('layouts.flash')
-                    <form action="{{ route('user-profile-information.update') }}" autocomplete="off"  method="post">
+                    <form action="{{ route('user-profile-information.update') }}" autocomplete="off"  method="post"  enctype="multipart/form-data">
                         @method('put')
                         @csrf
 
@@ -69,7 +74,14 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="email">Alamat Email<span class="small text-danger">*</span></label>
-                                        <input type="email" id="email" class="form-control" name="email" placeholder="example@example.com" value="{{ old('email', Auth::user()->email) }}">
+                                        <input type="email" id="email" class="form-control" name="email" placeholder="example@example.com" value="{{ old('email', Auth::user()->email) }}" disabled>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="foto">Foto Profil</label>
+                                        <input type="file" class="form-control  @error('foto_profil') is-invalid @enderror" name="foto_profil" placeholder="Foto Profil">
                                     </div>
                                 </div>
                             </div>

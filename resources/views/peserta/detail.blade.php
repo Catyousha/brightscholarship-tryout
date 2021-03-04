@@ -23,6 +23,18 @@
                 <div class="card-body table-responsive ">
 
                     <table class="table">
+                        <tr>
+                            <th class="align-middle">Foto Profil</th>
+                            <td class="align-middle">:</td>
+                            <td class="align-middle">
+                                @if($peserta->foto_profil != null)
+                                <img  class="img-profile" style="height: 90px; width: 90px; border-radius: 20px;" src="{{url('storage/foto_profil/'.$peserta->foto_profil) }}" />
+                                @else
+                                <figure class="img-profile font-weight-bold" style="font-size: 60px; height: 180px; width: 180px; border-radius: 20px;" data-initial="{{ $peserta->name[0] }}"></figure>
+                                @endif
+                            </td>
+                        </tr>
+
                             <tr>
                                 <th class="align-middle">Nama Peserta</th>
                                 <td class="align-middle">:</td>
@@ -32,6 +44,11 @@
                                 <th class="align-middle">Pilihan</th>
                                 <td class="align-middle">:</td>
                                 <td class="align-middle">{{$peserta->pilihan->name}}</td>
+                            </tr>
+                            <tr>
+                                <th class="align-middle">Asal Sekolah</th>
+                                <td class="align-middle">:</td>
+                                <td class="align-middle">{{$peserta->asal_sekolah}}</td>
                             </tr>
                             <tr>
                                 <th class="align-middle">Email Peserta</th>

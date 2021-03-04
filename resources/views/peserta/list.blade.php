@@ -35,6 +35,7 @@
                             <th>Nama Peserta</th>
                             <th>Email</th>
                             <th>Pilihan</th>
+                            <th>Asal Sekolah</th>
                             <th>Tryout Diikuti</th>
                             <th>Opsi</th>
                         </thead>
@@ -43,6 +44,7 @@
                             <tr>
                                 <td>{{$p->name}}</td>
                                 <td>{{$p->email}}</td>
+                                <td>{{$p->asal_sekolah}}</td>
                                 <td>{{$p->pilihan->name}}</td>
                                 <td class="pl-5">{{$p->user_tryout->count()}}</td>
                                 <td>

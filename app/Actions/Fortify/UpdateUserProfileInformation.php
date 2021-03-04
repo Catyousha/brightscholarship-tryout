@@ -3,6 +3,7 @@
 namespace App\Actions\Fortify;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
@@ -19,29 +20,13 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     public function update($user, array $input)
     {
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => [
-                'required',
-                'string',
-                'email',
-                'max:255',
-                Rule::unique('users')->ignore($user->id),
-            ],
-            'asal_sekolah' => ['required', 'string', 'max:255'],
             'foto_profil' => ['image']
         ])->validate();
 
-        if ($input['email'] !== $user->email &&
-            $user instanceof MustVerifyEmail) {
-            $this->updateVerifiedUser($user, $input);
-        } else {
-            $user->forceFill([
-                'name' => $input['name'],
-                'email' => $input['email'],
-                'asal_sekolah' => $input['asal_sekolah'],
-                'foto_profil' => $input['foto_profil']
-            ])->save();
-        }
+        Storage::delete(['foto_profil/'.$user->foto_profil]);
+        $user->forceFill([
+            'foto_profil' => basename($input['foto_profil']->store('foto_profil'))
+        ])->save();
     }
 
     /**

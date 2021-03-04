@@ -105,10 +105,15 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col-md-2 mr-3">
-                            <figure class="img-profile rounded-circle avatar font-weight-bold" data-initial="{{$user->name[0]}}"></figure>
+                            @if($user->foto_profil != null)
+                            <img  class="img-profile rounded-circle avatar" src="{{url('storage/foto_profil/'.$user->foto_profil) }}" />
+                            @else
+                            <figure class="img-profile rounded-circle avatar font-weight-bold" data-initial="{{ $user->name[0] }}"></figure>
+                            @endif
                         </div>
                         <div class="col md-10">
                             <div class="h5 mb-1 font-weight-bold text-gray-800 mb-1">{{$user->name}}</div>
+                            <div class="text-sm font-weight-bold text-gray-700 mb-1">{{$user->asal_sekolah}}</div>
                             <div class="text-xs mb-1 font-weight-bold text-gray-700">Ranking #{{$rank}} {{$user->pilihan->name}}</div>
                             <div class="text-xs font-weight-bold text-primary mb-1">Skor rata-rata: {{round($pt->avg_score, 2)}}</div>
                         </div>

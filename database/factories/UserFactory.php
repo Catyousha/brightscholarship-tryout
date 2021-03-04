@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Pilihan;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class UserFactory extends Factory
@@ -31,7 +32,8 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'role' => 'student',
             'pilihan_id' => Pilihan::factory(),
-            'asal_sekolah' => "SMA 01 ".$this->faker->city
+            'asal_sekolah' => "SMA 01 ".$this->faker->city,
+            'foto_profil' => $this->faker->image(storage_path('app/public/foto_profil/'), 640, 480, 'cats', false)
         ];
     }
 }
