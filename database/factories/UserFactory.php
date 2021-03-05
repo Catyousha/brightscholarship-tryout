@@ -33,7 +33,8 @@ class UserFactory extends Factory
             'role' => 'student',
             'pilihan_id' => Pilihan::factory(),
             'asal_sekolah' => "SMA 01 ".$this->faker->city,
-            'foto_profil' => $this->faker->image(storage_path('app/public/foto_profil/'), 640, 480, 'cats', false)
+            'foto_profil' => $this->faker->image(storage_path('app/public/foto_profil/'), 640, 480, 'cats', false),
+            'acc_verified_at' => now()
         ];
     }
 }

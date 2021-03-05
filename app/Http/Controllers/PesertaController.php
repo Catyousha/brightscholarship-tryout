@@ -10,6 +10,7 @@ use Symfony\Component\Console\Input\Input;
 
 class PesertaController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -19,9 +20,47 @@ class PesertaController extends Controller
     {
         Gate::authorize('isAdmin');
         $peserta = ($request->query('name')) ?
-                                            User::like('name', $request->query('name'))->orderBy('name')->paginate(20)
-                                           : User::orderBy('name')->paginate(20);
+                                            User::like('name', $request->query('name'))
+                                            ->where('role', 'student')
+                                            ->where('acc_verified_at', '!=', null)
+                                            ->orderBy('name')
+                                            ->paginate(20)
+                                            : User::where('role', 'student')
+                                           ->where('acc_verified_at', '!=', null)
+                                           ->orderBy('name')
+                                           ->paginate(20);
+
         return view('peserta.list', compact('peserta'));
+    }
+
+    public function show_tunggu_acc(Request $request)
+    {
+        Gate::authorize('isAdmin');
+        $peserta = ($request->query('name')) ?
+                                    User::like('name', $request->query('name'))
+                                    ->where('role', 'student')
+                                    ->where('acc_verified_at', null)
+                                    ->orderBy('name')
+                                    ->paginate(20)
+                                    : User::where('role', 'student')
+                                    ->where('acc_verified_at', null)
+                                    ->orderBy('name')
+                                    ->paginate(20);
+
+        return view('peserta.list_tunggu', compact('peserta'));
+
+    }
+
+    public function validate_acc(Request $request)
+    {
+        Gate::authorize('isAdmin');
+        $user = User::findOrFail($request->user_id);
+        if($request->decision == "_ACC"){
+            $user->update(['acc_verified_at' => now()]);
+        } else if($request->decision == "_REJECT"){
+            $user->delete();
+        }
+        return response()->json(['data' => $request->decision]);
     }
 
     /**

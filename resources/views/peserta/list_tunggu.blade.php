@@ -1,6 +1,7 @@
 @extends('layouts.main')
-@section('title', "Daftar Peserta Terdaftar")
+@section('title', "Daftar Peserta Menunggu Validasi")
 @push('css')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" />
 @endpush
 
 @section('main-content')
@@ -13,7 +14,7 @@
                 <div class="card-header py-3">
                     <div class="row">
                         <div class="col-lg-6 col-md-12">
-                            <h6 class="m-0 font-weight-bold text-primary mb-2">Daftar Peserta Terdaftar</h6>
+                            <h6 class="m-0 font-weight-bold text-primary mb-2">Daftar Peserta Menunggu Validasi</h6>
                         </div>
                         <div class="col-lg-6 col-md-12">
                             <form action="{{route('peserta.index')}}" method="GET" autocomplete="off">
@@ -37,21 +38,20 @@
                             <th>Email</th>
                             <th>Pilihan</th>
                             <th>Asal Sekolah</th>
-                            <th>Tryout Diikuti</th>
                             <th>Opsi</th>
                         </thead>
                         <tbody>
                             @php $no = 1@endphp
                             @forelse ($peserta as $p)
-                            <tr>
+                            <tr id="user_{{$p->id}}">
                                 <td>{{$no}}</td>
                                 <td>{{$p->name}}</td>
                                 <td>{{$p->email}}</td>
                                 <td>{{$p->asal_sekolah}}</td>
                                 <td>{{$p->pilihan->name}}</td>
-                                <td class="pl-5">{{$p->user_tryout->count()}}</td>
                                 <td>
-                                    <a href="{{route('peserta.show', $p->id)}}" class="btn btn-primary btn-sm"><i class="fa fa-user fa-fw"></i> Detail</a>
+                                    <button class="btn btn-primary btn-sm validate-btn" data-id={{$p->id}} data-decision="_ACC"><i class="fa fa-user fa-fw"></i> Validasi</button>
+                                    <button class="btn btn-danger btn-sm validate-btn" data-id={{$p->id}} data-decision="_REJECT"><i class="fa fa-user fa-fw"></i> Tolak</button>
                                 </td>
                                 @php $no+=1 @endphp
                             </tr>
@@ -90,4 +90,38 @@
 @endpush
 
 @push('js')
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"
+integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+
+    $('.validate-btn').click(function (){
+        let user_id = $(this).attr('data-id');
+        let decision_type = $(this).attr('data-decision');
+        $.ajax({
+            type:'POST',
+            url:'/validate',
+            data:{_token: "{{ csrf_token() }}", user_id: user_id, decision: decision_type},
+            success:function(data) {
+                $('#user_'+user_id).remove();
+                if(data.data == '_ACC'){
+                    toastr.success('Peserta yang telah diverifikasi dapat mengikuti tryout.', 'Peserta berhasil divalidasi!');
+                } else{
+                    toastr.error('Peserta yang ditolak tidak dapat dilakukan verifikasi kembali.', 'Peserta berhasil ditolak!');
+                }
+
+
+            },
+            error: function(err){
+                console.log(err)
+            }
+        });
+
+    })
+</script>
+
 @endpush

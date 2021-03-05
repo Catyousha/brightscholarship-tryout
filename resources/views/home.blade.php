@@ -47,6 +47,7 @@
                         <div class="col md-10">
                             <div class="h5 mb-1 font-weight-bold text-gray-800 mb-3">Manajemen Peserta</div>
                             <a class="btn btn-sm btn-primary btn-block" href="{{route('peserta.index')}}">Lihat Daftar Peserta</a>
+                            <a class="btn btn-sm btn-primary btn-block" href="{{route('peserta.tunggu')}}">Lihat Daftar Tunggu Validasi</a>
                         </div>
                     </div>
                 </div>

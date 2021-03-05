@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'pilihan_id', 'email', 'password', 'asal_sekolah', 'foto_profil',
+        'name', 'pilihan_id', 'email', 'password', 'asal_sekolah', 'foto_profil', 'acc_verified_at'
     ];
 
     /**
@@ -36,6 +36,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'acc_verified_at' => 'datetime',
     ];
 
     public  function scopeLike($query, $field, $value){

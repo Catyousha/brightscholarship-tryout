@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->text('foto_profil')->nullable();
             $table->rememberToken();
             $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('acc_verified_at')->nullable();
             $table->timestamps();
         });
     }

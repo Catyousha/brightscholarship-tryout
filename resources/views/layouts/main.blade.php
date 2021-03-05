@@ -83,7 +83,13 @@
         <li class="nav-item @if(Request::segment(1) == 'peserta') active @endif">
             <a class="nav-link" href="{{ route('peserta.index') }}">
                 <i class="fas fa-fw fa-user"></i>
-                <span>{{ __('Daftar Peserta') }}</span>
+                <span>{{ __('Daftar Peserta Tervalidasi') }}</span>
+            </a>
+        </li>
+        <li class="nav-item @if(Request::segment(1) == 'daftar-tunggu') active @endif">
+            <a class="nav-link" href="{{ route('peserta.tunggu') }}">
+                <i class="fas fa-fw fa-user"></i>
+                <span>{{ __('Daftar Tunggu Validasi') }}</span>
             </a>
         </li>
         @endcan
@@ -122,7 +128,7 @@
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
                             @if(Auth::user()->foto_profil != null)
-                            <img  class="img-profile rounded-circle avatar" src="{{url('storage/foto_profil/'.Auth::user()->foto_profil) }}" />
+                            <img class="img-profile rounded-circle avatar" src="{{url('storage/foto_profil/'.Auth::user()->foto_profil) }}" />
                             @else
                             <figure class="img-profile rounded-circle avatar font-weight-bold" data-initial="{{ Auth::user()->name[0] }}"></figure>
                             @endif

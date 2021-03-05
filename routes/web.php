@@ -1,6 +1,8 @@
 <?php
 use App\Http\Controllers\TryoutController;
 use App\Http\Controllers\AnswerController;
+use App\Http\Controllers\PesertaController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -24,7 +26,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware('auth')->group(function(){
+Route::get('/wait', function () {
+    if(Auth::user()->acc_verified_at != null){
+        return redirect()->route('home');
+    }
+    return view('auth.wait-acc');
+})->middleware('auth')->name('wait');
+
+Route::middleware(['auth', 'acc.verified'])->group(function(){
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/profile', 'ProfileController@index')->name('profile');
     Route::resource('/tryout', 'TryoutController');
@@ -32,6 +41,8 @@ Route::middleware('auth')->group(function(){
     Route::resource('/sesi', 'SesiController');
     Route::resource('/peserta', 'PesertaController');
     Route::resource('/bobot', 'BobotController');
+
+    Route::get('/daftar-tunggu', [PesertaController::class, 'show_tunggu_acc'])->name('peserta.tunggu');
 
     Route::get('/ranking/{name}', [TryoutController::class, 'pemeringkatan'])->name('tryout.rank');
 
@@ -44,12 +55,9 @@ Route::middleware('auth')->group(function(){
 
     //AJAX
     Route::post('/answer', [AnswerController::class, 'save_answer'])->name('answer.save');
+    Route::post('/validate', [PesertaController::class, 'validate_acc'])->name('peserta.validate');
 
     //PDF Creator
     Route::get('/print/{type}/{id_tryout?}', 'PdfController@index')->name('cetak');
 
 });
-
-Route::get('/blank', function () {
-    return view('blank');
-})->name('blank');
