@@ -8,6 +8,7 @@
     @if ($errors->any())
         <div class="alert alert-danger border-left-danger" role="alert">
             <ul class="pl-4 my-2">
+                {{$errors}}
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
@@ -118,10 +119,10 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group focused">
-                                        <label class="form-control-label" for="id_confirm_password">Konfirmasi Password Baru</label>
-                                        <input type="password" id="id_confirm_password" class="form-control" name="password_confirmation" placeholder="Confirm password">
+                                        <label class="form-control-label" for="id_new_confirm_password">Konfirmasi Password Baru</label>
+                                        <input type="password" id="id_new_confirm_password" class="form-control" name="new_password_confirmation" placeholder="Confirm password">
                                     </div>
-                                    @error('confirm_password')
+                                    @error('password_new_confirmation')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>

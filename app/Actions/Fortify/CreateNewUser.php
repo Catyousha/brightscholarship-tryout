@@ -32,7 +32,7 @@ class CreateNewUser implements CreatesNewUsers
             'pilihan' => ['required', 'string', 'max:255'],
             'asal_sekolah' => ['required', 'string', 'max:255'],
             'password' => $this->passwordRules(),
-            'foto_profil' => ['required|image']
+            'foto_profil' => ['required','image']
         ])->validate();
 
         return User::create([

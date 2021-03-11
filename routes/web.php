@@ -2,6 +2,8 @@
 use App\Http\Controllers\TryoutController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\PesertaController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -33,7 +35,22 @@ Route::get('/wait', function () {
     return view('auth.wait-acc');
 })->middleware('auth')->name('wait');
 
-Route::middleware(['auth', 'acc.verified'])->group(function(){
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('message', 'Laman verifikasi telah dikirim ke email anda!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    return redirect('/home');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+
+Route::middleware(['auth','verified', 'acc.verified'])->group(function(){
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/profile', 'ProfileController@index')->name('profile');
     Route::resource('/tryout', 'TryoutController');
@@ -59,5 +76,4 @@ Route::middleware(['auth', 'acc.verified'])->group(function(){
 
     //PDF Creator
     Route::get('/print/{type}/{id_tryout?}', 'PdfController@index')->name('cetak');
-
 });
