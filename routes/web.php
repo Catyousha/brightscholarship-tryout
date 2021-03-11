@@ -25,7 +25,7 @@ Route::get('/', function () {
         return redirect()->route('tryout.soal', ['id_tryout'=>$id, 'no_soal'=>1]);
     }
 
-    return view('welcome');
+    return view('landing-page');
 });
 
 Route::get('/wait', function () {
