@@ -24,19 +24,22 @@
 								@csrf
 
 								<div class="form-group">
-									<input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Nama Lengkap" required>
+                                    <label for="id_nama" class="font-weight-bold text-primary">Nama Lengkap</label>
+									<input type="text" id="id_nama" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Nama Lengkap" required>
 									@error('name')
 									<div class="invalid-feedback">{{ $message }}</div>
 									@enderror
 								</div>
 								<div class="form-group">
-									<input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Alamat Email" required>
+                                    <label for="id_email" class="font-weight-bold text-primary">Alamat Email</label>
+									<input type="email" id="id_email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Alamat Email" required>
 									@error('email')
 									<div class="invalid-feedback">{{ $message }}</div>
 									@enderror
 								</div>
                                 <div class="form-group">
-                                    <select class="custom-select" name="pilihan">
+                                    <label for="id_pilihan" class="font-weight-bold text-primary">Pilihan</label>
+                                    <select class="custom-select" id="id_pilihan" name="pilihan">
                                         @foreach (\App\Models\Pilihan::all() as $p)
                                         <option value="{{$p->id}}" @if(old('pilihan') == $p->id) selected @endif>{{$p->name}}</option>
                                         @endforeach
@@ -46,30 +49,35 @@
 									@enderror
 								</div>
                                 <div class="form-group">
-									<input type="text" class="form-control @error('asal_sekolah') is-invalid @enderror" name="asal_sekolah" value="{{ old('asal_sekolah') }}" placeholder="Asal Sekolah" required>
+                                    <label for="id_asal_sekolah" class="font-weight-bold text-primary">Asal Sekolah</label>
+									<input type="text" id="id_asal_sekolah" class="form-control @error('asal_sekolah') is-invalid @enderror" name="asal_sekolah" value="{{ old('asal_sekolah') }}" placeholder="Asal Sekolah" required>
 									@error('asal_sekolah')
 									<div class="invalid-feedback">{{ $message }}</div>
 									@enderror
 								</div>
                                 <div class="form-group">
-									<input type="file" class="form-control  @error('foto_profil') is-invalid @enderror" name="foto_profil" placeholder="Foto Profil" required>
+                                    <label for="id_foto_profil" class="font-weight-bold text-primary">Foto Profil</label>
+									<input type="file" id="id_foto_profil" class="form-control  @error('foto_profil') is-invalid @enderror" name="foto_profil" placeholder="Foto Profil" required>
 									@error('foto_profil')
 									<div class="invalid-feedback">{{ $message }}</div>
 									@enderror
 								</div>
-								<div class="form-group row">
-									<div class="col-sm-6 mb-3 mb-sm-0">
-										<input type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}" placeholder="Kata Sandi" required>
-										@error('password')
-										<div class="invalid-feedback">{{ $message }}</div>
-										@enderror
-									</div>
-									<div class="col-sm-6">
-										<input type="password" class="form-control @error('password_confirmation ') is-invalid @enderror" name="password_confirmation" value="{{ old('password_confirmation') }}" placeholder="Ulangi Kata Sandi" required>
-										@error('password_confirmation')
-										<div class="invalid-feedback">{{ $message }}</div>
-										@enderror
-									</div>
+								<div class="form-group">
+                                    <label class="font-weight-bold text-primary">Kata Sandi</label>
+                                    <div class="row">
+                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                            <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}" placeholder="Kata Sandi" required>
+                                            @error('password')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input type="password" class="form-control @error('password_confirmation ') is-invalid @enderror" name="password_confirmation" value="{{ old('password_confirmation') }}" placeholder="Ulangi Kata Sandi" required>
+                                            @error('password_confirmation')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
 								</div>
 								<button class="g-recaptcha btn btn-primary btn-user btn-block" data-sitekey="{{ env('RECAPTCHA_SITEKEY') }}" data-callback="onSubmit" data-action="register">Daftar</button>
 							</form>
