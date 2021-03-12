@@ -96,7 +96,7 @@
         <footer class="footer py-4">
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col-lg-5 text-lg-left">Copyright © Brightscholarship 2020</div>
+                    <div class="col-lg-5 text-lg-left">Copyright © Brightscholarship 2021</div>
                 </div>
             </div>
         </footer>

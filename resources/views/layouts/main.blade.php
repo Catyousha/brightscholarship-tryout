@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 
     <!-- Favicon -->
     <link href="{{ asset('img/favicon.png') }}" rel="icon" type="image/png">
@@ -32,11 +33,11 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
-            <!--<div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-laugh-wink"></i>
-            </div>-->
-            <div class="mx-3" style="font-size: 12px;"> Selamat Datang! {{--config('app.name', 'Laravel')--}}</div>
+        <a class="sidebar-brand d-flex align-items-center justify-content-center my-3" href="{{ route('home') }}">
+            <div class="sidebar-brand-icon">
+                <img src="{{ asset('img/favicon.png') }}" style="border-radius: 25px;" width="64" height="64"/>
+            </div>
+
         </a>
 
         <!-- Divider -->
@@ -167,7 +168,7 @@
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; Brightscholarship 2020</span>
+                    <span>Copyright &copy; Brightscholarship 2021</span>
                 </div>
             </div>
         </footer>
