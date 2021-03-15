@@ -50,8 +50,8 @@
                                 <td>{{$p->asal_sekolah}}</td>
                                 <td>{{$p->pilihan->name}}</td>
                                 <td>
-                                    <button class="btn btn-primary btn-sm validate-btn" data-id={{$p->id}} data-decision="_ACC"><i class="fa fa-user fa-fw"></i> Validasi</button>
-                                    <button class="btn btn-danger btn-sm validate-btn" data-id={{$p->id}} data-decision="_REJECT"><i class="fa fa-user fa-fw"></i> Tolak</button>
+                                    <!--<button class="btn btn-primary btn-sm validate-btn" data-id={{$p->id}} data-decision="_ACC"><i class="fa fa-user fa-fw"></i> Validasi</button>
+                                    <button class="btn btn-danger btn-sm validate-btn" data-id={{$p->id}} data-decision="_REJECT"><i class="fa fa-user fa-fw"></i> Tolak</button>-->
                                 </td>
                                 @php $no+=1 @endphp
                             </tr>
