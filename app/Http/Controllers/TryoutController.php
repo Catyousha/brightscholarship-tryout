@@ -86,7 +86,7 @@ class TryoutController extends Controller
         if($tryout->count() > 1){
             return view('tryout.list', compact('tryout'));
         } else{
-            return $this->peserta_list($tryout->first()->id);
+            return $this->peserta_list($tryout->firstOrFail()->id);
         }
 
     }

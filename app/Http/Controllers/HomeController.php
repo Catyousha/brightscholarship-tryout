@@ -27,11 +27,14 @@ class HomeController extends Controller
         }
 
         $tryout = Tryout::latest()->where('pilihan_id', Auth::user()->pilihan_id)->get();
-        $peserta_tryout = ($tryout[0]->time_end < Carbon::now()) ? DB::table('user_tryout AS ut1')->select(DB::raw("*, (SELECT SUM(score)/".$tryout[0]->sesi->where('istirahat', 0)->count()." AS avg_score FROM `user_tryout` WHERE user_id = ut1.user_id) AS avg_score"))
+
+            $peserta_tryout = (!empty($tryout[0]) && $tryout[0]->time_end < Carbon::now()) ? DB::table('user_tryout AS ut1')->select(DB::raw("*, (SELECT SUM(score)/".$tryout[0]->sesi->where('istirahat', 0)->count()." AS avg_score FROM `user_tryout` WHERE user_id = ut1.user_id) AS avg_score"))
             ->where('tryout_id', $tryout[0]->id)
             ->orderByDesc('avg_score')
             ->get()->unique('user_id')->take(3)
             : null;
+
+
         return view('home', compact('tryout', 'peserta_tryout'));
     }
 }
