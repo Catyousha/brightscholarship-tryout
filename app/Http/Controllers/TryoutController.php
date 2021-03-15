@@ -81,7 +81,7 @@ class TryoutController extends Controller
         if($name == "ALL"){
             return $this->all_pemeringkatan();
         }
-        $pilihan = Pilihan::where('name', $name)->first();
+        $pilihan = Pilihan::where('name', $name)->firstOrFail();
         $tryout  = Tryout::where('pilihan_id', $pilihan->id);
         if($tryout->count() > 1){
             return view('tryout.list', compact('tryout'));

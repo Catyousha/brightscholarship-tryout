@@ -70,7 +70,7 @@
             </div>
         </div>
 
-        <div class="col-xl-4 col-md-6 mb-4">
+        <div class="col-xl-5 col-md-6 mb-4">
             <div class="card border-primary shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
@@ -81,6 +81,7 @@
                             <div class="h5 mb-1 font-weight-bold text-gray-800 mb-3">Pemeringkatan</div>
                             <a class="btn btn-sm btn-primary btn-block" href="{{route('tryout.rank', ['name' => 'SAINTEK'])}}">Lihat Pemeringkatan SAINTEK</a>
                             <a class="btn btn-sm btn-primary btn-block" href="{{route('tryout.rank', ['name' => 'SOSHUM'])}}">Lihat Pemeringkatan SOSHUM</a>
+                            <a class="btn btn-sm btn-primary btn-block" href="{{route('tryout.rank', ['name' => 'CAMPURAN'])}}">Lihat Pemeringkatan CAMPURAN</a>
                             <a class="btn btn-sm btn-primary btn-block" href="{{route('tryout.rank', ['name' => 'ALL'])}}">Lihat Semua Pemeringkatan</a>
                         </div>
                     </div>
