@@ -24,9 +24,14 @@ class PdfController extends Controller
             return $pdf->stream('Hasil Pemeringkatan Seluruh Peserta BSTO UM.pdf');
 
 
-        } else if($type == "SAINTEK" || $type == "SOSHUM") {
+        } else if($type == "SAINTEK" || $type == "SOSHUM" || $type == "CAMPURAN") {
             if($id_tryout == null){
-                $id_tryout = ($type == "SAINTEK") ? 1 : 2;
+                $id_pilihan = array(
+                    "SAINTEK" => 1,
+                    "SOSHUM" => 2,
+                    "CAMPURAN" => 3
+                );
+                $id_tryout = $id_pilihan[$type];
             }
             $tryout         = Tryout::findOrFail($id_tryout);
             if($tryout->pilihan->name != $type){
