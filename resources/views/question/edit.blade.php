@@ -33,7 +33,7 @@
                             <tr>
                                 <td colspan="2">
                                     <select class="custom-select" name="f_bobot_id" required>
-                                        @foreach (\App\Models\Bobot::where('has_deleted', 0) as $b)
+                                        @foreach (\App\Models\Bobot::where('has_deleted', "0")->get() as $b)
                                         <option value="{{$b->id}}" @if($soal->bobot_id == $b->id) selected @endif>
                                             {{$b->name}} (Bobot nilai: {{$b->nilai_bobot}})
                                         </option>
