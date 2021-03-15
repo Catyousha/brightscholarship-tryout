@@ -43,7 +43,15 @@
                                         </td>
                                     @endif
                                 @endforeach
-                                <td class="text-center">{{$pt->avg_score}}</td>
+                                <td class="text-center">
+                                @php
+                                    $user_pilihan = \App\Models\User::find($pt->user_id)->pilihan->name;
+                                    if($user_pilihan == "CAMPURAN"){
+                                        $pt->avg_score = ($pt->avg_score*8)/16;
+                                    }
+                                @endphp
+                                    {{$pt->avg_score}}
+                                </td>
                                 @can('isAdmin')
                                             <td>
                                                 <a href="{{route('tryout.lembar', ['id_peserta' => $pt->user_id, 'id_tryout' => $pt->tryout_id])}}" class="btn btn-primary btn-sm"><i class="fa fa-paste fa-fw"></i> Lembar Jawaban</a>
