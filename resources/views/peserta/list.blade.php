@@ -35,8 +35,8 @@
                             <th>No.</th>
                             <th>Nama Peserta</th>
                             <th>Email</th>
-                            <th>Pilihan</th>
                             <th>Asal Sekolah</th>
+                            <th>Pilihan</th>
                             <th>Tryout Diikuti</th>
                             <th>Opsi</th>
                         </thead>
