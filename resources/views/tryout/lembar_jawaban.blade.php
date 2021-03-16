@@ -62,7 +62,7 @@
                                         @if($jp->choice->id == $c->id && !$c->correct) text-danger font-weight-bold
                                         @elseif($c->correct) text-success font-weight-bold
                                         @endif"
-                                    for="{{$c->id}}">{{$c->choice_symbol}}. {{$c->choice_text}}</label>
+                                    for="{{$c->id}}">{{$c->choice_symbol}}. {!! $c->choice_text !!}</label>
                                 </div>
                                 @endforeach
                             </div>
