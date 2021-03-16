@@ -92,9 +92,12 @@
 @push('js')
 <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
 <script>
-    CKEDITOR.replace( 'f_question_text' );
+    CKEDITOR.replace( 'f_question_text',{
+            removeButtons: 'Cut,Copy,Paste,Undo,Redo,Anchor'
+        });
+    
     $('.choice_editor').each(function () {
-        CKEDITOR.replace($(this).prop('id'), ,{
+        CKEDITOR.replace($(this).prop('id'),{
             removeButtons: 'Cut,Copy,Paste,Undo,Redo,Anchor'
         });
     });
