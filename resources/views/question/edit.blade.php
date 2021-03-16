@@ -94,7 +94,9 @@
 <script>
     CKEDITOR.replace( 'f_question_text' );
     $('.choice_editor').each(function () {
-        CKEDITOR.replace($(this).prop('id'), { toolbar : 'SimpleVersion', removePlugins : 'elementspath' });
+        CKEDITOR.replace($(this).prop('id'), ,{
+            removeButtons: 'Cut,Copy,Paste,Undo,Redo,Anchor'
+        });
     });
 </script>
 @endpush
