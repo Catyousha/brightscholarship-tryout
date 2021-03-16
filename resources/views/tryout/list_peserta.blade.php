@@ -38,7 +38,7 @@
                             @php $rank = 0@endphp
                             @forelse ($peserta_tryout as $pt)
                             <tr>
-                                @php $rank += 1@endphp
+                                @php $rank += 1; @endphp
                                 <td class="text-center">{{$rank}}</td>
                                 <td>{{\App\Models\User::where('id', $pt->user_id)->first()->name}}</td>
                                 @foreach($tryout->sesi as $s)

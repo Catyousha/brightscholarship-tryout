@@ -37,10 +37,11 @@ class PdfController extends Controller
             if($tryout->pilihan->name != $type){
                 return redirect()->route('tryout.index');
             }
+
             $peserta_tryout = DB::table('user_tryout AS ut1')->select(DB::raw("*, (SELECT SUM(score)/".$tryout->sesi->where('istirahat', 0)->count()." AS avg_score FROM `user_tryout` WHERE user_id = ut1.user_id) AS avg_score"))
             ->where('tryout_id', $id_tryout)
             ->orderByDesc('avg_score')
-            ->get();
+            ->get()->unique('user_id');
 
             $data = array('tryout' => $tryout, 'peserta_tryout' => $peserta_tryout, 'pilihan' => $type);
             $pdf = PDF::loadView('PDF.rank_to', $data)->setPaper('a3', 'landscape');

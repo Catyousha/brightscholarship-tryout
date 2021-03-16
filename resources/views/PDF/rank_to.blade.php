@@ -32,23 +32,25 @@
         <div class="table-row">
             <div class="table-cell">Ranking</div>
             <div class="table-cell">Nama Peserta</div>
-            @foreach (\App\Models\Mapel::all() as $m)
-                @if($m->name != "ISTIRAHAT")
-                    <div class="table-cell">Skor {{$m->name}}</div>
+            @foreach ($tryout->sesi as $s)
+                @if($s->istirahat != 1)
+                    <th class="text-center">Skor {{$s->mapel->name}}</th>
                 @endif
             @endforeach
             <div class="table-cell">Rata-Rata</div>
         </div>
             @php $rank = 0@endphp
-            @forelse ($peserta_tryout->unique('user_id') as $pt)
+            @forelse ($peserta_tryout) as $pt)
             <div class="table-row">
-                @php $rank += 1@endphp
+                @php $rank += 1;@endphp
                 <div class="table-cell">{{$rank}}</div>
                 <div class="table-cell">{{\App\Models\User::where('id', $pt->user_id)->first()->name}}</div>
-                @foreach(\App\Models\Mapel::all() as $m)
-                    @if($m->name != "ISTIRAHAT")
-                        <div class="table-cell">
-                            {{\App\Models\UserTryout::where('user_id', $pt->user_id)->where('mapel_id', $m->id)->first()->score ?? "-"}}
+                @foreach($tryout->sesi as $s)
+                    @if($s->istirahat != 1)
+                        <div class="table-cell">{{\App\Models\UserTryout::where('sesi_id', $s->id)
+                                                                        ->where('user_id', $pt->user_id)
+                                                                        ->first()
+                                                                        ->score ?? 0}}
                         </div>
                     @endif
                 @endforeach
