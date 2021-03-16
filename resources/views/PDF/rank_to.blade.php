@@ -34,13 +34,13 @@
             <div class="table-cell">Nama Peserta</div>
             @foreach ($tryout->sesi as $s)
                 @if($s->istirahat != 1)
-                    <th class="text-center">Skor {{$s->mapel->name}}</th>
+                    <div class="table-cell">Skor {{$s->mapel->name}}</div>
                 @endif
             @endforeach
             <div class="table-cell">Rata-Rata</div>
         </div>
-            @php $rank = 0@endphp
-            @forelse ($peserta_tryout) as $pt)
+            @php $rank = 0;@endphp
+            @forelse ($peserta_tryout as $pt)
             <div class="table-row">
                 @php $rank += 1;@endphp
                 <div class="table-cell">{{$rank}}</div>

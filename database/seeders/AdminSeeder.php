@@ -19,7 +19,11 @@ class AdminSeeder extends Seeder
         $pilihan = Pilihan::all();
 
         User::factory(1)->state(new Sequence(
-            ['pilihan_id' => $pilihan->get(0)->id, 'role' => 'admin']
+            [
+                'email' => 'admin@example.com',
+                'pilihan_id' => $pilihan->get(0)->id,
+                'role' => 'admin'
+                ]
         ))->create();
     }
 }
