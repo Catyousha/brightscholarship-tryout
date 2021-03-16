@@ -81,6 +81,7 @@
                                 <th class="align-middle">Mata Pelajaran</th>
                                 <th class="align-middle">Waktu Dimulai</th>
                                 <th class="align-middle">Waktu Berakhir</th>
+                                <th class="align-middle">Jumlah Soal</th>
                                 <th class="align-middle">Opsi</th>
 
                             </tr>
@@ -89,6 +90,7 @@
                                     <td class="align-middle">{{$s->mapel->name}}</td>
                                     <td class="align-middle">{{$s->time_start->translatedFormat('d M Y H:i')}}</td>
                                     <td class="align-middle">{{$s->time_end->translatedFormat('d M Y H:i')}}</td>
+                                    <td class="align-middle text-center">{{$s->question()->count()}}</td>
                                     <td>
                                         <a href="{{route('sesi.edit', $s->id)}}" class="btn btn-primary btn-sm"><i class="fa fa-edit fa-fw"></i> Edit</a>
                                         <a class="delete-sesi-btn btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteSesiModal" data-id="{{$s->id}}"><i class="fa fa-trash fa-fw"></i> Hapus</a>
