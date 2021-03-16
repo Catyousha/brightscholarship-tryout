@@ -25,7 +25,9 @@
                             <th>Ranking</th>
                             <th>Nama Peserta</th>
                             @foreach ($tryout->sesi as $s)
-                            <th class="text-center">Skor {{$s->mapel->name}}</th>
+                                @if($s->istirahat != 1)
+                                    <th class="text-center">Skor {{$s->mapel->name}}</th>
+                                @endif
                             @endforeach
                             <th>Rata-Rata</th>
                             @can('isAdmin')

@@ -43,7 +43,7 @@
                 @forelse (\App\Models\UserAnswer::where('tryout_id', $tryout->id)
                                                 ->where('user_id', $usertryout[0]->user_id)
                                                 ->where('sesi_id', $s->id)
-                                                ->orderBy('question_id')
+                                                ->orderBy('question_num')
                                                 ->get() as $jp)
                 <div class="col-lg-12 mb-4">
                     <div class="card shadow mb-4">
