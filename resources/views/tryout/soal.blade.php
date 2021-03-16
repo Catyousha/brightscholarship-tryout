@@ -44,6 +44,12 @@
         alert("Waktu pengerjaan telah habis, klik OK untuk melanjutkan ke sesi berikutnya.");
         document.getElementById('submit-jawaban').submit();
         clearInterval(i);
+      } else if(duration <= 5000){
+            var await_comp = document.getElementsByClassName('await-answer');
+            Array.from(await_comp).forEach((el) => {
+                el.classList.add("disabled");
+                el.disabled = true;
+            });
       }
 
         $('#countdown').text(duration.hours() + " jam " + duration.minutes() + " menit " + duration.seconds() + " detik ")

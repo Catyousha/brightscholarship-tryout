@@ -8,6 +8,7 @@ use App\Models\Sesi;
 use App\Models\Tryout;
 use App\Models\UserAnswer;
 use App\Models\UserTryout;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -37,7 +38,6 @@ class AnswerController extends Controller
         $tryout_id = $request->t_id;
         $sesi_id = $request->s_id;
         Gate::authorize('view', [Tryout::find($tryout_id), Sesi::find($sesi_id)]);
-        $jml_soal = Sesi::find($sesi_id)->question->count();
         $score = 0;
         $answer_data = Session::get("tryout_{$tryout_id}_sesi_{$sesi_id}");
 
@@ -76,8 +76,8 @@ class AnswerController extends Controller
         //dd($request->session()->all());
         $request->session()->forget("tryout_{$tryout_id}_sesi_{$sesi_id}");
         if($userTO->save()){
-            $next_sesi = Sesi::find($sesi_id+1);
-            if($next_sesi && $next_sesi->tryout_id == $tryout_id){
+            $next_sesi = Sesi::where('tryout_id', $tryout_id)->where('time_end', '>', Carbon::now())->count();
+            if($next_sesi >= 1){
                 return redirect()->route('tryout.soal', ['id_tryout' => $tryout_id, 'no_soal' => 1]);
             } else{
                 $request->session()->forget("ongoing_tryout");

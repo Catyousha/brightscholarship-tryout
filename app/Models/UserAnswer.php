@@ -14,7 +14,7 @@ class UserAnswer extends Model
     ];
 
     public function question(){
-        return $this->hasOne(Question::class, 'id', 'question_id');
+        return $this->hasOne(Question::class, 'id', 'question_id')->orderBy('question_num');;
     }
 
     public function choice(){

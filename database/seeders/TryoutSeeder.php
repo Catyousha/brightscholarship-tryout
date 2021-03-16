@@ -35,20 +35,20 @@ class TryoutSeeder extends Seeder
             Sesi::factory()->count(4)->state(new Sequence(
             [
                 'mapel_id' => $mapel->get(0)->id,
-                'time_start' => Carbon::now(), 'time_end' => Carbon::now()->addHours(1)
+                'time_start' => Carbon::now(), 'time_end' => Carbon::now()->addMinutes(1)
             ],
             [
                 'mapel_id' => $mapel->get(1)->id,
-                'time_start' => Carbon::now()->addHours(1), 'time_end' => Carbon::now()->addHours(2)
+                'time_start' => Carbon::now()->addMinutes(1), 'time_end' => Carbon::now()->addMinutes(2)
 
             ],
             [
                 'mapel_id' => $mapel->get(2)->id,
-                'time_start' => Carbon::now()->addHours(2), 'time_end' => Carbon::now()->addHours(3)
+                'time_start' => Carbon::now()->addMinutes(2), 'time_end' => Carbon::now()->addMinutes(3)
             ],
             [
                 'mapel_id' => $mapel->get(3)->id,
-                'time_start' => Carbon::now()->addHours(3), 'time_end' => Carbon::now()->addHours(4)
+                'time_start' => Carbon::now()->addMinutes(3), 'time_end' => Carbon::now()->addMinutes(4)
             ]
             ))->has(
                 Question::factory()->count(5)->state( new Sequence(
