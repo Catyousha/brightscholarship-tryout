@@ -188,7 +188,7 @@
                                 </td>
                                 <td>
                                     <input type="hidden" name="f_choice_symbol[]" value="{{$symbol[$i]}}">
-                                    <input class="form-control form-control-sm" type="text" name="f_choice_text[]" value="{{old('f_choice_text.'.$i)}}" required>
+                                    <textarea id="{{$i}}" class="choice_editor form-control form-control-sm" type="text" name="f_choice_text[]" rows="1" required>{{old('f_choice_text.'.$i)}}</textarea>
                                 </td>
                             </tr>
                             @endfor
@@ -299,5 +299,8 @@ crossorigin="anonymous"></script>
 <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
 <script>
     CKEDITOR.replace( 'f_question_text' );
+    $('.choice_editor').each(function () {
+        CKEDITOR.replace($(this).prop('id'));
+    });
 </script>
 @endpush

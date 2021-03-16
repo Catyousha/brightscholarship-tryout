@@ -56,7 +56,7 @@
                                     <label class="form-check-label" for="{{$c->choice_symbol}}">{{$c->choice_symbol}}.</label>
                                 </td>
                                 <td>
-                                    <input class="form-control form-control-sm" type="text" name="f_choice_text[]" value="{{$c->choice_text}}">
+                                    <textarea id="{{$c->id}}" class="choice_editor form-control form-control-sm" type="text" name="f_choice_text[]" rows="1">{{$c->choice_text}}</textarea>
                                 </td>
                             </tr>
                             @endforeach
@@ -93,5 +93,8 @@
 <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
 <script>
     CKEDITOR.replace( 'f_question_text' );
+    $('.choice_editor').each(function () {
+        CKEDITOR.replace($(this).prop('id'), { toolbar : 'SimpleVersion', removePlugins : 'elementspath' });
+    });
 </script>
 @endpush

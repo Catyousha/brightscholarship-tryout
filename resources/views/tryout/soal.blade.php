@@ -26,6 +26,9 @@
     .nav-soal .active a {
         color: white !important;
     }
+    .form-check-label p {
+        display:inline;
+    }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
 <script>
@@ -75,7 +78,7 @@
                                 checked
                             @endif>
                             <label class="form-check-label" for="{{$c->id}}">
-                                {{$c->choice_symbol}}. {{$c->choice_text}}
+                                {{$c->choice_symbol}}. {!! $c->choice_text !!}
                             </label>
                         </div>
                         @endforeach
