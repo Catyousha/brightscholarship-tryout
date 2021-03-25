@@ -31,9 +31,6 @@
                                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{url('/home')}}">Home</a></li>
                             @else
                                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{route('login')}}">Login</a></li>
-                                @if (Route::has('register'))
-                                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{route('register')}}">Register</a></li>
-                                @endif
                             @endauth
                     @endif
                     </ul>

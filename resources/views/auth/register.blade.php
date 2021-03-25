@@ -79,7 +79,7 @@
                                         </div>
                                     </div>
 								</div>
-								<button class="g-recaptcha btn btn-primary btn-user btn-block" data-sitekey="{{ env('RECAPTCHA_SITEKEY') }}" data-callback="onSubmit" data-action="register">Daftar</button>
+								<button class="g-recaptcha btn btn-primary btn-user btn-block" data-sitekey="{{ env('RECAPTCHA_SITEKEY') }}" data-callback="onSubmit" data-action="register" disabled>Daftar</button>
 							</form>
 							<hr>
 							<div class="text-center">
