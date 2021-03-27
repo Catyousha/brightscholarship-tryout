@@ -102,7 +102,7 @@ class TryoutController extends Controller
             ELSE
             SUM(score)/8
             END
-            ) AS avg_score FROM `user_tryout` as ut2 WHERE ut2.user_id = ut1.user_id) AS avg_score"))
+            ) AS avg_score FROM `user_tryout` as ut2 WHERE ut2.user_id = ut1.user_id ) AS avg_score"))
                                                          ->orderByDesc('avg_score')
                                                          ->get()->unique('user_id');
         return view('tryout.all_ranking', compact('peserta_tryout', 'tryout'));

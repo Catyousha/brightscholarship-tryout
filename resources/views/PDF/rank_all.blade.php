@@ -53,12 +53,6 @@
                     @endif
                 @endforeach
                 <div class="table-cell">
-                    @php
-                        $user_pilihan = \App\Models\User::find($pt->user_id)->pilihan->name;
-                        if($user_pilihan == "CAMPURAN"){
-                            $pt->avg_score = ($pt->avg_score*8)/16;
-                        }
-                    @endphp
                     {{$pt->avg_score}}
                 </div>
             </div>
