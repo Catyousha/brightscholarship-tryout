@@ -49,7 +49,7 @@
                                 <td>{{$p->email}}</td>
                                 <td>{{$p->asal_sekolah}}</td>
                                 <td>{{$p->pilihan->name}}</td>
-                                <td class="pl-5">{{$p->user_tryout->count()}}</td>
+                                <td class="pl-5">{{$p->user_tryout->groupBy('tryout_id')->count()}}</td>
                                 <td>
                                     <a href="{{route('peserta.show', $p->id)}}" class="btn btn-primary btn-sm"><i class="fa fa-user fa-fw"></i> Detail</a>
                                 </td>
