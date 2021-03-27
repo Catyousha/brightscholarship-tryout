@@ -94,9 +94,18 @@
 
     @can('isStudent')
     <h1 class="h3 mb-4 text-gray-800">{{ __('Selamat datang di BrightScholarship Tryout!') }}</h1>
-
+    <div class="row">
+        <div class="col-xl-4 col-md-4 mb-4">
+            <div class="card shadow h-100 py-2">
+                <div class="card-body">
+                    <a class="btn btn-sm btn-primary btn-block" href="https://zoom.us/j/94971570713?pwd=Q0VON0dLeVA1ZThid2NyOHRjaVl5QT09">Link Zoom</a>
+                    <a class="btn btn-sm btn-success btn-block" href="https://drive.google.com/file/d/14oaJA49d-BT8EVK9XL-GqfSMXgIOcawz/view">Unduh Sertifikat</a>
+                </div>
+            </div>
+        </div>
+    </div>
     @if($peserta_tryout != null)
-    <h1 class="h5 mb-4 text-gray-500">{{ __('Selamat kepada 3 besar {{Auth::user()->pilihan->name}}!') }}</h1>
+    <h1 class="h5 mb-4 text-gray-500">{{ __('Selamat kepada 3 besar'.Auth::user()->pilihan->name.'!') }}</h1>
     <div class="row">
         @php $rank = 1; @endphp
         @foreach($peserta_tryout as $pt)
