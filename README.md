@@ -1,6 +1,8 @@
-# Laravel 8 + SB Admin 2
+# UTBK Brightscholarship Tryout UM
 
-SB Admin 2 for Laravel 8.
+UTBK Brightscholarship Tryout UM
+
+UTBK Brightscholarship Tryout UM is a platform used to carry out tryout exam and ranking activities followed by more than 130 participants on March 27, 2021 in rumbelbsum.com. The platform's feature is that it allows participants to work on a tryout exam within a period of time divided by section, view ranking, as well as the management of weight value for scoring and making questions on the admin side. All systems on this platform including database design are done by myself.
 
 | Laravel Version | Branch |
 |-----------------|--------|
@@ -25,50 +27,15 @@ SB Admin 2 for Laravel 8.
 - Rename or copy `.env.example` file to `.env`
 - Run `php artisan key:generate`
 - Set your database credentials in your `.env` file
-- Run migration `php artisan migrate`
-- Make something awesome!
+- Run migration `php artisan migrate:fresh --seed`
 
-## Note
-
-Recommend to install this preset on a project that you are starting from scratch, otherwise your project's design might break.
 
 ## Credits
 
-Laravel SB Admin 2 uses some open-source third-party libraries/packages, many thanks to the web community.
+Special thanks to:
 
 - Laravel - Open source framework.
-- LaravelEasyNav - Making managing navigation in Laravel easy.
-- SB Admin 2 - Thanks to Start Bootstrap.
-
-## Preview
-
-`login`
-
-<img src="https://imgur.com/YjGp6Sbl.png">
-
-***
-
-`register`
-
-<img src="https://imgur.com/Wj09cu4l.png">
-
-***
-
-`dashboard`
-
-<img src="https://imgur.com/CrmOfT5l.png">
-
-***
-
-`profile`
-
-<img src="https://imgur.com/5t4eS1rl.png">
-
-***
-
-`logout`
-
-<img src="https://imgur.com/d9JclOYl.png">
+- Laravel 8 + SB Admin 2 boilerplate (https://github.com/aleckrh/laravel-sb-admin-2)
 
 ## License
 
