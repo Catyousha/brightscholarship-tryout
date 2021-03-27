@@ -94,7 +94,15 @@ class TryoutController extends Controller
     public function all_pemeringkatan(){
         $tryout         = Tryout::all();
         //$peserta_tryout = UserTryout::where('tryout_id', $id)->orderBy('score')->get();
-        $peserta_tryout = DB::table('user_tryout AS ut1')->select(DB::raw("*, (SELECT SUM(score)/8 AS avg_score FROM `user_tryout` WHERE user_id = ut1.user_id) AS avg_score"))
+        $peserta_tryout = DB::table('user_tryout AS ut1')->select(DB::raw("*, (SELECT (
+            CASE
+            WHEN ut1.tryout_id = 4 THEN SUM(score)/8
+            WHEN ut1.tryout_id = 5 THEN SUM(score)/8
+            WHEN ut1.tryout_id = 6 THEN SUM(score)/12
+            ELSE
+            SUM(score)/8
+            END
+            ) AS avg_score FROM `user_tryout` as ut2 WHERE ut2.user_id = ut1.user_id) AS avg_score"))
                                                          ->orderByDesc('avg_score')
                                                          ->get()->unique('user_id');
         return view('tryout.all_ranking', compact('peserta_tryout', 'tryout'));

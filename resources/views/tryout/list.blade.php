@@ -34,7 +34,6 @@
                             <th>Pilihan</th>
                             <th>Waktu Dimulai</th>
                             <th>Waktu Berakhir</th>
-                            <th>Jumlah Peserta Mengerjakan</th>
                             <th>Opsi</th>
                         </thead>
                         <tbody>
@@ -44,7 +43,6 @@
                                 <td>{{$t->pilihan->name}}</td>
                                 <td>{{$t->time_start->translatedFormat('d M Y H:i')}}</td>
                                 <td>{{$t->time_end->translatedFormat('d M Y H:i')}}</td>
-                                <td>{{$t->user_tryout->unique('user_id')->count()}}</td>
                                 <td colspan="2">
                                     @can('isAdmin')<a href="{{route('tryout.edit', $t->id )}}" class="btn btn-primary btn-sm">Detail</a>@endcan
                                     @if($t->time_end < Carbon\Carbon::now() || Auth::user()->role == "admin")
