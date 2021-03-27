@@ -96,7 +96,7 @@
     <h1 class="h3 mb-4 text-gray-800">{{ __('Selamat datang di BrightScholarship Tryout!') }}</h1>
 
     @if($peserta_tryout != null)
-    <h1 class="h5 mb-4 text-gray-500">{{ __('Selamat kepada 3 besar SAINTEK!') }}</h1>
+    <h1 class="h5 mb-4 text-gray-500">{{ __('Selamat kepada 3 besar {{Auth::user()->pilihan->name}}!') }}</h1>
     <div class="row">
         @php $rank = 1; @endphp
         @foreach($peserta_tryout as $pt)
